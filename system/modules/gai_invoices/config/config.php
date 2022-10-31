@@ -12,4 +12,4 @@
 
 /* Hooks */
 $GLOBALS['TL_HOOKS']['processFormData'][]           = array('Bcs\Handler', 'onProcessForm');
-$GLOBALS['TL_HOOKS']['compileFormFields'][]         = array('Bcs\Handler', 'conCompileFormFields');
+$GLOBALS['TL_HOOKS']['compileFormFields'][]         = array('Bcs\Handler', 'onCompileFormFields');
