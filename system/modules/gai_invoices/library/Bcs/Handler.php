@@ -78,9 +78,10 @@ class Handler
              foreach($fields as $field) {
                  echo "Field: " . $field . "<br>";
              }
+             die();
          }
              
-         die();
+         
     }
     
     
