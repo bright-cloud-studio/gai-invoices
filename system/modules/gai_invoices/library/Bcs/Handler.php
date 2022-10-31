@@ -8,15 +8,14 @@ use Google;
 class Handler
 {
     protected static $arrUserOptions = array();
-
+    // DEV MODE: 0 - Off, 1 - On
+    $dev_mode = 1;
+    
+    // when our form is submitted
     public function onProcessForm($submittedData, $formData, $files, $labels, $form)
     {
-        
-        // DEV MODE: 0 - Off, 1 - On
-        $dev_mode = 1;
-        
+
         // Form - Submit Invoice
-        
         if($formData['formID'] == 'create_invoice') {
           
             // Get data = $submittedData['first_name']
@@ -70,4 +69,18 @@ class Handler
           
         }
     }
+    
+    
+    // when the fields are created
+    public function onProcessForm($fields, $formId, $form)
+    {
+         if($formData['formID'] == 'create_invoice') {
+             foreach($fields as $field) {
+                 echo "Field: " . $field . "<br>";
+         }
+             
+         die();
+    }
+    
+    
 }
