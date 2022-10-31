@@ -9,7 +9,7 @@ class Handler
 {
     protected static $arrUserOptions = array();
     // DEV MODE: 0 - Off, 1 - On
-    $dev_mode = 1;
+    public static $dev_mode = 1;
     
     // when our form is submitted
     public function onProcessForm($submittedData, $formData, $files, $labels, $form)
@@ -72,11 +72,12 @@ class Handler
     
     
     // when the fields are created
-    public function onProcessForm($fields, $formId, $form)
+    public function onCompileFormFields($fields, $formId, $form)
     {
          if($formId == 'create_invoice') {
              foreach($fields as $field) {
                  echo "Field: " . $field . "<br>";
+             }
          }
              
          die();
