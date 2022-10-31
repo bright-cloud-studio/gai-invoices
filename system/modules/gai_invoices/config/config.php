@@ -10,3 +10,5 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
+/* Hooks */
+$GLOBALS['TL_HOOKS']['processFormData'][]      = array('Bcs\Handler', 'onProcessForm');
