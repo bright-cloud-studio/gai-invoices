@@ -74,7 +74,7 @@ class Handler
     // when the fields are created
     public function onProcessForm($fields, $formId, $form)
     {
-         if($formData['formID'] == 'create_invoice') {
+         if($formId == 'create_invoice') {
              foreach($fields as $field) {
                  echo "Field: " . $field . "<br>";
          }
