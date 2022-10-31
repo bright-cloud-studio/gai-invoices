@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "global-assessments-invoices",
+  "private_key_id": "f26aee71f6165a54f95d4d07ca164483dce5cb79",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCx5v6lA3/rnIuR\n7AdQconjNoVf0oRE3oN4JDmT8HognQpI8YzrK4A7QFZDbHrso2rxmDxaj9nppStj\nirMcVASEFJHScEOtASK/BcxEVLJ1Lkl3nH0Kk9PQWpVFyU9E51/ChbzsUTmZf8x+\nOktRBoeqRYIKTt8joqxvEIepudun5sP74NUz4ZpPelqvRCxVSuL9JNFX/9ACHO2s\nR8Ze2ReST4sTvOsn45BrcDsCNqfQU7dUZHB/nrT9n3viYZ35njfgbhxbABw69YmJ\nV+at1+vb8M+up8Hr/rYQ4bGrqAmDyCW7852+WLRcQdb3JNh4AAivg5GruHrXe5vm\nmwvWuwBDAgMBAAECggEAFcC+g1PduOQP5txa+pm+xYMdpN1bYgZpQfAAAFhnvoQl\nRU0P45OSnuwbgCwMDdJfmcH5I0OyrBCPsSC9DOozESlouTgT9lwMsRnW48YNeima\nPx9p5Li1riTdWsamRDEccu8ibizyY5QOX6LmIbawMQBFydfiDfvupLf7NqQsuSdY\noUtGEEb2XlDUu2Jydymi4C0SeGyxNp6zLUYG5hmHP25s6p//vr+iRc3RJ4Auj2Az\nSICzAZ8ih8B6Lrg68Q/jfzPPc7q2er4bM7IyhiFGFSIoXirUnJdmw2mJcozV2OhD\nP7AZum7w5hqKQ4aDzLK77BUq/HuEXh4qUXqmonwiYQKBgQDkXns5cr7bCk/vtYce\nX2qoj84f5wMTAOFc506pOyomN4sGR8Id4UPfVkUyQk9GnneI1mztSGPI/1ud0Dpj\nGJ+FaJC1JRYUC1aJHC1Uul1J55pfi/szUlA5PfdUXDNp2qdr0oZSVJRdNz3PgT9N\noGKDd3rinXuE8IAthVMIGm/m4wKBgQDHbVpiSCOa5ALiEE1802s1XqEPF2e8wVfg\nUOgMkkBJUcTwW5Bo2G37oYEhVoTXCsQGeRyR2k95bBRdoBeu3aVfvaxYUoxwcYoD\nzZUy+xrJnlTCxQSLKynmZUyB4sgqfZkHu+yuqye65RPc16SNugAN4957Fyq9dxcE\nxxACa+BfIQKBgQCglkPmiObm1qCResASPpyc/cq/qk4CHftbvhgVbtJb33D2sJ0z\nL8XvlhXAmtpuWV7LLaWZUe9BVzgQiG2WY6lBQd+IUhTtcW+fqN3Dl+2j26Y1jBTP\n6REav5VdkBxjUmuqqXblDC7sQb1IXqWqK586vVj/ZCiIuioYWImjyBtqawKBgApH\ndqsuMLehHQzt7jCK7TG5CPAwMqamCJOFWBCd0TZ2QoJpFc5xqWmY74D6Zqp24Ze7\n0l8qM4J8sagJwm6++fEvY5zB1H9POt/rTs9r5fuSb6gCY7OQq/42JnVjbRHTm3ms\nlAyEwe1+NUHi05aCidItdqA9l3RgmQ0j/Y1CZjRBAoGBAKn4EnM1PlLRZQbtAzWR\nImlbF8eKpUN20+by3tc1Pl2i6phIt6jZN0djNINmfA6Y2fmI0Pw9fRXpIQyJehdY\nR8XiCL042XtdbnHAkkjwbxnZ1f2Ju3iiZ0CbOLWlRm5G4MtBKXS+p3CkOMJxoAK1\nHsMYAgXUIdLfxpTBoeX2Op0l\n-----END PRIVATE KEY-----\n",
+  "client_email": "global-assessments-invoices@global-assessments-invoices.iam.gserviceaccount.com",
+  "client_id": "102213095638447353521",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/global-assessments-invoices%40global-assessments-invoices.iam.gserviceaccount.com"
+}
