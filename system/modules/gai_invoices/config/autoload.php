@@ -9,3 +9,9 @@
  * @link       https://www.brightcloudstudio.com/
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
+
+/* Register the classes */
+ClassLoader::addClasses(array
+(
+    'Bcs\Handler'                       => 'system/modules/gai_invoices/Lbrary/Bcs/Handler.php',
+));
