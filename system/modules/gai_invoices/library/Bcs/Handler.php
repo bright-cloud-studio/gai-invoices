@@ -8,35 +8,36 @@ use Google;
 class Handler
 {
     protected static $arrUserOptions = array();
-    // DEV MODE: 0 - Off, 1 - On
-    public static $dev_mode = 1;
+    public static $dev_mode = true;
     
-    // when our form is submitted
+    // our google api stuffs
+    protected $client;
+    protected $service;
+    public static $spreadsheetId;
+    
+    
+    function __construct() {
+        // Create a client connection to Google
+        $this->$client = new Google\Client();
+        // Load our auth key
+        $this->$client->setAuthConfig('key.json');
+        // Set our scope to use the Sheets service
+        $this->$client->addScope(Google\Service\Sheets::SPREADSHEETS);
+        // Assign our client to a service
+        $this->$service = new \Google_Service_Sheets($this->$client);
+        // Set the ID for our specific spreadsheet
+        Handler::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+
+    }
+    
+    
+    // HOOK: when a form is submitted and being processed
     public function onProcessForm($submittedData, $formData, $files, $labels, $form)
     {
-
-        // Form - Submit Invoice
+        // detect the correct form based on the id
         if($formData['formID'] == 'create_invoice') {
-          
-            // Get data = $submittedData['first_name']
-           
-            // Create a client connection to Google
-            $client = new Google\Client();
-            // Load our auth key
-            $client->setAuthConfig('key.json');
-            // Set our scope to use the Sheets service
-            $client->addScope(Google\Service\Sheets::SPREADSHEETS);
             
-            // configure the Sheets Service
-            $service = new \Google_Service_Sheets($client);
-            
-            
-            // lets test by reading data from our sheet
-            //$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
-            //$spreadsheet = $service->spreadsheets->get($spreadsheetId);
-            //echo '<pre>' , var_dump($spreadsheet) , '</pre>';
-            
-            // Lets test by adding a new entry into the Transactions table
+            // Build out a "Transactions" row using the form data
             $newRow = [
                 'October',
                 $submittedData['school_id'],
@@ -48,40 +49,91 @@ class Handler
                 '999',
                 $submittedData['notes'],
             ];
-            $rows = [$newRow]; // you can append several rows at once
+            
+            // append the new row to the existing ones
+            $rows = [$newRow];
+            // Set the modified rows
             $valueRange = new \Google_Service_Sheets_ValueRange();
             $valueRange->setValues($rows);
-            $range = 'Transactions'; // the service will detect the last row of this sheet
+            $range = 'Transactions';
             $options = ['valueInputOption' => 'USER_ENTERED'];
-            $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
-            $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
-            
-            
-            
-            
-            
-            // show the values for testing purposes
-            if($dev_mode == 1)
-                echo '<pre>' , var_dump($client) , '</pre>';
-                
-            if($dev_mode == 1)
+            $this->$service->spreadsheets_values->append(Handler::$spreadsheetId, $range, $valueRange, $options);
+
+            // show variables in dev mode            
+            if(Handler::$dev_mode) {
+                echo '<pre>' , var_dump($this->$client) , '</pre>';
                 die();
-          
+            }
+            
+
         }
     }
     
     
-    // when the fields are created
+    // HOOK: when compiling the form fields so they can be modified
     public function onCompileFormFields($fields, $formId, $form)
     {
-         if($formId == 'create_invoice') {
-             foreach($fields as $field) {
-                 echo "Field: " . $field . "<br>";
-             }
-             die();
-         }
-             
-         
+        
+        // If this is our submit invoice form
+        if($form->id == 2) {
+            
+            // loop through the form's fields
+            foreach($fields as $field) {
+                
+                // modify our school_id field
+                if($field->name == "school_id") {
+                    
+                    $range = 'Schools!A2:D';
+                    $response = $this->$service->spreadsheets_values->get(Handler::$spreadsheetId, $range);
+                    $schools = $response->getValues();
+                    
+                    foreach($schools as $school) {
+                        $options[$school[0]]['value'] = $school[0];
+                        $options[$school[0]]['label'] = $school[2];
+                    }
+                    
+                    // override the options with our new ones
+                    $field->options = serialize($options);
+                }
+                
+                // modify our student_id field
+                if($field->name == "student_id") {
+                    
+                    $range = 'Students!A2:D';
+                    $response = $this->$service->spreadsheets_values->get(Handler::$spreadsheetId, $range);
+                    $students = $response->getValues();
+                    
+                    foreach($students as $student) {
+                        $options[$student[0]]['value'] = $student[0];
+                        $options[$student[0]]['label'] = $student[1];
+                    }
+                    
+                    // override the options with our new ones
+                    $field->options = serialize($options);
+                }
+                
+                // modify our service_provided field
+                if($field->name == "service_provided") {
+                    
+                    $range = 'Services!A2:D';
+                    $response = $this->$service->spreadsheets_values->get(Handler::$spreadsheetId, $range);
+                    $services = $response->getValues();
+                    
+                    foreach($services as $service) {
+                        $options[$service[0]]['value'] = $service[0];
+                        $options[$service[0]]['label'] = $service[2];
+                    }
+                    
+                    // override the options with our new ones
+                    $field->options = serialize($options);
+                }
+            
+            }
+            
+            return $fields;
+        }
+
+        return $fields;
     }
     
     
