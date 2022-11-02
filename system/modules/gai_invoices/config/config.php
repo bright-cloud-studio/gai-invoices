@@ -11,6 +11,7 @@
 **/
 
 /* Front end modules */
+// this is the front end module that displays recent invoices
 $GLOBALS['FE_MOD']['gai_invoices']['mod_recent_invoices'] 	= 'Bcs\Module\ModRecentInvoices';
 
 /* Hooks */
