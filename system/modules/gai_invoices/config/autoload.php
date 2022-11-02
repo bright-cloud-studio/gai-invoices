@@ -13,5 +13,14 @@
 /* Register the classes */
 ClassLoader::addClasses(array
 (
-    'Bcs\Handler'                       => 'system/modules/gai_invoices/Lbrary/Bcs/Handler.php',
+    'Bcs\Handler'                               => 'system/modules/gai_invoices/library/Bcs/Handler.php',
+    'Bcs\Module\ModRecentInvoices'              => 'system/modules/gai_invoices/library/Bcs/Module/ModRecentInvoices.php',
+    'Bcs\Model\ItemRecentSelectedInvoice'       => 'system/modules/gai_invoices/library/Bcs/Model/ItemRecentSelectedInvoice.php'
+));
+
+/* Register the templates */
+TemplateLoader::addFiles(array
+(
+	'mod_recent_invoices'                   => 'system/modules/gai_invoices/templates/modules',
+	'item_recent_selected_invoice'          => 'system/modules/gai_invoices/templates/items',
 ));
