@@ -12,6 +12,10 @@
 
   
 namespace Bcs\Module;
+
+use Google;
+
+
  
 class ModRecentInvoices extends \Contao\Module
 {
@@ -21,6 +25,11 @@ class ModRecentInvoices extends \Contao\Module
      * @var string
      */
   protected $strTemplate = 'mod_recent_invoices';
+  
+    // our google api stuffs
+    protected $client;
+    protected $service;
+    public static $spreadsheetId;
  
 	protected $arrStates = array();
  
@@ -33,7 +42,18 @@ class ModRecentInvoices extends \Contao\Module
 	public function __construct($objModule, $strColumn='main')
 	{
 		parent::__construct($objModule, $strColumn);
-		//$this->arrStates = Locations::getStates();
+		
+		// Create a client connection to Google
+        $this->$client = new Google\Client();
+        // Load our auth key
+        $this->$client->setAuthConfig('key.json');
+        // Set our scope to use the Sheets service
+        $this->$client->addScope(Google\Service\Sheets::SPREADSHEETS);
+        // Assign our client to a service
+        $this->$service = new \Google_Service_Sheets($this->$client);
+        // Set the ID for our specific spreadsheet
+        ModRecentInvoices::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+		
 	}
 	
     /**
@@ -64,85 +84,33 @@ class ModRecentInvoices extends \Contao\Module
      */
     protected function compile()
     {
-      
-	    /*
-		$objLocation = Location::findBy('published', '1');
-		
-		if (!in_array('system/modules/locations/assets/js/locations.js', $GLOBALS['TL_JAVASCRIPT'])) { 
-			$GLOBALS['TL_JAVASCRIPT'][] = 'system/modules/locations/assets/js/locations.js';
-		}
-		
-		// Return if no pending items were found
-		if (!$objLocation)
-		{
-			$this->Template->empty = 'No Locations Found';
-			return;
-		}
-		$arrStates = array();
-		
-		// Generate List
-		while ($objLocation->next())
-		{
-			$strStateKey = $objLocation->state;
-			$strStateName = ($this->arrStates["United States"][$objLocation->state] != '' ? $this->arrStates["United States"][$objLocation->state] : $this->arrStates["Canada"][$objLocation->state]);
-			if (in_array($objLocation->state, array('AB','BC','MB','NB','NL','NS','NT','NU','ON','PE','QC','SK','YT'))) {
-				$strStateKey = 'CAN';
-				$strStateName = 'Canada - All Provinces';
-			}
-			
-			if (!array_key_exists($strStateKey, $arrStates)) {
-				$arrStates[$strStateKey] = array(
-					"name" 			=> $strStateName,
-					'pid'			=> $objLocation->pid,
-					"abbr"			=> $strStateKey,
-					"locations"		=> array()
-				);
-			}
-			
-			$arrLocation = array(
-				'id'		=> $objLocation->id,
-				'pid'		=> $objLocation->pid,
-				'alias'		=> $objLocation->alias,
-				'tstamp'	=> $objLocation->tstamp,
-				'timetamp'	=> \Date::parse(\Config::get('datimFormat'), $objLocation->tstamp),
-				'published' => $objLocation->published
-			);
-			
-			if ($this->jumpTo) {
-				$objTarget = $this->objModel->getRelated('jumpTo');
-				$arrLocation['link'] = $this->generateFrontendUrl($objTarget->row()) .'?alias=' .$objLocation->alias;
-			}
-			
-			//$this->Template->categories = \StringUtil::deserialize(YOUR_VARIABLE_HERE);
-			
-			$arrLocation['pid'] 			= \StringUtil::deserialize($objLocation->pid);
-			$arrLocation['name'] 			= $objLocation->name;
-			$arrLocation['contact_name']		= $objLocation->contact_name;
-			$arrLocation['contact_name_2']		= $objLocation->contact_name_2;
-			$arrLocation['contact_name_3']		= $objLocation->contact_name_3;
-			$arrLocation['address']	 		= $objLocation->address;
-			$arrLocation['address_2']	 	= $objLocation->address_2;
-			$arrLocation['city'] 			= $objLocation->city;
-			$arrLocation['state'] 			= $objLocation->state;
-			$arrLocation['zip'] 			= $objLocation->zip;
-			$arrLocation['listing_zip']		= $objLocation->listing_zip;
-			$arrLocation['country'] 		= $objLocation->country;
-			$arrLocation['phone'] 			= $objLocation->phone;
-			$arrLocation['url'] 			= $objLocation->url;
-			$strItemTemplate = ($this->locations_customItemTpl != '' ? $this->locations_customItemTpl : 'item_location');
-			$objTemplate = new \FrontendTemplate($strItemTemplate);
-			$objTemplate->setData($arrLocation);
-			$arrStates[$strStateKey]['locations'][] = $objTemplate->parse();
-		}
-		$arrTemp = $arrStates;
-		unset($arrTemp['CAN']);
-		uasort($arrTemp, array($this,'sortByState'));
-		$arrTemp['CAN'] = $arrStates['CAN'];
-		$arrStates = $arrTemp;
-		
-		$this->Template->stateOptions = $this->generateSelectOptions();
-		$this->Template->states = $arrStates;
-		*/
+        
+        // Get this user's unprocessed listings from Sheets
+        $spreadsheet = $this->$service->spreadsheets->get(ModRecentInvoices::$spreadsheetId);
+        
+        // get all of our unarchived Transactions
+        $range = 'Transactions';
+        $response = $this->$service->spreadsheets_values->get(ModRecentInvoices::$spreadsheetId, $range);
+        $values = $response->getValues();
+        
+        // an array to store this users entries
+        $vals = array();
+        $objUser = \FrontendUser::getInstance();
+        
+        foreach($values as $entry) {
+            
+            // if the id matches this entry, it is related to our user
+            if($entry[9] == $objUser->id) {
+                array_push($vals,$entry);
+            }
+            
+        }
+        
+        // set this users entries to the template
+        $this->Template->spreadsheet = $vals;
+        //var_dump($spreadsheet);
+        
+        
 	}
 
 } 
