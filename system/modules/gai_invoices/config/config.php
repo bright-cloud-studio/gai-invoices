@@ -10,6 +10,9 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
+/* Front end modules */
+$GLOBALS['FE_MOD']['gai_invoices']['mod_recent_invoices'] 	= 'Bcs\Module\ModRecentInvoices';
+
 /* Hooks */
 $GLOBALS['TL_HOOKS']['processFormData'][]           = array('Bcs\Handler', 'onProcessForm');
 $GLOBALS['TL_HOOKS']['compileFormFields'][]         = array('Bcs\Handler', 'onCompileFormFields');
