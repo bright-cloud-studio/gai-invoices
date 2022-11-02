@@ -13,13 +13,17 @@
 /* Register the classes */
 ClassLoader::addClasses(array
 (
+    // this is the hooks class
     'Bcs\Handler'                               => 'system/modules/gai_invoices/library/Bcs/Handler.php',
+    // this is the front end module for displaying recent invoices for editing
     'Bcs\Module\ModRecentInvoices'              => 'system/modules/gai_invoices/library/Bcs/Module/ModRecentInvoices.php',
 ));
 
 /* Register the templates */
 TemplateLoader::addFiles(array
 (
+    // this is the template for the recent invoices module
 	'mod_recent_invoices'                   => 'system/modules/gai_invoices/templates/modules',
+    // this is the template for the selected recent invoice inside the recent invoices module
 	'item_recent_selected_invoice'          => 'system/modules/gai_invoices/templates/items',
 ));
