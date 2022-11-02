@@ -1,4 +1,17 @@
 <!-- This is the module that will list unprocessed transactions for editing -->
 <div class="mod_recent_invoices">
-  THIS IS THE RECENT INVOICES MODULE
+
+	<div class="list_recent_invoices marbot90">
+		<h2>Recent Invoices</h2>
+		LIST OF THE RECENT INVOICES
+		
+		<?php echo '<pre>' , print_r($this->Template->spreadsheet) , '</pre>'; ?>
+		
+	</div>
+	
+	<div class="edit_selected_invoice marbot90">
+		<h2>Edit Recent Invoice</h2>
+		DISPLAY FORM OF SELECTED INVOICE
+	</div>
+
 </div>
