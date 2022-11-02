@@ -37,6 +37,9 @@ class Handler
         // detect the correct form based on the id
         if($formData['formID'] == 'create_invoice') {
             
+            $objUser = \FrontendUser::getInstance();
+           
+            
             // Build out a "Transactions" row using the form data
             $newRow = [
                 'October',
@@ -48,6 +51,7 @@ class Handler
                 $submittedData['meeting_end'],
                 '999',
                 $submittedData['notes'],
+                $objUser->id
             ];
             
             // append the new row to the existing ones
