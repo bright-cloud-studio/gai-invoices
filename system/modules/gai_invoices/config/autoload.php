@@ -15,7 +15,6 @@ ClassLoader::addClasses(array
 (
     'Bcs\Handler'                               => 'system/modules/gai_invoices/library/Bcs/Handler.php',
     'Bcs\Module\ModRecentInvoices'              => 'system/modules/gai_invoices/library/Bcs/Module/ModRecentInvoices.php',
-    'Bcs\Model\ItemRecentSelectedInvoice'       => 'system/modules/gai_invoices/library/Bcs/Model/ItemRecentSelectedInvoice.php'
 ));
 
 /* Register the templates */
