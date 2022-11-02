@@ -94,21 +94,45 @@ class ModRecentInvoices extends \Contao\Module
         $values = $response->getValues();
         
         // an array to store this users entries
-        $vals = array();
+        $entries = array();
         $objUser = \FrontendUser::getInstance();
         
+        $entry_id = 0;
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
             if($entry[9] == $objUser->id) {
-                array_push($vals,$entry);
+                //array_push($entries,$entry);
+                
+                $strListingKey = $entry_id;
+                if (!array_key_exists($strListingKey, $entries)) {
+                    $arrListings[$strListingKey] = array(
+                        "billing_month"     => $entry[0],
+                        'school_id'		    => $entry[1],
+                        'student_id'		=> $entry[2],
+                        'service_provided'	=> $entry[3],
+                        'meeting_date'		=> $entry[4],
+                        'meeting_start'		=> $entry[5],
+                        'meeting_end'		=> $entry[6],
+                        'meeting_duration'	=> $entry[7],
+                        'notes'		        => $entry[8],
+                        'client_id'		    => $entry[9],
+                    );
+                    
+                    $strItemTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'item_recent_invoice');
+                    $objTemplate = new \FrontendTemplate($strItemTemplate);
+                    $objTemplate->setData($entries[$strListingKey]);
+                    $entries[$strListingKey] = $objTemplate->parse();
+                    
+                }
+                
             }
             
+            $entry_id++;
         }
         
         // set this users entries to the template
-        $this->Template->spreadsheet = $vals;
-        //var_dump($spreadsheet);
+        $this->Template->entries = $entries;
         
         
 	}
