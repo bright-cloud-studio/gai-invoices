@@ -13,8 +13,6 @@
   
 namespace Bcs\Module;
  
-use Bcs\Model\ModRecentInvoices;
- 
 class ModRecentInvoices extends \Contao\Module
 {
  
