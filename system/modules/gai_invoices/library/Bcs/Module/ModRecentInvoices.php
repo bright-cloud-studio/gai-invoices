@@ -78,13 +78,9 @@ class ModRecentInvoices extends \Contao\Module
         return parent::generate();
     }
  
- 
-    /**
-     * Generate the module
-     */
+    /* Generate the module */
     protected function compile()
     {
-        
         // Get this user's unprocessed listings from Sheets
         $spreadsheet = $this->$service->spreadsheets->get(ModRecentInvoices::$spreadsheetId);
         
@@ -133,8 +129,6 @@ class ModRecentInvoices extends \Contao\Module
         
         // set this users entries to the template
         $this->Template->entries = $entries;
-        
-        
-	}
 
+	}
 } 
