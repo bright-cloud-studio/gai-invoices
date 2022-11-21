@@ -78,9 +78,13 @@ class ModRecentInvoices extends \Contao\Module
         return parent::generate();
     }
  
-    /* Generate the module */
+ 
+    /**
+     * Generate the module
+     */
     protected function compile()
     {
+        
         // Get this user's unprocessed listings from Sheets
         $spreadsheet = $this->$service->spreadsheets->get(ModRecentInvoices::$spreadsheetId);
         
@@ -98,30 +102,24 @@ class ModRecentInvoices extends \Contao\Module
             
             // if the id matches this entry, it is related to our user
             if($entry[9] == $objUser->id) {
-                //array_push($entries,$entry);
                 
-                $strListingKey = $entry_id;
-                if (!array_key_exists($strListingKey, $entries)) {
-                    $arrListings[$strListingKey] = array(
-                        "billing_month"     => $entry[0],
-                        'school_id'		    => $entry[1],
-                        'student_id'		=> $entry[2],
-                        'service_provided'	=> $entry[3],
-                        'meeting_date'		=> $entry[4],
-                        'meeting_start'		=> $entry[5],
-                        'meeting_end'		=> $entry[6],
-                        'meeting_duration'	=> $entry[7],
-                        'notes'		        => $entry[8],
-                        'client_id'		    => $entry[9],
-                    );
-                    
-                    $strItemTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'item_recent_invoice');
-                    $objTemplate = new \FrontendTemplate($strItemTemplate);
-                    $objTemplate->setData($entries[$strListingKey]);
-                    $entries[$strListingKey] = $objTemplate->parse();
-                    
-                }
+                $arrData = array();
+                $arrData['billing_month']       = $entry[0];
+                $arrData['school_id']           = $entry[1];
+                $arrData['student_id']          = $entry[2];
+                $arrData['service_provided']    = $entry[3];
+                $arrData['meeting_date']        = $entry[4];
+                $arrData['meeting_start']       = $entry[5];
+                $arrData['meeting_end']         = $entry[6];
+                $arrData['meeting_duration']    = $entry[7];
+                $arrData['notes']               = $entry[8];
+                $arrData['client_id']           = $entry[9];
                 
+                $strItemTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'item_recent_invoice');
+                $objTemplate = new \FrontendTemplate($strItemTemplate);
+                $objTemplate->setData($arrData);
+                $entries[$entry_id] = $objTemplate->parse();
+
             }
             
             $entry_id++;
@@ -129,6 +127,8 @@ class ModRecentInvoices extends \Contao\Module
         
         // set this users entries to the template
         $this->Template->entries = $entries;
-
+        
+        
 	}
+
 } 
