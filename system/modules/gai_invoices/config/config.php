@@ -11,6 +11,9 @@
 **/
 
 /* Front end modules */
+
+// Create Invoice - List's a psychologists entries in the Work Assignment sheet
+$GLOBALS['FE_MOD']['gai_invoices']['mod_create_invoice'] 	= 'Bcs\Module\ModCreateInvoices';
 // this is the front end module that displays recent invoices
 $GLOBALS['FE_MOD']['gai_invoices']['mod_recent_invoices'] 	= 'Bcs\Module\ModRecentInvoices';
 
