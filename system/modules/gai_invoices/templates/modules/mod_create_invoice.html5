@@ -1,0 +1,10 @@
+<!-- This is the module that lists a psychologists entries in the Work Assignment sheet, then allows them to submit Transactions for it -->
+
+<div class="mod_create_invoice">
+  <h2>Create Invoices</h2>
+  
+  <p>Step 1: List Work Assignment entries for this physcholoist</p>
+  
+  <p>Step 2: Create Transactions entries based on the selected Work Assignment</p>
+  
+</div>
