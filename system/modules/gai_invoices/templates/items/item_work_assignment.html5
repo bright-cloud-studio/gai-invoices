@@ -1,0 +1,5 @@
+<!-- This is an entry in the Work Assignment sheet -->
+
+<div class="item_work_assignment">
+  <a href="#"><?= $this->student_name ?></a>
+</div>
