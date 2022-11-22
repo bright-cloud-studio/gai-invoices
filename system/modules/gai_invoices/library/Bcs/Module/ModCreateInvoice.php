@@ -98,7 +98,8 @@ class ModCreateInvoice extends \Contao\Module
             
             // if the id matches this entry, it is related to our user
             //if($entry[9] == $objUser->id) {
-                //array_push($entries,$entry);
+                
+                array_push($entries,$entry);
                 
                 $strListingKey = $entry_id;
                 if (!array_key_exists($strListingKey, $entries)) {
