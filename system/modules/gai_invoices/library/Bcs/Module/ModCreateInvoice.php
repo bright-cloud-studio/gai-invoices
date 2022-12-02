@@ -24,7 +24,7 @@ class ModCreateInvoice extends \Contao\Module
      * Template
      * @var string
      */
-  protected $strTemplate = 'mod_create_invoice';
+    protected $strTemplate = 'mod_create_invoice';
   
     // our google api stuffs
     protected $client;
@@ -41,9 +41,9 @@ class ModCreateInvoice extends \Contao\Module
 	 */
 	public function __construct($objModule, $strColumn='main')
 	{
-		parent::__construct($objModule, $strColumn);
-		
-		// Create a client connection to Google
+        parent::__construct($objModule, $strColumn);
+
+        // Create a client connection to Google
         $this->$client = new Google\Client();
         // Load our auth key
         $this->$client->setAuthConfig('key.json');
@@ -86,8 +86,6 @@ class ModCreateInvoice extends \Contao\Module
         $objUser = \FrontendUser::getInstance();
         $user = $objUser->firstname . " " . $objUser->lastname;
         
-        
-        
         // Get this user's unprocessed listings from Sheets
         $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
         
@@ -97,7 +95,8 @@ class ModCreateInvoice extends \Contao\Module
         $values = $response->getValues();
         
         // an array to store this users entries
-        $entries = array();
+        $entryList = array();
+        $entryForm = array();
         $objUser = \FrontendUser::getInstance();
         
         $entry_id = 0;
@@ -108,34 +107,41 @@ class ModCreateInvoice extends \Contao\Module
                 
                 if($user == $entry[3]) {
                     $arrData = array();
-                    $arrData['date']       = $entry[0];
-                    $arrData['30_days']       = $entry[1];
-                    $arrData['45_days']       = $entry[2];
-                    $arrData['psychologist']       = $entry[3];
-                    $arrData['district']       = $entry[4];
-                    $arrData['student_name']       = $entry[5];
+                    $arrData['date']                = $entry[0];
+                    $arrData['30_days']             = $entry[1];
+                    $arrData['45_days']             = $entry[2];
+                    $arrData['psychologist']        = $entry[3];
+                    $arrData['district']            = $entry[4];
+                    $arrData['student_name']        = $entry[5];
                     $arrData['date_of_birth']       = $entry[6];
-                    $arrData['grade']       = $entry[7];
-                    $arrData['lasid']       = $entry[8];
-                    $arrData['sasid']       = $entry[9];
-                    $arrData['initial']       = $entry[10];
-                    $arrData['type_of_testing']       = $entry[11];
-                    $arrData['testing_date']       = $entry[12];
-                    $arrData['meeting_required']       = $entry[13];
-                    $arrData['meeting_date']       = $entry[14];
-                    $arrData['parent_info']       = $entry[15];
-                    $arrData['teacher_info']       = $entry[16];
-                    $arrData['team_chair']       = $entry[17];
-                    $arrData['email']       = $entry[18];
-                    $arrData['report_submitted']       = $entry[19];
-                    $arrData['invoiced_to_gai']       = $entry[20];
-                    $arrData['district_invoice']       = $entry[21];
-                    $arrData['notes']       = $entry[22];
+                    $arrData['grade']               = $entry[7];
+                    $arrData['lasid']               = $entry[8];
+                    $arrData['sasid']               = $entry[9];
+                    $arrData['initial']             = $entry[10];
+                    $arrData['type_of_testing']     = $entry[11];
+                    $arrData['testing_date']        = $entry[12];
+                    $arrData['meeting_required']    = $entry[13];
+                    $arrData['meeting_date']        = $entry[14];
+                    $arrData['parent_info']         = $entry[15];
+                    $arrData['teacher_info']        = $entry[16];
+                    $arrData['team_chair']          = $entry[17];
+                    $arrData['email']               = $entry[18];
+                    $arrData['report_submitted']    = $entry[19];
+                    $arrData['invoiced_to_gai']     = $entry[20];
+                    $arrData['district_invoice']    = $entry[21];
+                    $arrData['notes']               = $entry[22];
                     
-                    $strItemTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'item_work_assignment');
-                    $objTemplate = new \FrontendTemplate($strItemTemplate);
-                    $objTemplate->setData($arrData);
-                    $entries[$entry_id] = $objTemplate->parse();
+                    // Generate as "List"
+                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_list');
+                    $objListTemplate = new \FrontendTemplate($strListTemplate);
+                    $objListTemplate->setData($arrData);
+                    $entryList[$entry_id] = $objListTemplate->parse();
+                    
+                    // Generate as "Form"
+                    $strFormTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_form');
+                    $objFormTemplate = new \FrontendTemplate($strFormTemplate);
+                    $objFormTemplate->setData($arrData);
+                    $entryForm[$entry_id] = $objListTemplate->parse();
                 }
 
             }
@@ -144,7 +150,8 @@ class ModCreateInvoice extends \Contao\Module
         }
         
         // set this users entries to the template
-        $this->Template->entries = $entries;
+        $this->Template->workAssignmentList = $entryList;
+        $this->Template->workAssignmentForm = $entryForm;
 
 	}
 } 
