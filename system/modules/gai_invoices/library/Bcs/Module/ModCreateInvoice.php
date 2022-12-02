@@ -81,6 +81,13 @@ class ModCreateInvoice extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
+        
+        // get the user and build their name
+        $objUser = \FrontendUser::getInstance();
+        $user = $objUser->firstname . " " . $objUser->lastname;
+        
+        
+        
         // Get this user's unprocessed listings from Sheets
         $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
         
@@ -97,46 +104,41 @@ class ModCreateInvoice extends \Contao\Module
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
-            //if($entry[9] == $objUser->id) {
+            if($entry_id != 0) {
                 
-                array_push($entries,$entry);
-                
-                $strListingKey = $entry_id;
-                if (!array_key_exists($strListingKey, $entries)) {
-                    $arrListings[$strListingKey] = array(
-                        "date"              => $entry[0],
-                        '30_days'           => $entry[1],
-                        '45_days'           => $entry[2],
-                        'psychologist'      => $entry[3],
-                        'district'          => $entry[4],
-                        'student_name'      => $entry[5],
-                        'date_of_birth'     => $entry[6],
-                        'grade'             => $entry[7],
-                        'lasid'             => $entry[8],
-                        'sasid'             => $entry[9],
-                        'initial'           => $entry[10],
-                        'type_of_testing'   => $entry[11],
-                        'testing_date'      => $entry[12],
-                        'meeting_required'  => $entry[13],
-                        'meeting_date'      => $entry[14],
-                        'parent_info'       => $entry[15],
-                        'teacher_info'      => $entry[16],
-                        'team_chair'        => $entry[17],
-                        'email'             => $entry[18],
-                        'report_submitted'  => $entry[19],
-                        'invoiced_to_gai'		=> $entry[20],
-                        'district_invoice'  => $entry[21],
-                        'notes'             => $entry[22]
-                    );
+                if($user == $entry[3]) {
+                    $arrData = array();
+                    $arrData['date']       = $entry[0];
+                    $arrData['30_days']       = $entry[1];
+                    $arrData['45_days']       = $entry[2];
+                    $arrData['psychologist']       = $entry[3];
+                    $arrData['district']       = $entry[4];
+                    $arrData['student_name']       = $entry[5];
+                    $arrData['date_of_birth']       = $entry[6];
+                    $arrData['grade']       = $entry[7];
+                    $arrData['lasid']       = $entry[8];
+                    $arrData['sasid']       = $entry[9];
+                    $arrData['initial']       = $entry[10];
+                    $arrData['type_of_testing']       = $entry[11];
+                    $arrData['testing_date']       = $entry[12];
+                    $arrData['meeting_required']       = $entry[13];
+                    $arrData['meeting_date']       = $entry[14];
+                    $arrData['parent_info']       = $entry[15];
+                    $arrData['teacher_info']       = $entry[16];
+                    $arrData['team_chair']       = $entry[17];
+                    $arrData['email']       = $entry[18];
+                    $arrData['report_submitted']       = $entry[19];
+                    $arrData['invoiced_to_gai']       = $entry[20];
+                    $arrData['district_invoice']       = $entry[21];
+                    $arrData['notes']       = $entry[22];
                     
                     $strItemTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'item_work_assignment');
                     $objTemplate = new \FrontendTemplate($strItemTemplate);
-                    $objTemplate->setData($entries[$strListingKey]);
-                    $entries[$strListingKey] = $objTemplate->parse();
-                    
+                    $objTemplate->setData($arrData);
+                    $entries[$entry_id] = $objTemplate->parse();
                 }
-                
-           // }
+
+            }
             
             $entry_id++;
         }
