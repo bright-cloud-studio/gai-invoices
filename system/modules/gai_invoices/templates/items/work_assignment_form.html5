@@ -1,0 +1,5 @@
+
+<!-- Work Assignment as a form -->
+<div class="work_assignment_form">
+	<p><?= $this->date ?> - <?= $this->district ?> - <?= $this->student_name ?></p>
+</div>
