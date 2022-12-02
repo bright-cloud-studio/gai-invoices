@@ -19,10 +19,11 @@
 	<div class="generate_transactions">
 		<h2>Step Two: Submit Transaction</h2>
 		
-		<form>
-			
-			
-		</form>
+		<?php if (empty($this->workAssignmentForm)): ?>
+			<p class="empty">There are no Work Assignments to build forms from</p>
+		<?php else: ?>
+			<?= implode('', $this->workAssignmentForm) ?>
+		<?php endif; ?>
 		
 	</div>
 	
