@@ -1,10 +1,30 @@
 <!-- This is the module that lists a psychologists entries in the Work Assignment sheet, then allows them to submit Transactions for it -->
 
-<div class="mod_create_invoice">
-  <h2>Create Invoices</h2>
-  
-  <p>Step 1: List Work Assignment entries for this physcholoist</p>
-  
-  <p>Step 2: Create Transactions entries based on the selected Work Assignment</p>
-  
+<div class="mod_create_invoice marbot90">
+	
+	<!-- First, this will list the users Work Assignments -->
+	<div class="list_work_assignments marbot60">
+		<h2>Step One: Select Work Assignment</h2>
+		
+		<p>These are your current Work Assignments</p>
+		
+		<?php if (empty($this->entries)): ?>
+			<p class="empty">You currently have no Work Assignments</p>
+		<?php else: ?>
+			<?= implode('', $this->entries) ?>
+		<?php endif; ?>
+	</div>
+	
+	<!-- Second, they will fill out this form to generate Transactions and mark this Work Assignment as processed -->
+	<div class="generate_transactions">
+		<h2>Step Two: Submit Transaction</h2>
+		
+		<form>
+			
+			
+		</form>
+		
+	</div>
+	
+
 </div>
