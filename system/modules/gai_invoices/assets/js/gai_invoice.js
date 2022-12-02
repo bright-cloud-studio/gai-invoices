@@ -4,8 +4,11 @@ $( document ).ready(function() {
   
   
     // called when selecting a Work Assignment on the Create an Invoice page
-    function selectWorkAssignment(date, district, student){
+    function selectWorkAssignment(id){
 
+        alert("ID: " . id);
+        
+        /*
         // trigger this function when our form runs
         $.ajax({
             url:'/system/modules/panel_pricing_calculator/assets/php/action.remove.from.cart.endpoint.php',
@@ -29,6 +32,7 @@ $( document ).ready(function() {
                 $("#dev_message").html("REMOVE FROM CART FAIL");
             }
         });
+        */
 
     }
   
