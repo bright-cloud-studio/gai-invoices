@@ -8,10 +8,10 @@
 		
 		<p>These are your current Work Assignments</p>
 		
-		<?php if (empty($this->entries)): ?>
+		<?php if (empty($this->workAssignmentList)): ?>
 			<p class="empty">You currently have no Work Assignments</p>
 		<?php else: ?>
-			<?= implode('', $this->entries) ?>
+			<?= implode('', $this->workAssignmentList) ?>
 		<?php endif; ?>
 	</div>
 	
