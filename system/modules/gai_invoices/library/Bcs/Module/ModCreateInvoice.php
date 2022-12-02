@@ -81,6 +81,9 @@ class ModCreateInvoice extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
+        // Include our JS with a unique code to prefent caching
+        $rand_ver = rand(1,9999);
+        $GLOBALS['TL_BODY'][] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
         
         // get the user and build their name
         $objUser = \FrontendUser::getInstance();
