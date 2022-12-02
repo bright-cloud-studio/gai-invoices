@@ -24,9 +24,9 @@ ClassLoader::addClasses(array
 /* Register the templates */
 TemplateLoader::addFiles(array
 (
-    // Create Invoices
     'mod_create_invoice'            => 'system/modules/gai_invoices/templates/modules',
-    'item_work_assignment'          => 'system/modules/gai_invoices/templates/items',
+    'work_assignment_list'          => 'system/modules/gai_invoices/templates/items',
+    'work_assignment_form'          => 'system/modules/gai_invoices/templates/items',
     
     
     // this is the template for the recent invoices module
