@@ -141,7 +141,7 @@ class ModCreateInvoice extends \Contao\Module
                     $strFormTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_form');
                     $objFormTemplate = new \FrontendTemplate($strFormTemplate);
                     $objFormTemplate->setData($arrData);
-                    $entryForm[$entry_id] = $objListTemplate->parse();
+                    $entryForm[$entry_id] = $objFormTemplate->parse();
                 }
 
             }
