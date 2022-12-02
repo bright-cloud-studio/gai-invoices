@@ -1,5 +1,39 @@
 
 <!-- Work Assignment as a form -->
 <div class="work_assignment_form">
-	<p><?= $this->date ?> - <?= $this->district ?> - <?= $this->student_name ?></p>
+
+
+
+
+	<form>
+		
+	<!-- Date -->	
+	<div class="widget widget-text size50">
+		<label for="date" class="size50">
+			Date
+		</label>
+		<input type="text" name="date" id="date" class="size50" value="<?= $this->date ?>" required="">
+	</div>
+	
+	<!-- District -->	
+	<div class="widget widget-text size50">
+		<label for="district" class="size50">
+			District / School
+		</label>
+		<input type="text" name="district" id="district" class="size50" value="<?= $this->district ?>" required="">
+	</div>
+	
+	<!-- Student Name -->	
+	<div class="widget widget-text size50">
+		<label for="student_name" class="size50">
+			Student Name
+		</label>
+		<input type="text" name="student_name" id="student_name" class="size50" value="<?= $this->student_name ?>" required="">
+	</div>
+	
+	
+	</form>
+	
+	
+	
 </div>
