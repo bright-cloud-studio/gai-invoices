@@ -1,6 +1,6 @@
 
 <!-- This is an entry in the Work Assignment sheet -->
-<div class="item_work_assignment">
+<div class="work_assignment_list">
 	<a href="javascript:void(0);" onClick="selectWorkAssignment(<?= $this->date ?>, <?= $this->district ?>, <?= $this->student_name ?>);">
 		<?= $this->date ?> - <?= $this->district ?> - <?= $this->student_name ?>
 	</a>
