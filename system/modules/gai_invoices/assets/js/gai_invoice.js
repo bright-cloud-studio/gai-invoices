@@ -13,31 +13,32 @@
     
     // Adds another Transaction fieldset to the specific form
     function addAnotherTransaction(id){
-
+        
+        // get total of Transactions already listed in the form
         var transCount = $('.' + id + ' fieldset.transaction').length + 1;
         
-        // first, lets clone the first transaction
+        // Clone the first Transaction as a base
         var cloned =  $('.' + id + ' fieldset.transaction:first').clone();
         
-        // unique ID for Services Provided
+        // Modify the cloned "Services Provided" field to have a unique ID
         cloned.find("label[for='service_provided']").attr('for', 'service_provided_' + transCount);
         cloned.find('select#service_provided').val(' ');
         cloned.find('select#service_provided').attr('name', 'service_provided_' + transCount);
         cloned.find('select#service_provided').attr('id', 'service_provided_' + transCount);
         
-        // unqiue ID for Price
+        // Modify the cloned "Price" field to have a unique ID
         cloned.find("label[for='price']").attr('for', 'price_' + transCount);
         cloned.find('input#price').val(" ");
         cloned.find('input#price').attr('name', 'price_' + transCount);
         cloned.find('input#price').attr('id', 'price_' + transCount);
         
-        // unqiue ID for Notes
+        // Modify the cloned "Notes" field to have a unique ID
         cloned.find("label[for='notes']").attr('for', 'notes_' + transCount);
         cloned.find('textarea#notes').val(" ");
         cloned.find('textarea#notes').attr('name', 'notes_' + transCount);
         cloned.find('textarea#notes').attr('id', 'notes_' + transCount);
         
-        // lets append the cloned element to the transactions list
+        // Append the cloned and updated Transaction to the list of other Transactions
         cloned.appendTo('.' + id + ' .transactions');
 
     }
@@ -46,6 +47,12 @@
     // this is the big bad booty daddy that will generate our Transactions on Google Sheets and mark our Work Assignment as Processed
     function processWorkAssignment(id){
         alert("PROCESS: " + id);
+        
+        // Get form values
+        
+        // AJAX to PHP to generate Transactions and mark this Work Assignment as Processed on Sheets
+        
+        // Show error or success message
     }
     
     
