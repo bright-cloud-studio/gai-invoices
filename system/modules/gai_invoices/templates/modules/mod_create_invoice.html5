@@ -16,7 +16,7 @@
 	</div>
 	
 	<!-- Second, they will fill out this form to generate Transactions and mark this Work Assignment as processed -->
-	<div class="generate_transactions">
+	<div class="generate_transactions marbot60">
 		<h2>Step Two: Submit Transaction</h2>
 		
 		<?php if (empty($this->workAssignmentForm)): ?>
@@ -26,6 +26,14 @@
 		<?php endif; ?>
 		
 	</div>
+	
+	
+	<div class="messages marbot60">
+		
+		<span class="message"></span>
+		
+	</div>
+	
 	
 
 </div>
