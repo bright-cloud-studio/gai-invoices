@@ -16,7 +16,7 @@
 
 <!-- This is an entry in the Work Assignment sheet -->
 <div class="work_assignment_list">
-	<a href="javascript:void(0);" onClick="selectWorkAssignment(<?= $unique_id ?>);">
+	<a href="javascript:void(0);" onClick="selectWorkAssignment('<?= $unique_id ?>');">
 		<?= $this->date ?> - <?= $this->district ?> - <?= $this->student_name ?>
 	</a>
 </div>
