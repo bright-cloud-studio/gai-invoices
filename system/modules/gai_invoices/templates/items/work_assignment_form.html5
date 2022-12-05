@@ -15,35 +15,103 @@
 ?>
 
 <!-- Work Assignment as a form -->
-<div class="work_assignment_form <?= $unique_id ?>">
+<div class="work_assignment_form <?= $unique_id ?>" style="display: none;">
 
 
 
 
 	<form class="flex_wrapper">
 		
-		<!-- Date -->	
-		<div class="widget widget-text size50">
-			<label for="date" class="size50">
-				Date
-			</label>
-			<input type="text" name="date" id="date" class="size50" value="<?= $this->date ?>" required="">
-		</div>
+		<fieldset class="size100">
+			<!-- Date -->	
+			<div class="widget widget-text size50">
+				<label for="date" class="size50">
+					Date
+				</label>
+				<input type="text" name="date" id="date" value="<?= $this->date ?>" required="">
+			</div>
+		</fieldset>
 		
-		<!-- District -->	
-		<div class="widget widget-text size50">
-			<label for="district" class="size50">
-				District / School
-			</label>
-			<input type="text" name="district" id="district" class="size50" value="<?= $this->district ?>" required="">
-		</div>
+		<fieldset class="size100">
+			<!-- District -->	
+			<div class="widget widget-text size50">
+				<label for="district" class="size50">
+					District / School
+				</label>
+				<input type="text" name="district" id="district" value="<?= $this->district ?>" required="">
+			</div>
+			
+			<!-- Student Name -->	
+			<div class="widget widget-text size50">
+				<label for="student_name" class="size50">
+					Student Name
+				</label>
+				<input type="text" name="student_name" id="student_name" value="<?= $this->student_name ?>" required="">
+			</div>
+	
+			<!-- Date of Birth -->	
+			<div class="widget widget-text size50">
+				<label for="date_of_birth" class="size50">
+					Date of Birth
+				</label>
+				<input type="text" name="date_of_birth" id="date_of_birth" value="<?= $this->date_of_birth ?>" required="">
+			</div>
+			
+			<!-- Grade -->	
+			<div class="widget widget-text size50">
+				<label for="grade" class="size50">
+					Grade
+				</label>
+				<input type="text" name="grade" id="grade" value="<?= $this->grade ?>" required="">
+			</div>
+			
+			<!-- LASID -->	
+			<div class="widget widget-text size50">
+				<label for="lasid" class="size50">
+					LASID #
+				</label>
+				<input type="text" name="lasid" id="lasid" value="<?= $this->lasid ?>" required="">
+			</div>
+			
+			<!-- SASID -->	
+			<div class="widget widget-text size50">
+				<label for="sasid" class="size50">
+					SASID
+				</label>
+				<input type="text" name="sasid" id="sasid" value="<?= $this->sasid ?>" required="">
+			</div>
+			
+			<!-- Initial / Re-eval -->	
+			<div class="widget widget-text size50">
+				<label for="initial" class="size50">
+					Initial / Re-eval
+				</label>
+				<input type="text" name="initial" id="initial" value="<?= $this->initial ?>" required="">
+			</div>
+			
+			<!-- Type of Testing -->	
+			<div class="widget widget-text size50">
+				<label for="type_of_testing" class="size50">
+					Type of Testing
+				</label>
+				<input type="text" name="type_of_testing" id="type_of_testing" value="<?= $this->type_of_testing ?>" required="">
+			</div>
+		</fieldset>
 		
-		<!-- Student Name -->	
-		<div class="widget widget-text size50">
-			<label for="student_name" class="size50">
-				Student Name
-			</label>
-			<input type="text" name="student_name" id="student_name" class="size50" value="<?= $this->student_name ?>" required="">
+		
+		
+		<fieldset class="size100">
+			Enter Transactions here
+		</fieldset>
+		
+		
+		
+		
+		
+
+		<!-- Submit Button -->
+		<div class="widget widget-submit center_element size100">
+			<button type="submit" id="ctrl_5" class="submit center_element">Submit</button>
 		</div>
 	
 	
