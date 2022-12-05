@@ -46,13 +46,23 @@
     
     // this is the big bad booty daddy that will generate our Transactions on Google Sheets and mark our Work Assignment as Processed
     function processWorkAssignment(id){
-        alert("PROCESS: " + id);
         
-        // Get form values
+        var test_val = 1;
         
-        // AJAX to PHP to generate Transactions and mark this Work Assignment as Processed on Sheets
+        // trigger this function when our form runs
+        $.ajax({
+            url:'/system/modules/gai_invoices/assets/php/action.process.work.assignment.php',
+            type:'POST',
+            data:"test_val="+test_val+"",
+            success:function(result){
+                // redirect us to the success page
+                $(".messages .message").html(result);
+            },
+            error:function(result){
+                $(".messages .message").html("There was an error using the AJAX call for processWorkAssignment");
+            }
+        });
         
-        // Show error or success message
     }
     
     
