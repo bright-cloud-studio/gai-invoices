@@ -1,5 +1,0 @@
-<!-- This is the form for the selected recent invoice for editing -->
-
-<div class="item_recent_invoice">
-  <a href="#"><?= $this->billing_month ?></a>
-</div>
