@@ -17,6 +17,9 @@
         // get total of Transactions already listed in the form
         var transCount = $('.' + id + ' fieldset.transaction').length + 1;
         
+        // set our hidden transactions total value
+        $('.' + id + ' .trans_total').val(transCount);
+        
         // Clone the first Transaction as a base
         var cloned =  $('.' + id + ' fieldset.transaction:first').clone();
         
@@ -46,20 +49,21 @@
     
     // this is the big bad booty daddy that will generate our Transactions on Google Sheets and mark our Work Assignment as Processed
     function processWorkAssignment(id){
-        
-        var test_val = 1;
+
+        // get every form field and add them to the ajax data line
+        var datastring = $("#form_" + id).serialize();
         
         // trigger this function when our form runs
         $.ajax({
-            url:'/system/modules/gai_invoices/assets/php/action.process.work.assignment.php',
-            type:'POST',
-            data:"test_val="+test_val+"",
+            url: '/system/modules/gai_invoices/assets/php/action.process.work.assignment.php',
+            type: 'POST',
+            data: datastring,
             success:function(result){
                 // redirect us to the success page
-                $(".messages .message").html(result);
+                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/process-work-assignments/process-work-assignments-success.html");
             },
             error:function(result){
-                $(".messages .message").html("There was an error using the AJAX call for processWorkAssignment");
+                $(".message").html("There was an error using the AJAX call for processWorkAssignment");
             }
         });
         
