@@ -102,14 +102,15 @@ class ModCreateInvoice extends \Contao\Module
         $entryForm = array();
         $objUser = \FrontendUser::getInstance();
         
-        $entry_id = 0;
+        $entry_id = 1;
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
-            if($entry_id != 0) {
+            if($entry_id != 1) {
                 
-                if($user == $entry[3]) {
+                if($user == $entry[3] && $entry[23] != 1) {
                     $arrData = array();
+                    $arrData['sheet_row']           = $entry_id;
                     $arrData['date']                = $entry[0];
                     $arrData['30_days']             = $entry[1];
                     $arrData['45_days']             = $entry[2];
