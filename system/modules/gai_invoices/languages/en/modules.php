@@ -15,4 +15,4 @@
 // Create Invoice
 $GLOBALS['TL_LANG']['FMD']['mod_create_invoice'] 	= array('Create Invoice', 'Displays list of Work Assignments then creates Transactions for them');
 
-$GLOBALS['TL_LANG']['FMD']['mod_work_assignment_history'] 	= array('Work Assignment History', 'Displays history of processed Work Assignments);
+$GLOBALS['TL_LANG']['FMD']['mod_work_assignment_history'] 	= array('Work Assignment History', 'Displays history of processed Work Assignments');
