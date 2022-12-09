@@ -18,9 +18,17 @@
 <div class="work_assignment_form <?= $unique_id ?>" style="display: none;">
 
 
-	<form class="flex_wrapper">
+	<form class="flex_wrapper" id="form_<?= $unique_id ?>">
+		
+		
+		<!-- Hidden Fields -->
+		<div style="display: none;">
+			<input type="text" name="sheet_row" class="sheet_row" value="<?= $this->sheet_row ?>">
+			<input type="text" name="transactions" class="trans_total" value="1">
+		</div>
 		
 		<fieldset class="size100">
+			
 			<!-- Date -->	
 			<div class="widget widget-text size50">
 				<label for="date" class="size50">
@@ -31,10 +39,29 @@
 		</fieldset>
 		
 		<fieldset class="size100">
+			
 			<!-- District -->	
 			<div class="widget widget-text size50">
 				<label for="district" class="size50">
 					District / School
+				</label>
+				<input type="text" name="district" id="district" value="<?= $this->district ?>" required="">
+			</div>
+			
+			
+			<!-- District ONLY
+			<div class="widget widget-text size50">
+				<label for="district" class="size50">
+					District
+				</label>
+				<input type="text" name="district" id="district" value="<?= $this->district ?>" required="">
+			</div>
+			-->
+			
+			<!-- School ONLY
+			<div class="widget widget-text size50">
+				<label for"school" class="size50">
+					School
 				</label>
 				<input type="text" name="district" id="district" value="<?= $this->district ?>" required="">
 			</div>
@@ -152,7 +179,7 @@
 
 		<!-- Submit Button -->
 		<div class="widget widget-submit center_element size100">
-			<a id="process_work_assignment" class="btn process_work_assignment" onClick="processWorkAssignment('<?= $unique_id ?>')">Submit</a>
+			<a id="process_work_assignment" class="btn process_work_assignment" onClick="processWorkAssignment('<?= $unique_id ?>')">Process Monthly Invoice</a></a>
 		</div>
 	
 	
