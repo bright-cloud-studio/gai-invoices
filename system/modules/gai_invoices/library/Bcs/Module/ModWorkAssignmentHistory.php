@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Bright Cloud Studio's Modal Gallery
+ * Bright Cloud Studio's GAI Invoices
  *
- * Copyright (C) 2021 Bright Cloud Studio
+ * Copyright (C) 2022-2023 Bright Cloud Studio
  *
- * @package    bright-cloud-studio/modal-gallery
+ * @package    bright-cloud-studio/gai-invoices
  * @link       https://www.brightcloudstudio.com/
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
@@ -15,8 +15,6 @@ namespace Bcs\Module;
 
 use Google;
 
-
- 
 class ModWorkAssignmentHistory extends \Contao\Module
 {
  
@@ -144,7 +142,7 @@ class ModWorkAssignmentHistory extends \Contao\Module
                     $objFormTemplate->setData($arrData);
                     $entryForm[$entry_id] = $objFormTemplate->parse();
                 }
-
+                
             }
             
             $entry_id++;
@@ -155,6 +153,5 @@ class ModWorkAssignmentHistory extends \Contao\Module
         $this->Template->workAssignmentForm = $entryForm;
         
         */
-
 	}
 } 
