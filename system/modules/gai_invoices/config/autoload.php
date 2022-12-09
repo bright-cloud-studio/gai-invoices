@@ -15,10 +15,8 @@ ClassLoader::addClasses(array
 (
     // this is the hooks class
     'Bcs\Handler'                               => 'system/modules/gai_invoices/library/Bcs/Handler.php',
-    // Create Invoice
-    'Bcs\Module\ModCreateInvoice'              => 'system/modules/gai_invoices/library/Bcs/Module/ModCreateInvoice.php',
-    // this is the front end module for displaying recent invoices for editing
-    'Bcs\Module\ModWorkAssignmentHistory'              => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignmentHistory.php',
+    'Bcs\Module\ModCreateInvoice'               => 'system/modules/gai_invoices/library/Bcs/Module/ModCreateInvoice.php',
+    'Bcs\Module\ModWorkAssignmentHistory'       => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignmentHistory.php',
 ));
 
 /* Register the templates */
@@ -27,7 +25,6 @@ TemplateLoader::addFiles(array
     'mod_create_invoice'            => 'system/modules/gai_invoices/templates/modules',
     'work_assignment_list'          => 'system/modules/gai_invoices/templates/items',
     'work_assignment_form'          => 'system/modules/gai_invoices/templates/items',
-    
     
     // this is the template for the recent invoices module
 	'mod_work_assignment_history'   => 'system/modules/gai_invoices/templates/modules',
