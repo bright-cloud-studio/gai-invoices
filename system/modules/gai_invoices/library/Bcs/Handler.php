@@ -15,7 +15,6 @@ class Handler
     protected $service;
     public static $spreadsheetId;
     
-    
     function __construct() {
         // Create a client connection to Google
         $this->$client = new Google\Client();
@@ -30,7 +29,6 @@ class Handler
 
     }
     
-    
     // HOOK: when a form is submitted and being processed
     public function onProcessForm($submittedData, $formData, $files, $labels, $form)
     {
@@ -39,10 +37,9 @@ class Handler
             
             $objUser = \FrontendUser::getInstance();
            
-            
             // Build out a "Transactions" row using the form data
             $newRow = [
-                'October',
+                date('F'), // insert the current month
                 $submittedData['school_id'],
                 $submittedData['student_id'],
                 $submittedData['service_provided'],
@@ -69,10 +66,8 @@ class Handler
                 die();
             }
             
-
         }
     }
-    
     
     // HOOK: when compiling the form fields so they can be modified
     public function onCompileFormFields($fields, $formId, $form)
@@ -139,6 +134,5 @@ class Handler
 
         return $fields;
     }
-    
     
 }
