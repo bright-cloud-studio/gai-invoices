@@ -1,3 +1,7 @@
 <div class="mod_work_assignment_history marbot60">
-	This is where previous Work Assignments will be listed, once clarified on the order of things.
+	<?php if (empty($this->workAssignmentHistory)): ?>
+			<p class="empty">You currently have no Work Assignment History</p>
+		<?php else: ?>
+			<?= implode('', $this->workAssignmentHistory) ?>
+		<?php endif; ?>
 </div>
