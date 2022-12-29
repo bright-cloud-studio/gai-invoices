@@ -1,22 +1,17 @@
 <?php
-	// clean date by replacing spaces and symbols with underscores
 	$cleanDate = str_replace(' ', '_', $this->date);
 	$cleanDate = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanDate));
-	
-	// clean district by replacing spaces and symbols with underscores
 	$cleanDistrict = str_replace(' ', '_', $this->district);
 	$cleanDistrict = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanDistrict));
-	
-	// clean student by replacing spaces and symbols with underscores
-	$cleanStudent = str_replace(' ', '_', $this->student_name);
-	$cleanStudent = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanStudent));
-	
-	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanStudent;
+	$cleanSchool = str_replace(' ', '_', $this->school);
+	$cleanSchool = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanSchool));
+	$cleanStudent = preg_replace('~[^A-Z]~', '', $this->student_name);
+	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent;
 ?>
 
 <!-- This is an entry in the Work Assignment sheet -->
 <div class="work_assignment_list">
 	<a href="javascript:void(0);" onClick="selectWorkAssignment('<?= $unique_id ?>');">
-		<?= $this->date ?> - <?= $this->district ?> - <?= $this->student_name ?>
+		<?= $this->date ?> - <?= $this->district ?> - <?= $this->school ?> - <?= $cleanStudent ?>
 	</a>
 </div>
