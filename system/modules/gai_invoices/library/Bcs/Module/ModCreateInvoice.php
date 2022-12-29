@@ -108,7 +108,8 @@ class ModCreateInvoice extends \Contao\Module
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                if($user == $entry[3] && $entry[23] != 1) {
+                // if user name matches and processed isnt 1
+                if($user == $entry[3] && $entry[24] != 1) {
                     $arrData = array();
                     $arrData['sheet_row']           = $entry_id;
                     $arrData['date']                = $entry[0];
@@ -116,24 +117,25 @@ class ModCreateInvoice extends \Contao\Module
                     $arrData['45_days']             = $entry[2];
                     $arrData['psychologist']        = $entry[3];
                     $arrData['district']            = $entry[4];
-                    $arrData['student_name']        = $entry[5];
-                    $arrData['date_of_birth']       = $entry[6];
-                    $arrData['grade']               = $entry[7];
-                    $arrData['lasid']               = $entry[8];
-                    $arrData['sasid']               = $entry[9];
-                    $arrData['initial']             = $entry[10];
-                    $arrData['type_of_testing']     = $entry[11];
-                    $arrData['testing_date']        = $entry[12];
-                    $arrData['meeting_required']    = $entry[13];
-                    $arrData['meeting_date']        = $entry[14];
-                    $arrData['parent_info']         = $entry[15];
-                    $arrData['teacher_info']        = $entry[16];
-                    $arrData['team_chair']          = $entry[17];
-                    $arrData['email']               = $entry[18];
-                    $arrData['report_submitted']    = $entry[19];
-                    $arrData['invoiced_to_gai']     = $entry[20];
-                    $arrData['district_invoice']    = $entry[21];
-                    $arrData['notes']               = $entry[22];
+                    $arrData['school']              = $entry[5];
+                    $arrData['student_name']        = $entry[6];
+                    $arrData['date_of_birth']       = $entry[7];
+                    $arrData['grade']               = $entry[8];
+                    $arrData['lasid']               = $entry[9];
+                    $arrData['sasid']               = $entry[10];
+                    $arrData['initial']             = $entry[11];
+                    $arrData['type_of_testing']     = $entry[12];
+                    $arrData['testing_date']        = $entry[13];
+                    $arrData['meeting_required']    = $entry[14];
+                    $arrData['meeting_date']        = $entry[15];
+                    $arrData['parent_info']         = $entry[16];
+                    $arrData['teacher_info']        = $entry[17];
+                    $arrData['team_chair']          = $entry[18];
+                    $arrData['email']               = $entry[19];
+                    $arrData['report_submitted']    = $entry[20];
+                    $arrData['invoiced_to_gai']     = $entry[21];
+                    $arrData['district_invoice']    = $entry[22];
+                    $arrData['notes']               = $entry[23];
                     
                     // Generate as "List"
                     $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_list');
