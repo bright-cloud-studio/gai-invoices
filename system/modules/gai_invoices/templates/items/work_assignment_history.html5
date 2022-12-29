@@ -1,3 +1,3 @@
-<div class="work_assignment_history">
-  THIS IS A WORK ASSIGNMENT PREVIOUSLY COMPLETED
+<div class="work_assignment">
+  <a href="<?= $this->invoice_link ?>" target="_blank"><strong>Invoice #:</strong> <?= $this->invoice_number ?> <strong>Date Issued:</strong> <?= $this->date_issued ?></a>
 </div>
