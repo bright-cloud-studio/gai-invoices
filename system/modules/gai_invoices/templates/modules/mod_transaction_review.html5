@@ -1,0 +1,7 @@
+<div class="mod_transaction_review marbot60">
+	<?php if (empty($this->transactionReview)): ?>
+			<p class="empty">You currently have no transaction to review</p>
+		<?php else: ?>
+			<?= implode('', $this->transactionReview) ?>
+		<?php endif; ?>
+</div>
