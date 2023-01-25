@@ -4,21 +4,18 @@
 	
 	<!-- First, this will list the users Work Assignments -->
 	<div class="list_work_assignments marbot60">
-		<h2>Step One: Select Work Assignment</h2>
-		
-		<p>These are your current Work Assignments</p>
+		<h2>Select Work Assignment</h2>
 		
 		<?php if (empty($this->workAssignmentList)): ?>
 			<p class="empty">You currently have no Work Assignments</p>
 		<?php else: ?>
 			<?= implode('', $this->workAssignmentList) ?>
 		<?php endif; ?>
+		
 	</div>
 	
 	<!-- Second, they will fill out this form to generate Transactions and mark this Work Assignment as processed -->
 	<div class="generate_transactions marbot60">
-		<h2>Step Two: Submit Transaction</h2>
-		
 		<?php if (empty($this->workAssignmentForm)): ?>
 			<p class="empty">There are no Work Assignments to build forms from</p>
 		<?php else: ?>
