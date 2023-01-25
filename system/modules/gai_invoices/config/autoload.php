@@ -17,6 +17,7 @@ ClassLoader::addClasses(array
     'Bcs\Handler'                               => 'system/modules/gai_invoices/library/Bcs/Handler.php',
     'Bcs\Module\ModCreateInvoice'               => 'system/modules/gai_invoices/library/Bcs/Module/ModCreateInvoice.php',
     'Bcs\Module\ModWorkAssignmentHistory'       => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignmentHistory.php',
+    'Bcs\Module\ModTransactionReview'           => 'system/modules/gai_invoices/library/Bcs/Module/ModTransactionReview.php',
 ));
 
 /* Register the templates */
@@ -30,4 +31,7 @@ TemplateLoader::addFiles(array
 	'mod_work_assignment_history'   => 'system/modules/gai_invoices/templates/modules',
     // this is the template for the selected recent invoice inside the recent invoices module
 	'work_assignment_history'       => 'system/modules/gai_invoices/templates/items',
+    
+	'mod_transaction_review'        => 'system/modules/gai_invoices/templates/modules',
+	'transaction_review_list'       => 'system/modules/gai_invoices/templates/items',
 ));
