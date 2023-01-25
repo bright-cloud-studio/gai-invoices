@@ -7,11 +7,30 @@
 	$cleanSchool = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanSchool));
 	$cleanStudent = preg_replace('~[^A-Z]~', '', $this->student_name);
 	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent;
+	
+
+    // Add our "shared" class if this user is a shared user and not the primary psychologist
+	$objUser = \FrontendUser::getInstance();
+    $user = $objUser->firstname . " " . $objUser->lastname;
+	$class = '';
+	if($user == $this->shared_1) { $class .= "shared"; }
+	if($user == $this->shared_2) { $class .= "shared"; }
+	if($user == $this->shared_3) { $class .= "shared"; }
+	
+	// Add "NEW" to the link if it hasnt been processed
+	$show_new = 0;
+	
+	// if primary psychologist and unprocessed
+	if($this->psychologist == $user && $this->processed != 1) { $show_new = 1; }
+	if($this->shared_1 == $user && $this->processed_1 != 1) { $show_new = 1; }
+	if($this->shared_2 == $user && $this->processed_2 != 1) { $show_new = 1; }
+	if($this->shared_3 == $user && $this->processed_3 != 1) { $show_new = 1; }
+	
 ?>
 
 <!-- This is an entry in the Work Assignment sheet -->
 <div class="work_assignment_list">
-	<a href="javascript:void(0);" onClick="selectWorkAssignment('<?= $unique_id ?>');">
-		<?= $this->date ?> - <?= $this->district ?> - <?= $this->school ?> - <?= $cleanStudent ?>
+	<a href="javascript:void(0);" onClick="selectWorkAssignment('<?= $unique_id ?>');" class="<?= $class ?>">
+	<?php if($show_new == 1) { ?> <span class="new">NEW</span> - <?php } ?>	<?= $this->date ?> - <?= $this->district ?> - <?= $this->school ?> - <?= $this->student_name ?>
 	</a>
 </div>
