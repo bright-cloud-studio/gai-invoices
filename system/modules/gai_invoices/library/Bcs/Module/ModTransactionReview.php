@@ -88,7 +88,7 @@ class ModTransactionReview extends \Contao\Module
         $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
         
         // get all of our unarchived Transactions
-        $range = 'Invoices - Psy';
+        $range = 'Transactions';
         $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
         $values = $response->getValues();
         
@@ -102,15 +102,23 @@ class ModTransactionReview extends \Contao\Module
             // if the id matches this entry, it is related to our user
             if($entry_id != 0) {
                 
-                if($user == $entry[3]) {
+                if($user == $entry[1]) {
                     $arrData = array();
-                    $arrData['billing_year']    = $entry[0];
-                    $arrData['billing_month']   = $entry[1];
-                    $arrData['invoice_number']  = $entry[2];
-                    $arrData['psychologist']    = $entry[3];
-                    $arrData['date_issued']     = $entry[4];
-                    $arrData['date_due']        = $entry[5];
-                    $arrData['invoice_link']    = $entry[6];
+                    $arrData['billing_month']       = $entry[0];
+                    $arrData['psychologist']        = $entry[1];
+                    $arrData['district']            = $entry[2];
+                    $arrData['school']              = $entry[3];
+                    $arrData['student_initials']    = $entry[4];
+                    $arrData['service_code']        = $entry[5];
+                    $arrData['price']               = $entry[6];
+                    $arrData['lasid']               = $entry[7];
+                    $arrData['sasid']               = $entry[8];
+                    $arrData['meeting_date']        = $entry[9];
+                    $arrData['meeting_start']       = $entry[10];
+                    $arrData['meeting_end']         = $entry[11];
+                    $arrData['meeting_date']        = $entry[12];
+                    $arrData['notes']               = $entry[13];
+
                     
                     // Generate as "List"
                     $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
