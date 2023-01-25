@@ -1,4 +1,5 @@
 <?php
+	// These functions clean up our answers to make them programatic
 	$cleanDate = str_replace(' ', '_', $this->date);
 	$cleanDate = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanDate));
 	$cleanDistrict = str_replace(' ', '_', $this->district);
@@ -11,7 +12,10 @@
 
 <!-- Work Assignment as a form -->
 <div class="work_assignment_form <?= $unique_id ?>" style="display: none;">
+	
+	<h2 class="marbot30">Step Two: Submit Transaction</h2>
 
+	<a id="handoff_work_assignment" class="btn handoff_work_assignment" onClick="handoffSelected('<?= $unique_id ?>')">Share Work Assignment</a>
 
 	<form class="flex_wrapper" id="form_<?= $unique_id ?>">
 		
@@ -19,9 +23,52 @@
 		<!-- Hidden Fields -->
 		<div style="display: none;">
 			<input type="text" name="sheet_row" class="sheet_row" value="<?= $this->sheet_row ?>">
-			<input type="text" name="transactions" class="trans_total" value="1">
 			<input type="text" name="psychologist" class="psychologist" value="{{user::firstname}} {{user::lastname}}">
+			<input type="text" name="transactions" class="trans_total" value="1">
+			<input type="text" name="shared_total" class="shared_total" value="<?= $this->shared_total ?>">
+			<input type="text" name="shared_1" class="shared_1" value="<?= $this->shared_1 ?>">
+			<input type="text" name="shared_2" class="shared_2" value="<?= $this->shared_2 ?>">
+			<input type="text" name="shared_3" class="shared_3" value="<?= $this->shared_3 ?>">
 		</div>
+		
+		
+		
+		<fieldset class="size100 handoff_form" id="handoff_form" style="display: none;">
+			
+			
+			<div class="size100">
+				<p>Enter the full name of the Psycholigist who will take-on this Work Assignment</p>
+				<?php if($this->shared_total > 0) { ?>
+				<p>Currently Shared With:</p>
+				<ul>
+					<?php if($this->shared_1 !='') { ?> <li><?= $this->shared_1 ?></li> <?php } ?>
+					<?php if($this->shared_2 !='') { ?> <li><?= $this->shared_2 ?></li> <?php } ?>
+					<?php if($this->shared_3 !='') { ?> <li><?= $this->shared_3 ?></li> <?php } ?>
+				</ul>
+				<?php } ?>
+			</div>
+			
+			<!-- Date -->
+			<?php if($this->shared_total >= 3) { ?>
+				<div class="size100">
+					<p>You have reached the maximum number of shares for this Work Assignment</p>
+				</div>
+			<?php } else { ?>
+			<div class="widget widget-text size50">
+				<label for="date" class="size50">
+					Psychologist's Full Name
+				</label>
+				<input type="text" name="handoff" id="handoff" value="" required="">
+			</div>
+			
+			<div class="widget widget-submit center_element size50">
+				<a id="handoff_work_assignment" class="btn handoff_work_assignment" onClick="handoffWorkAssignment('<?= $unique_id ?>')">Share</a>
+			</div>
+			<?php } ?>
+			
+		</fieldset>
+		
+		
 		
 		<fieldset class="size100">
 			
@@ -30,7 +77,7 @@
 				<label for="date" class="size50">
 					Date
 				</label>
-				<input type="text" name="date" id="date" value="<?= $this->date ?>" required="">
+				<input type="text" name="date" id="date" value="<?= date("m/d/Y") ?>" required="">
 			</div>
 		</fieldset>
 		
@@ -87,8 +134,81 @@
 		</fieldset>
 		
 		
-		<div class="transactions">
+
+
+		<!-- These "templates" are used to be copied programatically -->
+		<div class="templates" style="display: none;">
+			
+			<!-- Duplicate for "Add Another Transaction" -->
 			<fieldset class="transaction size100">
+				
+				<!-- Service Provided -->	
+				<div class="widget widget-select size50">
+					<label for="service_provided" class="size50">
+						Meeting Provided
+					</label>
+					<select name="service_provided" id="service_provided">
+						<option value="NONE"></option>
+						<option value="1">Meeting</option>
+						<option value="12">Mtg Late Cancel</option>
+					</select>
+				</div>
+	
+				<!-- Price -->	
+				<div class="widget widget-text size50">
+					<label for="price" class="size50">
+						Price
+					</label>
+					<input type="text" name="price" id="price" value="" required="">
+				</div>
+				
+				<!-- Meeting Start -->	
+				<div class="widget widget-text size50">
+					<label for="meeting_start" class="size50">
+						Start Time
+					</label>
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="">
+				</div>
+				
+				<!-- Meeting End -->	
+				<div class="widget widget-text size50">
+					<label for="meeting_end" class="size50">
+						End Time
+					</label>
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="">
+				</div>
+				
+				<!-- Meeting Date -->	
+				<div class="widget widget-text size50" id="meeting_date">
+					<label for="meeting_date" class="size50">
+						Meeting Date
+					</label>
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="">
+				</div>
+	
+				<!-- Notes -->
+				<div class="widget widget-textarea size100">
+					<label for="notes" class="size100">
+						Notes
+					</label>
+					<textarea name="notes" id="notes" rows="4" cols="40" maxlength="500"></textarea>
+				</div>
+				
+			</fieldset>
+
+		</div>
+
+
+
+
+
+
+		<!-- This holds our copied "templates" and our one default serivce -->
+		<div class="transactions">
+			
+			<!-- Duplicate for "Add Another Transaction" -->
+			<fieldset class="transaction main_service size100">
+				
 				<!-- Service Provided -->	
 				<div class="widget widget-select size50">
 					<label for="service_provided" class="size50">
@@ -110,6 +230,7 @@
 						<option value="12">Mtg Late Cancel</option>
 						<option value="13">Test Late Cancel</option>
 						<option value="14">Parking</option>
+						<option value="15">Review Outside Testing</option>
 					</select>
 				</div>
 	
@@ -120,7 +241,31 @@
 					</label>
 					<input type="text" name="price" id="price" value="" required="">
 				</div>
-	
+				
+				<!-- Meeting Start -->	
+				<div class="widget widget-text size50" id="meeting_start" style="display: none;">
+					<label for="meeting_start" class="size50">
+						Start Time
+					</label>
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="">
+				</div>
+				
+				<!-- Meeting End -->	
+				<div class="widget widget-text size50" id="meeting_end" style="display: none;">
+					<label for="meeting_end" class="size50">
+						End Time
+					</label>
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="">
+				</div>
+				
+				<!-- Meeting Date -->	
+				<div class="widget widget-text size50" id="meeting_date" style="display: none;">
+					<label for="meeting_date" class="size50">
+						Meeting Date
+					</label>
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="">
+				</div>
+				
 				<!-- Notes -->
 				<div class="widget widget-textarea size100">
 					<label for="notes" class="size100">
@@ -128,26 +273,30 @@
 					</label>
 					<textarea name="notes" id="notes" rows="4" cols="40" maxlength="500"></textarea>
 				</div>
+				
 			</fieldset>
+
+			
 		</div>
-		
 		
 		<!-- Add Another Transaction Button -->
 		<div class="widget widget-submit size100">
-			<a id="add_another_transaction" class="btn add_another_transaction" onClick="addAnotherTransaction('<?= $unique_id ?>');">Add Another Transaction</a>
+			<a id="add_another_transaction" class="btn add_another_transaction" onClick="addAnotherTransaction('<?= $unique_id ?>');">Add Meeting</a>
 		</div>
 		
-		
-	
+		<!-- Checkbox to stop showing this work assignment to the user -->
+		<div class="widget widget-checkbox size100 center_element size100 center_element">
+			<fieldset id="complete_work_assignment" class="checkbox_container size100 center_element">
+				<input type="hidden" name="complete_work_assignment" value="">
+				<span><input type="checkbox" name="complete_work_assignment" id="complete_work_assignment" class="checkbox" value="yes"> <label id="complete_work_assignment" for="complete_work_assignment">Complete Work Assignment</label></span>
+			</fieldset>
+		</div>
 
 		<!-- Submit Button -->
 		<div class="widget widget-submit center_element size100">
-			<a id="process_work_assignment" class="btn process_work_assignment" onClick="processWorkAssignment('<?= $unique_id ?>')">Process Monthly Invoice</a></a>
+			<a id="process_work_assignment" class="btn process_work_assignment" onClick="processWorkAssignment('<?= $unique_id ?>')">Process Work Assignment</a>
 		</div>
 	
-	
 	</form>
-	
-	
 	
 </div>
