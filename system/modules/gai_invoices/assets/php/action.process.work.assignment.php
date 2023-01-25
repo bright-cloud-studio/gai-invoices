@@ -1,5 +1,5 @@
 <?php
-    
+
     // Start PHP session and include Composer, which also brings in our Google Sheets PHP stuffs
 	session_start();
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
@@ -14,21 +14,33 @@
     $service = new \Google_Service_Sheets($client);
     $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
     
+    $meeting_duration = 0;
     
     // For each transaction fieldset on the form, create a new row in the Transactions table on Sheets
     for ($x = 1; $x <= $vars["transactions"]; $x++) {
         
         //if this is the first transaction
         if($x == 1) {
+            
+            if($vars['meeting_end'] != null)
+                $meeting_duration = hoursToMinutes(date("H:i",strtotime($vars['meeting_end']) - strtotime($vars['meeting_start'])));
+            else
+                $meeting_duration = 0;
+            
             $newRow = [
-                'October',
+                date('F'),
+                $vars['psychologist'],
                 $vars['district'],
+                $vars['school'],
                 $vars['student_name'],
                 $vars['service_provided'],
                 $vars['price'],
-                '0',
-                '0',
-                '0',
+                $vars['lasid'],
+                $vars['sasid'],
+                $vars['meeting_date'],
+                $vars['meeting_start'],
+                $vars['meeting_end'],
+                $meeting_duration,
                 $vars['notes']
             ];
             
@@ -39,15 +51,26 @@
             $options = ['valueInputOption' => 'USER_ENTERED'];
             $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
         } else {
+            
+            if($vars['meeting_end_' . $x] != null)
+                $meeting_duration = hoursToMinutes(date("H:i",strtotime($vars['meeting_end_' . $x]) - strtotime($vars['meeting_start_' . $x])));
+            else
+                $meeting_duration = 0;
+            
             $newRow = [
-                'October',
+                date('F'),
+                $vars['psychologist'],
                 $vars['district'],
+                $vars['school'],
                 $vars['student_name'],
                 $vars['service_provided_' . $x],
                 $vars['price_' . $x],
-                '0',
-                '0',
-                '0',
+                $vars['lasid'],
+                $vars['sasid'],
+                $vars['meeting_date_' . $x],
+                $vars['meeting_start_' . $x],
+                $vars['meeting_end_' . $x],
+                $meeting_duration,
                 $vars['notes_' . $x]
             ];
 
@@ -63,16 +86,41 @@
     
     
     // Mark this Work Assignment as Processed
+    $processed = 1;
+    if($vars['complete_work_assignment'] == "yes") { $processed = 2; }
     $updateRow = [
-        '1'
+        $processed
     ];
     $rows = [$updateRow];
     $valueRange = new \Google_Service_Sheets_ValueRange();
     $valueRange->setValues($rows);
-    $range = 'Work Assignment!X' . $vars['sheet_row']; // where the replacement will start, here, first column and second line
+    
+    //$range = 'Work Assignment!Y' . $vars['sheet_row']; // where the replacement will start, here, first column and second line
+    
+    $range = 'Work Assignment!Y' . $vars['sheet_row'];
+    
+    if($vars['psychologist'] == $vars['shared_1']) { $range = 'Work Assignment!AA' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_2']) { $range = 'Work Assignment!AC' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_3']) { $range = 'Work Assignment!AE' . $vars['sheet_row']; }
+    
+    
     $options = ['valueInputOption' => 'USER_ENTERED'];
     $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
     
 
     // display some text to return back to the ajax call
     echo "success";
+    
+    
+    
+    // Converts our H:i format into pure minutes
+    function hoursToMinutes($hours) 
+    { 
+        $minutes = 0; 
+        if (strpos($hours, ':') !== false) 
+        { 
+            // Split hours and minutes. 
+            list($hours, $minutes) = explode(':', $hours); 
+        } 
+        return $hours * 60 + $minutes; 
+    } 
