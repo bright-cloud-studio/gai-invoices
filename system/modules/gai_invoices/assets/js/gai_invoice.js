@@ -159,3 +159,30 @@
         
     }
     
+    
+    
+    
+    // This will update the user's transactions as "Reviewed"
+    function reviewTransactions(id){
+
+        // get every form field and add them to the ajax data line
+        var datastring = $("#" + id).serialize();
+        
+        // trigger this function when our form runs
+        $.ajax({
+            url: '/system/modules/gai_invoices/assets/php/action.review.transactions.php',
+            type: 'POST',
+            data: datastring,
+            success:function(result){
+                // redirect us to the success page
+                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/review/review-success.html");
+            },
+            error:function(result){
+                $(".message").html("There was an error using the AJAX call for reviewTransactions");
+            }
+        });
+
+        
+    }
+    
+    
