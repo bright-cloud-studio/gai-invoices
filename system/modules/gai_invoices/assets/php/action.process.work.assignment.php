@@ -29,6 +29,7 @@
             
             $newRow = [
                 date('F'),
+                $vars['date'],
                 $vars['psychologist'],
                 $vars['district'],
                 $vars['school'],
@@ -59,6 +60,7 @@
             
             $newRow = [
                 date('F'),
+                $vars['date'],
                 $vars['psychologist'],
                 $vars['district'],
                 $vars['school'],
