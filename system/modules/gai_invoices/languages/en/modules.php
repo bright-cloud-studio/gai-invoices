@@ -10,7 +10,7 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
-$GLOBALS['TL_LANG']['MOD']['gai_invoices']                  = array('GAI - Invoices', 'Custom modules for the Dashboard');
+$GLOBALS['TL_LANG']['MOD']['gai_invoices']                  = array('GAI Invoices', 'Custom modules for the Dashboard');
 
 /* Front end modules */
 $GLOBALS['TL_LANG']['FMD']['mod_create_invoice']            = array('Create Invoice', 'Displays list of Work Assignments then creates Transactions for them');
