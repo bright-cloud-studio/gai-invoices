@@ -11,6 +11,7 @@
 **/
 
 /* Front end modules */
-$GLOBALS['TL_LANG']['FMD']['mod_create_invoice'] 	= array('Create Invoice', 'Displays list of Work Assignments then creates Transactions for them');
+$GLOBALS['TL_LANG']['FMD']['mod_create_invoice']            = array('Create Invoice', 'Displays list of Work Assignments then creates Transactions for them');
+$GLOBALS['TL_LANG']['FMD']['mod_add_meetings']              = array('Add Meetings', 'Manually add meeting transactions without a Work Assignment');
 $GLOBALS['TL_LANG']['FMD']['mod_work_assignment_history'] 	= array('Work Assignment History', 'Displays history of processed Work Assignments');
-$GLOBALS['TL_LANG']['FMD']['mod_transaction_review'] 	= array('Transaction Review', 'List and review transactions submitted in the last month');
+$GLOBALS['TL_LANG']['FMD']['mod_transaction_review']        = array('Transaction Review', 'List and review transactions submitted in the last month');
