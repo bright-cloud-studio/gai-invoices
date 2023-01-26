@@ -16,6 +16,7 @@ ClassLoader::addClasses(array
     // this is the hooks class
     'Bcs\Handler'                               => 'system/modules/gai_invoices/library/Bcs/Handler.php',
     'Bcs\Module\ModCreateInvoice'               => 'system/modules/gai_invoices/library/Bcs/Module/ModCreateInvoice.php',
+    'Bcs\Module\ModAddMeetings'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAddMeetings.php',
     'Bcs\Module\ModWorkAssignmentHistory'       => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignmentHistory.php',
     'Bcs\Module\ModTransactionReview'           => 'system/modules/gai_invoices/library/Bcs/Module/ModTransactionReview.php',
 ));
@@ -24,6 +25,7 @@ ClassLoader::addClasses(array
 TemplateLoader::addFiles(array
 (
     'mod_create_invoice'            => 'system/modules/gai_invoices/templates/modules',
+    'mod_add_meetings'              => 'system/modules/gai_invoices/templates/modules',
     'work_assignment_list'          => 'system/modules/gai_invoices/templates/items',
     'work_assignment_form'          => 'system/modules/gai_invoices/templates/items',
     
