@@ -79,6 +79,8 @@ class ModTransactionReview extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
+        $rand_ver = rand(1,9999);
+        $GLOBALS['TL_BODY'][] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
      
         // get the user and build their name
         $objUser = \FrontendUser::getInstance();
@@ -94,39 +96,45 @@ class ModTransactionReview extends \Contao\Module
         
         // an array to store this users entries
         $entryHistory = array();
+        $trans_ids = array();
         $objUser = \FrontendUser::getInstance();
         
-        $entry_id = 0;
+        $entry_id = 1;
+        $transaction_id = 1;
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
-            if($entry_id != 0) {
+            if($entry_id != 1) {
                 
-                if($user == $entry[1]) {
+                if($user == $entry[2]) {
                     $arrData = array();
+                    $arrData['transaction_id']      = $transaction_id;
                     $arrData['billing_month']       = $entry[0];
-                    $arrData['psychologist']        = $entry[1];
-                    $arrData['district']            = $entry[2];
-                    $arrData['school']              = $entry[3];
-                    $arrData['student_initials']    = $entry[4];
-                    $arrData['service_code']        = $entry[5];
-                    $arrData['price']               = $entry[6];
-                    $arrData['lasid']               = $entry[7];
-                    $arrData['sasid']               = $entry[8];
-                    $arrData['meeting_date']        = $entry[9];
-                    $arrData['meeting_start']       = $entry[10];
-                    $arrData['meeting_end']         = $entry[11];
-                    $arrData['meeting_date']        = $entry[12];
-                    $arrData['notes']               = $entry[13];
+                    $arrData['date_submitted']      = $entry[1];
+                    $arrData['psychologist']        = $entry[2];
+                    $arrData['district']            = $entry[3];
+                    $arrData['school']              = $entry[4];
+                    $arrData['student_initials']    = $entry[5];
+                    $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
+                    $arrData['price']               = $entry[7];
+                    $arrData['lasid']               = $entry[8];
+                    $arrData['sasid']               = $entry[9];
+                    $arrData['meeting_date']        = $entry[10];
+                    $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
+                    $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
+                    $arrData['meeting_duration']    = $entry[13];
+                    $arrData['notes']               = $entry[14];
 
-                    
                     // Generate as "List"
                     $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
                     $objListTemplate = new \FrontendTemplate($strListTemplate);
                     $objListTemplate->setData($arrData);
                     $entryHistory[$entry_id] = $objListTemplate->parse();
+                    $trans_ids[$transaction_id] = $entry_id;
+                    
+                    $transaction_id++;
                 }
-
+                
             }
             
             $entry_id++;
@@ -134,6 +142,68 @@ class ModTransactionReview extends \Contao\Module
         
         // set this users entries to the template
         $this->Template->transactionReview = $entryHistory;
+        $this->Template->transactionRowIDs = $trans_ids;
         
 	}
+	
+	function getServiceNameFromCode($service_code){
+    	switch ($service_code) {
+    		case 1:
+    			return 'Meeting';
+    			break;
+    		case 2:
+    			return 'Psych/Achvmt';
+    			break;
+    		case 3:
+    			return 'Psych';
+    			break;
+    		case 4:
+    			return 'Achvmt';
+    			break;
+    		case 5:
+    			return 'Psych/Achvmt/Obs';
+    			break;
+    		case 6:
+    			return 'Psych/Obs';
+    			break;
+    		case 7:
+    			return 'Achvmt/Obs';
+    			break;
+    		case 8:
+    			return 'Psych/Achvmt/Additional';
+    			break;
+    		case 9:
+    			return 'Psych/Additional';
+    			break;
+    		case 10:
+    			return 'Achvmt/Additional';
+    			break;
+    		case 11:
+    			return 'Rating Scales';
+    			break;
+    		case 12:
+    			return 'Mtg Late Cancel';
+    			break;
+    		case 13:
+    			return 'Test Late Cancel';
+    			break;
+    		case 14:
+    			return 'Parking';
+    			break;
+    		case 15:
+    			return 'Review District Report';
+    			break;
+    		case 16:
+    			return 'Obs';
+    			break;
+    		case 17:
+    			return 'Record Review';
+    			break;
+    		default:
+    		    return 'Invalid Service Code';
+    		    break;
+    	}
+    }
+
+	
 } 
