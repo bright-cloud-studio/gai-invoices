@@ -104,6 +104,7 @@ class ModCreateInvoice extends \Contao\Module
         
         $show = 0;
         $entry_id = 1;
+        $index = 1;
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
@@ -111,9 +112,12 @@ class ModCreateInvoice extends \Contao\Module
                 
                 // if the psychologist name matches
                 if($user == $entry[3] && $entry[24] != 2) { $show = 1; }
+                
                 if($user == $entry[25] && $entry[26] != 2) { $show = 1; }
-                if($user == $entry[27] && $entry[27] != 2) { $show = 1; }
+                if($user == $entry[27] && $entry[28] != 2) { $show = 1; }
                 if($user == $entry[29] && $entry[30] != 2) { $show = 1; }
+                if($user == $entry[31] && $entry[32] != 2) { $show = 1; }
+                if($user == $entry[33] && $entry[34] != 2) { $show = 1; }
                 
                 
                 if($show == 1) {
@@ -122,6 +126,7 @@ class ModCreateInvoice extends \Contao\Module
                     if($entry[20] == 'yes' || $entry[20] == "Yes") {
                         
                         $arrData = array();
+                        $arrData['id']                  = $index;
                         $arrData['sheet_row']           = $entry_id;
                         $arrData['date']                = $entry[0];
                         $arrData['30_days']             = $entry[1];
@@ -156,13 +161,18 @@ class ModCreateInvoice extends \Contao\Module
                         $arrData['processed_2']         = $entry[28];
                         $arrData['shared_3']            = $entry[29];
                         $arrData['processed_3']         = $entry[30];
+                        $arrData['shared_4']            = $entry[31];
+                        $arrData['processed_4']         = $entry[32];
+                        $arrData['shared_5']            = $entry[33];
+                        $arrData['processed_5']         = $entry[34];
                         
                         $shared_total = 0;
                         if($arrData['shared_1'] != '') { $shared_total++; }
                         if($arrData['shared_2'] != '') { $shared_total++; }
                         if($arrData['shared_3'] != '') { $shared_total++; }
+                        if($arrData['shared_4'] != '') { $shared_total++; }
+                        if($arrData['shared_5'] != '') { $shared_total++; }
                         $arrData['shared_total'] = $shared_total;
-                        
                         
                         
                         // Generate as "List"
@@ -170,6 +180,8 @@ class ModCreateInvoice extends \Contao\Module
                         $objListTemplate = new \FrontendTemplate($strListTemplate);
                         $objListTemplate->setData($arrData);
                         $entryList[$entry_id] = $objListTemplate->parse();
+                        
+                        $index++;
                         
                         // Generate as "Form"
                         $strFormTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_form');
