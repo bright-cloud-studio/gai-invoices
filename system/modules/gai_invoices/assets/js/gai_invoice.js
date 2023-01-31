@@ -83,11 +83,6 @@
             timepicker:false,
             format:'m-d-Y'
         });
-        
-        
-        
-        
-        
 
     }
     
@@ -117,12 +112,7 @@
         });
         
     }
-    
-    
-    
-    
-    
-    
+
     
      // Changes which Work Assignment Form is visible when clicking a Work Asssignment List item
     function handoffSelected(id){
@@ -134,7 +124,6 @@
         $('#form_' + id + ' #handoff_form').fadeIn();
 
     }
-    
     
     
     // this is the big bad booty daddy that will generate our Transactions on Google Sheets and mark our Work Assignment as Processed
@@ -159,9 +148,6 @@
         
     }
     
-    
-    
-    
     // This will update the user's transactions as "Reviewed"
     function reviewTransactions(id){
 
@@ -182,7 +168,47 @@
             }
         });
 
-        
     }
     
+    // This generates Transactions manually for meetings without Work Assignments
+    function addMeeting(){
+
+        // get every form field and add them to the ajax data line
+        var datastring = $("#form_add_meeting").serialize();
+        
+        // trigger this function when our form runs
+        $.ajax({
+            url: '/system/modules/gai_invoices/assets/php/action.add.meeting.php',
+            type: 'POST',
+            data: datastring,
+            success:function(result){
+                // redirect us to the success page
+                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/add-meetings/success.html");
+            },
+            error:function(result){
+                $(".message").html("There was an error using the AJAX call for addMeeting");
+            }
+        });
+
+    }
+    
+    
+     // This will update the user's transactions as "Reviewed"
+    function deleteTransaction(id){
+        
+        // trigger this function when our form runs
+        $.ajax({
+            url: '/system/modules/gai_invoices/assets/php/action.delete.transaction.php',
+            data:"row_id="+id,
+            type: 'POST',
+            success:function(result){
+                // redirect us to the success page
+                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/review.html");
+            },
+            error:function(result){
+                $(".message").html("There was an error using the AJAX call for deleteTransaction");
+            }
+        });
+
+    }
     
