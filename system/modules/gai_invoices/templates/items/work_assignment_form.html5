@@ -5,6 +5,7 @@
 	$cleanDistrict = str_replace(' ', '_', $this->district);
 	$cleanDistrict = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanDistrict));
 	$cleanSchool = str_replace(' ', '_', $this->school);
+	$cleanSchool = str_replace('.', '', $this->school);
 	$cleanSchool = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanSchool));
 	$cleanStudent = preg_replace('~[^A-Z]~', '', $this->student_name);
 	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent;
@@ -29,6 +30,8 @@
 			<input type="text" name="shared_1" class="shared_1" value="<?= $this->shared_1 ?>">
 			<input type="text" name="shared_2" class="shared_2" value="<?= $this->shared_2 ?>">
 			<input type="text" name="shared_3" class="shared_3" value="<?= $this->shared_3 ?>">
+			<input type="text" name="shared_4" class="shared_4" value="<?= $this->shared_4 ?>">
+			<input type="text" name="shared_5" class="shared_5" value="<?= $this->shared_5 ?>">
 		</div>
 		
 		
@@ -44,12 +47,14 @@
 					<?php if($this->shared_1 !='') { ?> <li><?= $this->shared_1 ?></li> <?php } ?>
 					<?php if($this->shared_2 !='') { ?> <li><?= $this->shared_2 ?></li> <?php } ?>
 					<?php if($this->shared_3 !='') { ?> <li><?= $this->shared_3 ?></li> <?php } ?>
+					<?php if($this->shared_4 !='') { ?> <li><?= $this->shared_4 ?></li> <?php } ?>
+					<?php if($this->shared_5 !='') { ?> <li><?= $this->shared_5 ?></li> <?php } ?>
 				</ul>
 				<?php } ?>
 			</div>
 			
 			<!-- Date -->
-			<?php if($this->shared_total >= 3) { ?>
+			<?php if($this->shared_total >= 5) { ?>
 				<div class="size100">
 					<p>You have reached the maximum number of shares for this Work Assignment</p>
 				</div>
@@ -58,7 +63,7 @@
 				<label for="date" class="size50">
 					Psychologist's Full Name
 				</label>
-				<input type="text" name="handoff" id="handoff" value="" required="">
+				<input type="text" name="handoff" id="handoff" class="handoff_<?= $this->id ?>" value="" required="">
 			</div>
 			
 			<div class="widget widget-submit center_element size50">
@@ -151,6 +156,7 @@
 						<option value="NONE"></option>
 						<option value="1">Meeting</option>
 						<option value="12">Mtg Late Cancel</option>
+						<option value="15">Review of District Report</option>
 					</select>
 				</div>
 	
@@ -217,20 +223,22 @@
 					<select name="service_provided" id="service_provided">
 						<option value="NONE"></option>
 						<option value="1">Meeting</option>
-						<option value="2">Full Eval</option>
-						<option value="3">Psych Eval</option>
-						<option value="4">Ach Eval</option>
-						<option value="5">Full Eval/Obs</option>
-						<option value="6">Psych Eval/Obs</option>
-						<option value="7">Ach Eval/Obs</option>
-						<option value="8">Full Eval/Additional</option>
-						<option value="9">Psych Eval/Additional</option>
-						<option value="10">Ach Eval/Additional</option>
-						<option value="11">Rating Scale</option>
+						<option value="2">Psych/Achvmt</option>
+						<option value="3">Psych</option>
+						<option value="4">Achvmt</option>
+						<option value="5">Psych/Achvmt/Obs</option>
+						<option value="6">Psych/Obs</option>
+						<option value="7">Achvmt/Obs</option>
+						<option value="8">Psych/Achvmt/Additional</option>
+						<option value="9">Psych/Additional</option>
+						<option value="10">Achvmt/Additional</option>
+						<option value="11">Rating Scales</option>
 						<option value="12">Mtg Late Cancel</option>
 						<option value="13">Test Late Cancel</option>
 						<option value="14">Parking</option>
-						<option value="15">Review Outside Testing</option>
+						<option value="15">Review District Report</option>
+						<option value="16">Obs</option>
+						<option value="17">Record Review</option>
 					</select>
 				</div>
 	
