@@ -92,25 +92,20 @@
 
         $(".message").empty();
 
-        // Form Validation
-        var validated = 0;
+        var validateFailed = [];
         
         // Service Provided
         var selectedService = $("#form_" + id + " .main_service #service_provided").find(":selected").text();
         if(selectedService == '') {
             $(".message").append("Service Provided cannot be empty<br>");
-        } else {
-            validated = 1;
-            //$(".message").append("Service Provided NOT EMPTY<br>");
+            validateFailed['selectedService'] = 1;
         }
         
         // Price
         var price = $("#form_" + id + " .main_service #price").val();
         if(price == '') {
             $(".message").append("Price cannot be empty<br>");
-        } else {
-            validated = 1;
-            //$(".message").append("PRICE NOT EMPTY<br>");
+            validateFailed['price'] = 1;
         }
         
         
@@ -130,50 +125,35 @@
             selectedMeeting[i] = $("#form_" + id + " #service_provided_" + i).find(":selected").text();
             if(selectedMeeting[i] == '') {
                 $(".message").append("Meeting Provided cannot be empty<br>");
-                validated = 0;
-            } else {
-                validated = 1;
-                //$(".message").append("Meeting Provided NOT EMPTY<br>");
+                validateFailed['selected_meeting'] = 1;
             }
 
             // Price
             meetingPrice[i] = $("#form_" + id + " #price_" + i).val();
             if(meetingPrice[i] == '') {
                 $(".message").append("Meeting Price " + i + " cannot be empty<br>");
-                validated = 0;
-            } else {
-                validated = 1;
-                //$(".message").append("Meeting Price " + i + " NOT EMPTY<br>");
+                validateFailed['meeting_price'] = 1;
             }
             
             // Start Time
             meetingTimeStart[i] = $("#form_" + id + " #meeting_start_" + transCount).val();
             if(meetingTimeStart[i] == '') {
                 $(".message").append("Meeting Start Time " + i + " cannot be empty<br>");
-                validated = 0;
-            } else {
-                validated = 1;
-                //$(".message").append("Meeting Start Time " + i + " NOT EMPTY<br>");
+                validateFailed['meeting_start'] = 1;
             }
             
             // End Time
             meetingTimeEnd[i] = $("#form_" + id + " #meeting_end_" + transCount).val();
             if(meetingTimeEnd[i] == '') {
                 $(".message").append("Meeting End Time " + i + " cannot be empty<br>");
-                validated = 0;
-            } else {
-                validated = 1;
-                //$(".message").append("Meeting End Time " + i + " NOT EMPTY<br>");
+                validateFailed['meeting_end'] = 1;
             }
             
             // Meeting Date
             meetingDate[i] = $("#form_" + id + " #meeting_date_" + transCount).val();
             if(meetingDate[i] == '') {
                 $(".message").append("Meeting Date " + i + " cannot be empty<br>");
-                validated = 0;
-            } else {
-                validated = 1;
-                //$(".message").append("Meeting Date " + i + " NOT EMPTY<br>");
+                validateFailed['meeting_date'] = 1;
             }
             
             
@@ -182,7 +162,7 @@
         
         
         
-        if(validated == 1) {
+        if($.isEmptyObject(validateFailed)) {
             // remove our onclick and add disabled class
             $("a#process_work_assignment").off('click');
             $("a#process_work_assignment").addClass("disabled");
@@ -267,22 +247,91 @@
     // This generates Transactions manually for meetings without Work Assignments
     function addMeeting(){
 
-        // get every form field and add them to the ajax data line
-        var datastring = $("#form_add_meeting").serialize();
+        $(".message").empty();
         
-        // trigger this function when our form runs
-        $.ajax({
-            url: '/system/modules/gai_invoices/assets/php/action.add.meeting.php',
-            type: 'POST',
-            data: datastring,
-            success:function(result){
-                // redirect us to the success page
-                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/add-meetings/success.html");
-            },
-            error:function(result){
-                $(".message").html("There was an error using the AJAX call for addMeeting");
-            }
-        });
+        
+        var validated = 0;
+        
+        var validateFailed = [];
+        
+        // District
+        var district = $(".mod_add_meetings #district").val();
+        if(district == '') {
+            $(".message").append("District cannot be empty<br>");
+            validateFailed['district'] = 1;
+        }
+        
+        // School
+        var school = $(".mod_add_meetings #school").val();
+        if(school == '') {
+            $(".message").append("School cannot be empty<br>");
+            validateFailed['school'] = 1;
+        }
+        
+        // Student Name
+        var student_name = $(".mod_add_meetings #student_name").val();
+        if(student_name == '') {
+            $(".message").append("Student Name cannot be empty<br>");
+            validateFailed['student_name'] = 1;
+        }
+        
+        // Date of Birth
+        var date_of_birth = $(".mod_add_meetings #date_of_birth").val();
+        if(date_of_birth == '') {
+            $(".message").append("Date of Birth cannot be empty<br>");
+            validateFailed['date_of_birth'] = 1;
+        }
+        
+        // LASID SASID
+        
+        // Service Provided
+        var selectedService = $(".mod_add_meetings #service_provided").find(":selected").text();
+        if(selectedService == '') {
+            $(".message").append("Meeting Provided cannot be empty<br>");
+            validateFailed['selectedService'] = 1;
+        }
+        
+        // Price
+        var price = $(".mod_add_meetings #price").val();
+        if(price == '') {
+            $(".message").append("Price cannot be empty<br>");
+            validateFailed['price'] = 1;
+        }
+        
+        // Meeting Start
+        var meeting_start = $(".mod_add_meetings #meeting_start").val();
+        if(meeting_start == '') {
+            $(".message").append("Meeting Start cannot be empty<br>");
+            validateFailed['meeting_start'] = 1;
+        }
+        
+        // Meeting End
+        var meeting_end = $(".mod_add_meetings #meeting_end").val();
+        if(meeting_end == '') {
+            $(".message").append("Meeting End cannot be empty<br>");
+            validateFailed['meeting_end'] = 1;
+        }
+
+        
+        
+        if($.isEmptyObject(validateFailed)) {
+            // get every form field and add them to the ajax data line
+            var datastring = $("#form_add_meeting").serialize();
+            
+            // trigger this function when our form runs
+            $.ajax({
+                url: '/system/modules/gai_invoices/assets/php/action.add.meeting.php',
+                type: 'POST',
+                data: datastring,
+                success:function(result){
+                    // redirect us to the success page
+                    window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/add-meetings/success.html");
+                },
+                error:function(result){
+                    $(".message").html("There was an error using the AJAX call for addMeeting");
+                }
+            });
+        }
 
     }
     
