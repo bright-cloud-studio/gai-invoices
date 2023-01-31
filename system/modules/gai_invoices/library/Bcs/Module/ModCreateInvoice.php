@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Bright Cloud Studio's Modal Gallery
+ * Bright Cloud Studio's GAI Invoices
  *
- * Copyright (C) 2021 Bright Cloud Studio
+ * Copyright (C) 2022-2023 Bright Cloud Studio
  *
- * @package    bright-cloud-studio/modal-gallery
+ * @package    bright-cloud-studio/gai-invoices
  * @link       https://www.brightcloudstudio.com/
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
@@ -14,17 +14,15 @@
 namespace Bcs\Module;
 
 use Google;
-
-
  
-class ModCreateInvoice extends \Contao\Module
+class ModTransactionReview extends \Contao\Module
 {
  
     /**
      * Template
      * @var string
      */
-    protected $strTemplate = 'mod_create_invoice';
+    protected $strTemplate = 'mod_transaction_review';
   
     // our google api stuffs
     protected $client;
@@ -51,12 +49,8 @@ class ModCreateInvoice extends \Contao\Module
         $this->$client->addScope(Google\Service\Sheets::SPREADSHEETS);
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
-        
         // Set the ID for our specific spreadsheet
-        // DEV
-        // ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
-        // LIVE
-        ModCreateInvoice::$spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
+        ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
 		
 	}
 	
@@ -70,7 +64,7 @@ class ModCreateInvoice extends \Contao\Module
         {
             $objTemplate = new \BackendTemplate('be_wildcard');
  
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['create_invoice'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['transaction_review'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
@@ -85,10 +79,9 @@ class ModCreateInvoice extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
-        // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
         $GLOBALS['TL_BODY'][] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
-        
+     
         // get the user and build their name
         $objUser = \FrontendUser::getInstance();
         $user = $objUser->firstname . " " . $objUser->lastname;
@@ -97,126 +90,155 @@ class ModCreateInvoice extends \Contao\Module
         $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
         
         // get all of our unarchived Transactions
-        // DEV
-        //$range = 'Work Assignment';
-        
-        // LIVE
-        $range = 'Fall';
-        
+        $range = 'Transactions';
         $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
         $values = $response->getValues();
         
         // an array to store this users entries
-        $entryList = array();
-        $entryForm = array();
-        //$objUser = \FrontendUser::getInstance();
+        $entryHistory = array();
+        $trans_ids = array();
+        $objUser = \FrontendUser::getInstance();
         
-        $show = 0;
         $entry_id = 1;
-        $index = 1;
+        $transaction_id = 1;
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                // If user matches Psychologist (3) and Processed (26) isnt completed (2)
-                if($user == $entry[3] && $entry[26] != 2) { $show = 1; }
-                
-                // Shared
-                if($user == $entry[27] && $entry[28] != 2) { $show = 1; }
-                if($user == $entry[29] && $entry[30] != 2) { $show = 1; }
-                if($user == $entry[31] && $entry[32] != 2) { $show = 1; }
-                if($user == $entry[33] && $entry[34] != 2) { $show = 1; }
-                if($user == $entry[35] && $entry[36] != 2) { $show = 1; }
-                
-                // Initial Pull
-                if($entry[25] == 1) {
-                
-                    if($show == 1) {
-    
-                        // if Report Submiited (21) is yes or Yes
-                        if($entry[21] == 'yes' || $entry[21] == "Yes") {
-                            
-                            $arrData = array();
-                            $arrData['id']                  = $index;
-                            $arrData['sheet_row']           = $entry_id;
-                            
-                            $arrData['date']                = $entry[0];
-                            $arrData['30_days']             = $entry[1];
-                            $arrData['45_days']             = $entry[2];
-                            $arrData['psychologist']        = $entry[3];
-                            $arrData['district']            = $entry[4];
-                            $arrData['school']              = $entry[5];
-                            $arrData['student_name']        = $entry[6];
-                            $arrData['date_of_birth']       = $entry[7];
-                            $arrData['gender']              = $entry[8];
-                            $arrData['grade']               = $entry[9];
-                            $arrData['lasid']               = $entry[10];
-                            $arrData['sasid']               = $entry[11];
-                            $arrData['initial']             = $entry[12];
-                            $arrData['type_of_testing']     = $entry[13];
-                            $arrData['testing_date']        = $entry[14];
-                            $arrData['meeting_required']    = $entry[15];
-                            $arrData['meeting_date']        = $entry[16];
-                            $arrData['parent_info']         = $entry[17];
-                            $arrData['teacher_info']        = $entry[18];
-                            $arrData['team_chair']          = $entry[19];
-                            $arrData['email']               = $entry[20];
-                            $arrData['report_submitted']    = $entry[21];
-                            $arrData['invoiced_to_gai']     = $entry[22];
-                            $arrData['district_invoice']    = $entry[23];
-                            $arrData['notes']               = $entry[24];
-                            
-                            $arrData['initial_pull']        = $entry[25];
-                            $arrData['processed']           = $entry[26];
-                            
-                            // Sharing
-                            $arrData['shared_1']            = $entry[27];
-                            $arrData['processed_1']         = $entry[28];
-                            $arrData['shared_2']            = $entry[29];
-                            $arrData['processed_2']         = $entry[30];
-                            $arrData['shared_3']            = $entry[31];
-                            $arrData['processed_3']         = $entry[32];
-                            $arrData['shared_4']            = $entry[33];
-                            $arrData['processed_4']         = $entry[34];
-                            $arrData['shared_5']            = $entry[35];
-                            $arrData['processed_5']         = $entry[36];
-                            
-                            $shared_total = 0;
-                            if($arrData['shared_1'] != '') { $shared_total++; }
-                            if($arrData['shared_2'] != '') { $shared_total++; }
-                            if($arrData['shared_3'] != '') { $shared_total++; }
-                            if($arrData['shared_4'] != '') { $shared_total++; }
-                            if($arrData['shared_5'] != '') { $shared_total++; }
-                            $arrData['shared_total'] = $shared_total;
-                            
-                            
-                            // Generate as "List"
-                            $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_list');
-                            $objListTemplate = new \FrontendTemplate($strListTemplate);
-                            $objListTemplate->setData($arrData);
-                            $entryList[$entry_id] = $objListTemplate->parse();
-                            
-                            $index++;
-                            
-                            // Generate as "Form"
-                            $strFormTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_form');
-                            $objFormTemplate = new \FrontendTemplate($strFormTemplate);
-                            $objFormTemplate->setData($arrData);
-                            $entryForm[$entry_id] = $objFormTemplate->parse();
-                        }
-                    }
-                }
+                if($user == $entry[2]) {
+                    $arrData = array();
+                    $arrData['row_id']              = $entry_id;
+                    $arrData['transaction_id']      = $transaction_id;
+                    $arrData['billing_month']       = $entry[0];
+                    $arrData['date_submitted']      = $entry[1];
+                    $arrData['psychologist']        = $entry[2];
+                    $arrData['district']            = $entry[3];
+                    $arrData['school']              = $entry[4];
+                    $arrData['student_initials']    = $entry[5];
+                    $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
+                    $arrData['price']               = $entry[7];
+                    $arrData['lasid']               = $entry[8];
+                    $arrData['sasid']               = $entry[9];
+                    $arrData['meeting_date']        = $entry[10];
+                    $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
+                    $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
+                    $arrData['meeting_duration']    = $entry[13];
+                    $arrData['notes']               = $entry[14];
 
+                    // Generate as "List"
+                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
+                    $objListTemplate = new \FrontendTemplate($strListTemplate);
+                    $objListTemplate->setData($arrData);
+                    $entryHistory[$entry_id] = $objListTemplate->parse();
+                    $trans_ids[$transaction_id] = $entry_id;
+                    
+                    $transaction_id++;
+                }
+                
             }
             
             $entry_id++;
-            $show = 0;
         }
         
         // set this users entries to the template
-        $this->Template->workAssignmentList = $entryList;
-        $this->Template->workAssignmentForm = $entryForm;
-
+        $this->Template->transactionReview = $entryHistory;
+        $this->Template->transactionRowIDs = $trans_ids;
+        
+        
+        
+        
+        // get invoice number from Psychologist sheet and add to template
+        $range = 'Psychologists';
+        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $values = $response->getValues();
+        
+        $entry_id = 1;
+        foreach($values as $entry) {
+            
+            // if the id matches this entry, it is related to our user
+            if($entry_id != 1) {
+                
+                if($user == $entry[1]) {
+                    
+                    if($entry[0] != '')
+                        $this->Template->invoiceNumber = sprintf('%06d', $entry[0]);
+                    else
+                        $this->Template->invoiceNumber = "000001";
+                }
+                
+            }
+            
+            $entry_id++;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
 	}
+	
+	function getServiceNameFromCode($service_code){
+    	switch ($service_code) {
+    		case 1:
+    			return 'Meeting';
+    			break;
+    		case 2:
+    			return 'Psych/Achvmt';
+    			break;
+    		case 3:
+    			return 'Psych';
+    			break;
+    		case 4:
+    			return 'Achvmt';
+    			break;
+    		case 5:
+    			return 'Psych/Achvmt/Obs';
+    			break;
+    		case 6:
+    			return 'Psych/Obs';
+    			break;
+    		case 7:
+    			return 'Achvmt/Obs';
+    			break;
+    		case 8:
+    			return 'Psych/Achvmt/Additional';
+    			break;
+    		case 9:
+    			return 'Psych/Additional';
+    			break;
+    		case 10:
+    			return 'Achvmt/Additional';
+    			break;
+    		case 11:
+    			return 'Rating Scales';
+    			break;
+    		case 12:
+    			return 'Mtg Late Cancel';
+    			break;
+    		case 13:
+    			return 'Test Late Cancel';
+    			break;
+    		case 14:
+    			return 'Parking';
+    			break;
+    		case 15:
+    			return 'Review District Report';
+    			break;
+    		case 16:
+    			return 'Obs';
+    			break;
+    		case 17:
+    			return 'Record Review';
+    			break;
+    		default:
+    		    return 'Invalid Service Code';
+    		    break;
+    	}
+    }
+
+	
 } 
