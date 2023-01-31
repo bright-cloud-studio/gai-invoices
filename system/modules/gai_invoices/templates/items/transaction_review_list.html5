@@ -1,3 +1,27 @@
-<div class="transaction_review">
-  <a href="<?= $this->invoice_link ?>" target="_blank"><strong>Invoice #:</strong> <?= $this->invoice_number ?> <strong>Date Issued:</strong> <?= $this->date_issued ?></a>
-</div>
+<?php
+	if($this->price != null) {
+		
+		$ourPrice = preg_replace('/[^\p{L}\p{N}\s]/u', '', $this->price);
+		$GLOBALS['review_total'] = $GLOBALS['review_total'] + $ourPrice;
+		
+		
+	} else {
+		$GLOBALS['review_total'] = $GLOBALS['review_total'] + 0;
+	}
+
+?>
+<tr>
+	<td><a onClick='deleteTransaction("<?= $this->row_id ?>");'>remove</a></td>
+	<td><?= $this->district ?></td>
+	<td><?= $this->school ?></td>
+	<td><?= $this->student_initials ?></td>
+	
+	<?php if($this->lasid != '') { ?>
+		<td>L<?= $this->lasid ?></td>
+	<?php } if($this->sasid != '') { ?>
+		<td>S<?= $this->sasid ?></td>
+	<?php } ?>
+	
+	<td><?= $this->service ?></td>
+	<td>$<?= $ourPrice ?></td>
+</tr>
