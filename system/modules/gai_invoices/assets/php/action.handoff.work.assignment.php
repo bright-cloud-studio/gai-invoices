@@ -30,7 +30,8 @@
     if($vars['shared_total'] == 0) { $range = 'Work Assignment!Z' . $vars['sheet_row']; }
     if($vars['shared_total'] == 1) { $range = 'Work Assignment!AB' . $vars['sheet_row']; }
     if($vars['shared_total'] == 2) { $range = 'Work Assignment!AD' . $vars['sheet_row']; }
-    
+    if($vars['shared_total'] == 3) { $range = 'Work Assignment!AF' . $vars['sheet_row']; }
+    if($vars['shared_total'] == 4) { $range = 'Work Assignment!AH' . $vars['sheet_row']; }
     
     
     $options = ['valueInputOption' => 'USER_ENTERED'];
