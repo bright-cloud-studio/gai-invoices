@@ -108,6 +108,7 @@ class ModTransactionReview extends \Contao\Module
                 
                 if($user == $entry[2]) {
                     $arrData = array();
+                    $arrData['row_id']              = $entry_id;
                     $arrData['transaction_id']      = $transaction_id;
                     $arrData['billing_month']       = $entry[0];
                     $arrData['date_submitted']      = $entry[1];
@@ -143,6 +144,40 @@ class ModTransactionReview extends \Contao\Module
         // set this users entries to the template
         $this->Template->transactionReview = $entryHistory;
         $this->Template->transactionRowIDs = $trans_ids;
+        
+        
+        
+        
+        // get invoice number from Psychologist sheet and add to template
+        $range = 'Psychologists';
+        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $values = $response->getValues();
+        
+        $entry_id = 1;
+        foreach($values as $entry) {
+            
+            // if the id matches this entry, it is related to our user
+            if($entry_id != 1) {
+                
+                if($user == $entry[1]) {
+                    
+                    if($entry[0] != '')
+                        $this->Template->invoiceNumber = sprintf('%06d', $entry[0]);
+                    else
+                        $this->Template->invoiceNumber = "000001";
+                }
+                
+            }
+            
+            $entry_id++;
+        }
+        
+        
+        
+        
+        
+        
+        
         
 	}
 	
