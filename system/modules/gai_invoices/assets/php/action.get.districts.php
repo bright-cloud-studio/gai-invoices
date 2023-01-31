@@ -18,17 +18,24 @@
     $response = $service->spreadsheets_values->get($spreadsheetId, $range);
     $values = $response->getValues();
    
-    $districts = array();
+    $names = array();
    
-    $districts_index = 0;
+    $names_index = 0;
     foreach($values as $entry) {
         
-        if($districts_index >= 1) {
-            array_push($districts, $entry['2']);
+
+        
+        if($names_index >= 1) {
+            if($entry['2'] != null) {
+                if(!in_array($entry['2'], $names)) {
+                    array_push($names, $entry['2']);
+                }
+            }
         }
         
-        $districts_index++;
+        
+        $names_index++;
         
     }
     
-    echo json_encode($districts);
+    echo json_encode($names);
