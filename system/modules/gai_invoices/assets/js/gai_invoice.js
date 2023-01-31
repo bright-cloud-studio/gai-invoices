@@ -34,31 +34,31 @@
         
         // Modify the cloned "Price" field to have a unique ID
         cloned.find("label[for='price']").attr('for', 'price_' + transCount);
-        cloned.find('input#price').val(" ");
+        cloned.find('input#price').val("");
         cloned.find('input#price').attr('name', 'price_' + transCount);
         cloned.find('input#price').attr('id', 'price_' + transCount);
         
         // Modify the cloned "Meeting Start" field to have a unique ID
         cloned.find("label[for='meeting_start']").attr('for', 'meeting_start_' + transCount);
-        cloned.find('input#meeting_start').val(" ");
+        cloned.find('input#meeting_start').val("");
         cloned.find('input#meeting_start').attr('name', 'meeting_start_' + transCount);
         cloned.find('input#meeting_start').attr('id', 'meeting_start_' + transCount);
         
         // Modify the cloned "Meeting End" field to have a unique ID
         cloned.find("label[for='meeting_end']").attr('for', 'meeting_end_' + transCount);
-        cloned.find('input#meeting_end').val(" ");
+        cloned.find('input#meeting_end').val("");
         cloned.find('input#meeting_end').attr('name', 'meeting_end_' + transCount);
         cloned.find('input#meeting_end').attr('id', 'meeting_end_' + transCount);
         
         // Modify the cloned "Meeting Date" field to have a unique ID
         cloned.find("label[for='meeting_date']").attr('for', 'meeting_date_' + transCount);
-        cloned.find('input#meeting_date').val(" ");
+        cloned.find('input#meeting_date').val("");
         cloned.find('input#meeting_date').attr('name', 'meeting_date_' + transCount);
         cloned.find('input#meeting_date').attr('id', 'meeting_date_' + transCount);
         
         // Modify the cloned "Notes" field to have a unique ID
         cloned.find("label[for='notes']").attr('for', 'notes_' + transCount);
-        cloned.find('textarea#notes').val(" ");
+        cloned.find('textarea#notes').val("");
         cloned.find('textarea#notes').attr('name', 'notes_' + transCount);
         cloned.find('textarea#notes').attr('id', 'notes_' + transCount);
         
@@ -90,26 +90,120 @@
     // this is the big bad booty daddy that will generate our Transactions on Google Sheets and mark our Work Assignment as Processed
     function processWorkAssignment(id){
 
-        // remove our onclick and add disabled class
-        $("a#process_work_assignment").off('click');
-        $("a#process_work_assignment").addClass("disabled");
+        $(".message").empty();
 
-        // get every form field and add them to the ajax data line
-        var datastring = $("#form_" + id).serialize();
+        // Form Validation
+        var validated = 0;
         
-        // trigger this function when our form runs
-        $.ajax({
-            url: '/system/modules/gai_invoices/assets/php/action.process.work.assignment.php',
-            type: 'POST',
-            data: datastring,
-            success:function(result){
-                // redirect us to the success page
-                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/work-assignments/submit-success.html");
-            },
-            error:function(result){
-                $(".message").html("There was an error using the AJAX call for processWorkAssignment");
+        // Service Provided
+        var selectedService = $("#form_" + id + " .main_service #service_provided").find(":selected").text();
+        if(selectedService == '') {
+            $(".message").append("Service Provided cannot be empty<br>");
+        } else {
+            validated = 1;
+            //$(".message").append("Service Provided NOT EMPTY<br>");
+        }
+        
+        // Price
+        var price = $("#form_" + id + " .main_service #price").val();
+        if(price == '') {
+            $(".message").append("Price cannot be empty<br>");
+        } else {
+            validated = 1;
+            //$(".message").append("PRICE NOT EMPTY<br>");
+        }
+        
+        
+        var transCount = $('.' + id + ' .transactions fieldset.transaction').length ;
+        
+        var selectedMeeting = [];
+        var meetingPrice = [];
+        var meetingTimeStart = [];
+        var meetingTimeEnd = [];
+        var meetingDate = [];
+        
+        // loop through each meeting and validate
+        for(var i = 2; i <= transCount; i++)
+        {
+            
+            // meeting provided
+            selectedMeeting[i] = $("#form_" + id + " #service_provided_" + i).find(":selected").text();
+            if(selectedMeeting[i] == '') {
+                $(".message").append("Meeting Provided cannot be empty<br>");
+                validated = 0;
+            } else {
+                validated = 1;
+                //$(".message").append("Meeting Provided NOT EMPTY<br>");
             }
-        });
+
+            // Price
+            meetingPrice[i] = $("#form_" + id + " #price_" + i).val();
+            if(meetingPrice[i] == '') {
+                $(".message").append("Meeting Price " + i + " cannot be empty<br>");
+                validated = 0;
+            } else {
+                validated = 1;
+                //$(".message").append("Meeting Price " + i + " NOT EMPTY<br>");
+            }
+            
+            // Start Time
+            meetingTimeStart[i] = $("#form_" + id + " #meeting_start_" + transCount).val();
+            if(meetingTimeStart[i] == '') {
+                $(".message").append("Meeting Start Time " + i + " cannot be empty<br>");
+                validated = 0;
+            } else {
+                validated = 1;
+                //$(".message").append("Meeting Start Time " + i + " NOT EMPTY<br>");
+            }
+            
+            // End Time
+            meetingTimeEnd[i] = $("#form_" + id + " #meeting_end_" + transCount).val();
+            if(meetingTimeEnd[i] == '') {
+                $(".message").append("Meeting End Time " + i + " cannot be empty<br>");
+                validated = 0;
+            } else {
+                validated = 1;
+                //$(".message").append("Meeting End Time " + i + " NOT EMPTY<br>");
+            }
+            
+            // Meeting Date
+            meetingDate[i] = $("#form_" + id + " #meeting_date_" + transCount).val();
+            if(meetingDate[i] == '') {
+                $(".message").append("Meeting Date " + i + " cannot be empty<br>");
+                validated = 0;
+            } else {
+                validated = 1;
+                //$(".message").append("Meeting Date " + i + " NOT EMPTY<br>");
+            }
+            
+            
+        }
+        
+        
+        
+        
+        if(validated == 1) {
+            // remove our onclick and add disabled class
+            $("a#process_work_assignment").off('click');
+            $("a#process_work_assignment").addClass("disabled");
+    
+            // get every form field and add them to the ajax data line
+            var datastring = $("#form_" + id).serialize();
+            
+            // trigger this function when our form runs
+            $.ajax({
+                url: '/system/modules/gai_invoices/assets/php/action.process.work.assignment.php',
+                type: 'POST',
+                data: datastring,
+                success:function(result){
+                    // redirect us to the success page
+                    window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/work-assignments/submit-success.html");
+                },
+                error:function(result){
+                    $(".message").html("There was an error using the AJAX call for processWorkAssignment");
+                }
+            });
+        }
         
     }
 
