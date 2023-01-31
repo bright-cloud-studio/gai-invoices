@@ -14,7 +14,15 @@
     $service = new \Google_Service_Sheets($client);
     $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
     
+    
     $meeting_duration = 0;
+    
+    
+    
+    // clean and protect price
+    $vars['price'] = preg_replace('/[^\p{L}\p{N}\s]/u', '', $vars['price']);
+    
+    
     
     // For each transaction fieldset on the form, create a new row in the Transactions table on Sheets
     for ($x = 1; $x <= $vars["transactions"]; $x++) {
@@ -99,11 +107,14 @@
     
     //$range = 'Work Assignment!Y' . $vars['sheet_row']; // where the replacement will start, here, first column and second line
     
-    $range = 'Work Assignment!Y' . $vars['sheet_row'];
+    $range = 'Fall!AA' . $vars['sheet_row'];
+    $spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
     
-    if($vars['psychologist'] == $vars['shared_1']) { $range = 'Work Assignment!AA' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_2']) { $range = 'Work Assignment!AC' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_3']) { $range = 'Work Assignment!AE' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_1']) { $range = 'Work Assignment!AB' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_2']) { $range = 'Work Assignment!AD' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_3']) { $range = 'Work Assignment!AF' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_4']) { $range = 'Work Assignment!AH' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_5']) { $range = 'Work Assignment!AJ' . $vars['sheet_row']; }
     
     
     $options = ['valueInputOption' => 'USER_ENTERED'];
