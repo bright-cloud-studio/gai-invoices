@@ -51,8 +51,12 @@ class ModCreateInvoice extends \Contao\Module
         $this->$client->addScope(Google\Service\Sheets::SPREADSHEETS);
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
+        
         // Set the ID for our specific spreadsheet
-        ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+        // DEV
+        // ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+        // LIVE
+        ModCreateInvoice::$spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
 		
 	}
 	
@@ -93,7 +97,12 @@ class ModCreateInvoice extends \Contao\Module
         $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
         
         // get all of our unarchived Transactions
-        $range = 'Work Assignment';
+        // DEV
+        //$range = 'Work Assignment';
+        
+        // LIVE
+        $range = 'Fall';
+        
         $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
         $values = $response->getValues();
         
@@ -110,84 +119,92 @@ class ModCreateInvoice extends \Contao\Module
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                // if the psychologist name matches
-                if($user == $entry[3] && $entry[24] != 2) { $show = 1; }
+                // If user matches Psychologist (3) and Processed (26) isnt completed (2)
+                if($user == $entry[3] && $entry[26] != 2) { $show = 1; }
                 
-                if($user == $entry[25] && $entry[26] != 2) { $show = 1; }
+                // Shared
                 if($user == $entry[27] && $entry[28] != 2) { $show = 1; }
                 if($user == $entry[29] && $entry[30] != 2) { $show = 1; }
                 if($user == $entry[31] && $entry[32] != 2) { $show = 1; }
                 if($user == $entry[33] && $entry[34] != 2) { $show = 1; }
+                if($user == $entry[35] && $entry[36] != 2) { $show = 1; }
                 
+                // Initial Pull
+                if($entry[25] == 1) {
                 
-                if($show == 1) {
-
-                    // if Report Submiited is yes or Yes
-                    if($entry[20] == 'yes' || $entry[20] == "Yes") {
-                        
-                        $arrData = array();
-                        $arrData['id']                  = $index;
-                        $arrData['sheet_row']           = $entry_id;
-                        $arrData['date']                = $entry[0];
-                        $arrData['30_days']             = $entry[1];
-                        $arrData['45_days']             = $entry[2];
-                        $arrData['psychologist']        = $entry[3];
-                        $arrData['district']            = $entry[4];
-                        $arrData['school']              = $entry[5];
-                        $arrData['student_name']        = $entry[6];
-                        $arrData['date_of_birth']       = $entry[7];
-                        $arrData['grade']               = $entry[8];
-                        $arrData['lasid']               = $entry[9];
-                        $arrData['sasid']               = $entry[10];
-                        $arrData['initial']             = $entry[11];
-                        $arrData['type_of_testing']     = $entry[12];
-                        $arrData['testing_date']        = $entry[13];
-                        $arrData['meeting_required']    = $entry[14];
-                        $arrData['meeting_date']        = $entry[15];
-                        $arrData['parent_info']         = $entry[16];
-                        $arrData['teacher_info']        = $entry[17];
-                        $arrData['team_chair']          = $entry[18];
-                        $arrData['email']               = $entry[19];
-                        $arrData['report_submitted']    = $entry[20];
-                        $arrData['invoiced_to_gai']     = $entry[21];
-                        $arrData['district_invoice']    = $entry[22];
-                        $arrData['notes']               = $entry[23];
-                        $arrData['processed']           = $entry[24];
-                        
-                        // Sharing
-                        $arrData['shared_1']            = $entry[25];
-                        $arrData['processed_1']         = $entry[26];
-                        $arrData['shared_2']            = $entry[27];
-                        $arrData['processed_2']         = $entry[28];
-                        $arrData['shared_3']            = $entry[29];
-                        $arrData['processed_3']         = $entry[30];
-                        $arrData['shared_4']            = $entry[31];
-                        $arrData['processed_4']         = $entry[32];
-                        $arrData['shared_5']            = $entry[33];
-                        $arrData['processed_5']         = $entry[34];
-                        
-                        $shared_total = 0;
-                        if($arrData['shared_1'] != '') { $shared_total++; }
-                        if($arrData['shared_2'] != '') { $shared_total++; }
-                        if($arrData['shared_3'] != '') { $shared_total++; }
-                        if($arrData['shared_4'] != '') { $shared_total++; }
-                        if($arrData['shared_5'] != '') { $shared_total++; }
-                        $arrData['shared_total'] = $shared_total;
-                        
-                        
-                        // Generate as "List"
-                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_list');
-                        $objListTemplate = new \FrontendTemplate($strListTemplate);
-                        $objListTemplate->setData($arrData);
-                        $entryList[$entry_id] = $objListTemplate->parse();
-                        
-                        $index++;
-                        
-                        // Generate as "Form"
-                        $strFormTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_form');
-                        $objFormTemplate = new \FrontendTemplate($strFormTemplate);
-                        $objFormTemplate->setData($arrData);
-                        $entryForm[$entry_id] = $objFormTemplate->parse();
+                    if($show == 1) {
+    
+                        // if Report Submiited (21) is yes or Yes
+                        if($entry[21] == 'yes' || $entry[21] == "Yes") {
+                            
+                            $arrData = array();
+                            $arrData['id']                  = $index;
+                            $arrData['sheet_row']           = $entry_id;
+                            
+                            $arrData['date']                = $entry[0];
+                            $arrData['30_days']             = $entry[1];
+                            $arrData['45_days']             = $entry[2];
+                            $arrData['psychologist']        = $entry[3];
+                            $arrData['district']            = $entry[4];
+                            $arrData['school']              = $entry[5];
+                            $arrData['student_name']        = $entry[6];
+                            $arrData['date_of_birth']       = $entry[7];
+                            $arrData['gender']              = $entry[8];
+                            $arrData['grade']               = $entry[9];
+                            $arrData['lasid']               = $entry[10];
+                            $arrData['sasid']               = $entry[11];
+                            $arrData['initial']             = $entry[12];
+                            $arrData['type_of_testing']     = $entry[13];
+                            $arrData['testing_date']        = $entry[14];
+                            $arrData['meeting_required']    = $entry[15];
+                            $arrData['meeting_date']        = $entry[16];
+                            $arrData['parent_info']         = $entry[17];
+                            $arrData['teacher_info']        = $entry[18];
+                            $arrData['team_chair']          = $entry[19];
+                            $arrData['email']               = $entry[20];
+                            $arrData['report_submitted']    = $entry[21];
+                            $arrData['invoiced_to_gai']     = $entry[22];
+                            $arrData['district_invoice']    = $entry[23];
+                            $arrData['notes']               = $entry[24];
+                            
+                            $arrData['initial_pull']        = $entry[25];
+                            $arrData['processed']           = $entry[26];
+                            
+                            // Sharing
+                            $arrData['shared_1']            = $entry[27];
+                            $arrData['processed_1']         = $entry[28];
+                            $arrData['shared_2']            = $entry[29];
+                            $arrData['processed_2']         = $entry[30];
+                            $arrData['shared_3']            = $entry[31];
+                            $arrData['processed_3']         = $entry[32];
+                            $arrData['shared_4']            = $entry[33];
+                            $arrData['processed_4']         = $entry[34];
+                            $arrData['shared_5']            = $entry[35];
+                            $arrData['processed_5']         = $entry[36];
+                            
+                            $shared_total = 0;
+                            if($arrData['shared_1'] != '') { $shared_total++; }
+                            if($arrData['shared_2'] != '') { $shared_total++; }
+                            if($arrData['shared_3'] != '') { $shared_total++; }
+                            if($arrData['shared_4'] != '') { $shared_total++; }
+                            if($arrData['shared_5'] != '') { $shared_total++; }
+                            $arrData['shared_total'] = $shared_total;
+                            
+                            
+                            // Generate as "List"
+                            $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_list');
+                            $objListTemplate = new \FrontendTemplate($strListTemplate);
+                            $objListTemplate->setData($arrData);
+                            $entryList[$entry_id] = $objListTemplate->parse();
+                            
+                            $index++;
+                            
+                            // Generate as "Form"
+                            $strFormTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_form');
+                            $objFormTemplate = new \FrontendTemplate($strFormTemplate);
+                            $objFormTemplate->setData($arrData);
+                            $entryForm[$entry_id] = $objFormTemplate->parse();
+                        }
                     }
                 }
 
