@@ -14,19 +14,23 @@
     
    
    
-    $range = 'Psychologists';
+    $range = 'Schools';
     $response = $service->spreadsheets_values->get($spreadsheetId, $range);
     $values = $response->getValues();
    
     $names = array();
    
-   $names_index = 0;
+    $names_index = 0;
     foreach($values as $entry) {
         
 
         
         if($names_index >= 1) {
-            array_push($names, $entry['1']);
+            if($entry['3'] != null) {
+                if(!in_array($entry['3'], $names)) {
+                    array_push($names, $entry['3']);
+                }
+            }
         }
         
         
