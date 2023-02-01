@@ -106,34 +106,40 @@ class ModTransactionReview extends \Contao\Module
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                if($user == $entry[2]) {
-                    $arrData = array();
-                    $arrData['row_id']              = $entry_id;
-                    $arrData['transaction_id']      = $transaction_id;
-                    $arrData['billing_month']       = $entry[0];
-                    $arrData['date_submitted']      = $entry[1];
-                    $arrData['psychologist']        = $entry[2];
-                    $arrData['district']            = $entry[3];
-                    $arrData['school']              = $entry[4];
-                    $arrData['student_initials']    = $entry[5];
-                    $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
-                    $arrData['price']               = $entry[7];
-                    $arrData['lasid']               = $entry[8];
-                    $arrData['sasid']               = $entry[9];
-                    $arrData['meeting_date']        = $entry[10];
-                    $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
-                    $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
-                    $arrData['meeting_duration']    = $entry[13];
-                    $arrData['notes']               = $entry[14];
-
-                    // Generate as "List"
-                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
-                    $objListTemplate = new \FrontendTemplate($strListTemplate);
-                    $objListTemplate->setData($arrData);
-                    $entryHistory[$entry_id] = $objListTemplate->parse();
-                    $trans_ids[$transaction_id] = $entry_id;
+                if($entry[16] != 1) {
+                
+                    if($user == $entry[2]) {
+                        $arrData = array();
+                        $arrData['row_id']              = $entry_id;
+                        $arrData['transaction_id']      = $transaction_id;
+                        $arrData['billing_month']       = $entry[0];
+                        $arrData['date_submitted']      = $entry[1];
+                        $arrData['psychologist']        = $entry[2];
+                        $arrData['district']            = $entry[3];
+                        $arrData['school']              = $entry[4];
+                        $arrData['student_initials']    = $entry[5];
+                        $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
+                        $arrData['price']               = $entry[7];
+                        $arrData['lasid']               = $entry[8];
+                        $arrData['sasid']               = $entry[9];
+                        $arrData['meeting_date']        = $entry[10];
+                        $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
+                        $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
+                        $arrData['meeting_duration']    = $entry[13];
+                        $arrData['notes']               = $entry[14];
+                        $arrData['reviewed']            = $entry[15];
+                        $arrData['deleted']             = $entry[16];
+    
+                        // Generate as "List"
+                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
+                        $objListTemplate = new \FrontendTemplate($strListTemplate);
+                        $objListTemplate->setData($arrData);
+                        $entryHistory[$entry_id] = $objListTemplate->parse();
+                        $trans_ids[$transaction_id] = $entry_id;
+                        
+                        $transaction_id++;
+                    }
                     
-                    $transaction_id++;
                 }
                 
             }
