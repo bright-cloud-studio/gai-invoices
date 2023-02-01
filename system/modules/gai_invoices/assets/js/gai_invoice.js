@@ -91,77 +91,80 @@
     function processWorkAssignment(id){
 
         $(".message").empty();
-
+        
         var validateFailed = [];
         
-        // Service Provided
-        var selectedService = $("#form_" + id + " .main_service #service_provided").find(":selected").text();
-        if(selectedService == '') {
-            $(".message").append("Service Provided cannot be empty<br>");
-            validateFailed['selectedService'] = 1;
-        }
-        
-        // Price
-        var price = $("#form_" + id + " .main_service #price").val();
-        if(price == '') {
-            $(".message").append("Price cannot be empty<br>");
-            validateFailed['price'] = 1;
-        }
         
         
-        var transCount = $('.' + id + ' .transactions fieldset.transaction').length ;
-        
-        var selectedMeeting = [];
-        var meetingPrice = [];
-        var meetingTimeStart = [];
-        var meetingTimeEnd = [];
-        var meetingDate = [];
-        
-        // loop through each meeting and validate
-        for(var i = 2; i <= transCount; i++)
-        {
-            
-            // meeting provided
-            selectedMeeting[i] = $("#form_" + id + " #service_provided_" + i).find(":selected").text();
-            if(selectedMeeting[i] == '') {
-                $(".message").append("Meeting Provided cannot be empty<br>");
-                validateFailed['selected_meeting'] = 1;
-            }
+        if( $('input#complete_work_assignment').is(':checked') == false){
 
+            // Service Provided
+            var selectedService = $("#form_" + id + " .main_service #service_provided").find(":selected").text();
+            if(selectedService == '') {
+                $(".message").append("Service Provided cannot be empty<br>");
+                validateFailed['selectedService'] = 1;
+            }
+            
             // Price
-            meetingPrice[i] = $("#form_" + id + " #price_" + i).val();
-            if(meetingPrice[i] == '') {
-                $(".message").append("Meeting Price " + i + " cannot be empty<br>");
-                validateFailed['meeting_price'] = 1;
-            }
-            
-            // Start Time
-            meetingTimeStart[i] = $("#form_" + id + " #meeting_start_" + transCount).val();
-            if(meetingTimeStart[i] == '') {
-                $(".message").append("Meeting Start Time " + i + " cannot be empty<br>");
-                validateFailed['meeting_start'] = 1;
-            }
-            
-            // End Time
-            meetingTimeEnd[i] = $("#form_" + id + " #meeting_end_" + transCount).val();
-            if(meetingTimeEnd[i] == '') {
-                $(".message").append("Meeting End Time " + i + " cannot be empty<br>");
-                validateFailed['meeting_end'] = 1;
-            }
-            
-            // Meeting Date
-            meetingDate[i] = $("#form_" + id + " #meeting_date_" + transCount).val();
-            if(meetingDate[i] == '') {
-                $(".message").append("Meeting Date " + i + " cannot be empty<br>");
-                validateFailed['meeting_date'] = 1;
+            var price = $("#form_" + id + " .main_service #price").val();
+            if(price == '') {
+                $(".message").append("Price cannot be empty<br>");
+                validateFailed['price'] = 1;
             }
             
             
+            var transCount = $('.' + id + ' .transactions fieldset.transaction').length ;
+            
+            var selectedMeeting = [];
+            var meetingPrice = [];
+            var meetingTimeStart = [];
+            var meetingTimeEnd = [];
+            var meetingDate = [];
+            
+            // loop through each meeting and validate
+            for(var i = 2; i <= transCount; i++)
+            {
+                
+                // meeting provided
+                selectedMeeting[i] = $("#form_" + id + " #service_provided_" + i).find(":selected").text();
+                if(selectedMeeting[i] == '') {
+                    $(".message").append("Meeting Provided cannot be empty<br>");
+                    validateFailed['selected_meeting'] = 1;
+                }
+    
+                // Price
+                meetingPrice[i] = $("#form_" + id + " #price_" + i).val();
+                if(meetingPrice[i] == '') {
+                    $(".message").append("Meeting Price " + i + " cannot be empty<br>");
+                    validateFailed['meeting_price'] = 1;
+                }
+                
+                // Start Time
+                meetingTimeStart[i] = $("#form_" + id + " #meeting_start_" + transCount).val();
+                if(meetingTimeStart[i] == '') {
+                    $(".message").append("Meeting Start Time " + i + " cannot be empty<br>");
+                    validateFailed['meeting_start'] = 1;
+                }
+                
+                // End Time
+                meetingTimeEnd[i] = $("#form_" + id + " #meeting_end_" + transCount).val();
+                if(meetingTimeEnd[i] == '') {
+                    $(".message").append("Meeting End Time " + i + " cannot be empty<br>");
+                    validateFailed['meeting_end'] = 1;
+                }
+                
+                // Meeting Date
+                meetingDate[i] = $("#form_" + id + " #meeting_date_" + transCount).val();
+                if(meetingDate[i] == '') {
+                    $(".message").append("Meeting Date " + i + " cannot be empty<br>");
+                    validateFailed['meeting_date'] = 1;
+                }
+                
+                
+            }
+        
         }
-        
-        
-        
-        
+
         if($.isEmptyObject(validateFailed)) {
             // remove our onclick and add disabled class
             $("a#process_work_assignment").off('click');
