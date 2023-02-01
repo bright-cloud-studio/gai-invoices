@@ -14,6 +14,12 @@
     $service = new \Google_Service_Sheets($client);
     $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
     
+    
+    // first remove dollar sign
+    $price = str_replace('$','',$vars['price']);
+    // remove decimal and trailing numbers
+    $price = floor($price);
+    
     $meeting_duration = 0;
     if($vars['meeting_end'] != null)
         $meeting_duration = hoursToMinutes(date("H:i",strtotime($vars['meeting_end']) - strtotime($vars['meeting_start'])));
@@ -28,7 +34,7 @@
         $vars['school'],
         $vars['student_name'],
         $vars['service_provided'],
-        $vars['price'],
+        $price,
         $vars['lasid'],
         $vars['sasid'],
         $vars['meeting_date'],
