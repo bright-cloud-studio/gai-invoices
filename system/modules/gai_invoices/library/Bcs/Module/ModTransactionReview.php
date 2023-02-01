@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Bright Cloud Studio's Modal Gallery
+ * Bright Cloud Studio's GAI Invoices
  *
- * Copyright (C) 2021 Bright Cloud Studio
+ * Copyright (C) 2022-2023 Bright Cloud Studio
  *
- * @package    bright-cloud-studio/modal-gallery
+ * @package    bright-cloud-studio/gai-invoices
  * @link       https://www.brightcloudstudio.com/
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
@@ -14,17 +14,15 @@
 namespace Bcs\Module;
 
 use Google;
-
-
  
-class ModWorkAssignmentHistory extends \Contao\Module
+class ModTransactionReview extends \Contao\Module
 {
  
     /**
      * Template
      * @var string
      */
-    protected $strTemplate = 'mod_work_assignment_history';
+    protected $strTemplate = 'mod_transaction_review';
   
     // our google api stuffs
     protected $client;
@@ -66,7 +64,7 @@ class ModWorkAssignmentHistory extends \Contao\Module
         {
             $objTemplate = new \BackendTemplate('be_wildcard');
  
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['work_assignment_history'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['transaction_review'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
@@ -81,8 +79,9 @@ class ModWorkAssignmentHistory extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
-        
-        
+        $rand_ver = rand(1,9999);
+        $GLOBALS['TL_BODY'][] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+     
         // get the user and build their name
         $objUser = \FrontendUser::getInstance();
         $user = $objUser->firstname . " " . $objUser->lastname;
@@ -91,44 +90,161 @@ class ModWorkAssignmentHistory extends \Contao\Module
         $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
         
         // get all of our unarchived Transactions
-        $range = 'Invoices - Psy';
+        $range = 'Transactions';
         $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
         $values = $response->getValues();
         
         // an array to store this users entries
         $entryHistory = array();
+        $trans_ids = array();
         $objUser = \FrontendUser::getInstance();
         
-        $entry_id = 0;
+        $entry_id = 1;
+        $transaction_id = 1;
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
-            if($entry_id != 0) {
+            if($entry_id != 1) {
                 
-                if($user == $entry[3]) {
-                    $arrData = array();
-                    $arrData['billing_year']    = $entry[0];
-                    $arrData['billing_month']   = $entry[1];
-                    $arrData['invoice_number']  = $entry[2];
-                    $arrData['psychologist']    = $entry[3];
-                    $arrData['date_issued']     = $entry[4];
-                    $arrData['date_due']        = $entry[5];
-                    $arrData['invoice_link']    = $entry[6];
+                if($entry[16] != 1) {
+                
+                    if($user == $entry[2]) {
+                        $arrData = array();
+                        $arrData['row_id']              = $entry_id;
+                        $arrData['transaction_id']      = $transaction_id;
+                        $arrData['billing_month']       = $entry[0];
+                        $arrData['date_submitted']      = $entry[1];
+                        $arrData['psychologist']        = $entry[2];
+                        $arrData['district']            = $entry[3];
+                        $arrData['school']              = $entry[4];
+                        $arrData['student_initials']    = $entry[5];
+                        $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
+                        $arrData['price']               = $entry[7];
+                        $arrData['lasid']               = $entry[8];
+                        $arrData['sasid']               = $entry[9];
+                        $arrData['meeting_date']        = $entry[10];
+                        $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
+                        $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
+                        $arrData['meeting_duration']    = $entry[13];
+                        $arrData['notes']               = $entry[14];
+                        $arrData['reviewed']            = $entry[15];
+                        $arrData['deleted']             = $entry[16];
+    
+                        // Generate as "List"
+                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
+                        $objListTemplate = new \FrontendTemplate($strListTemplate);
+                        $objListTemplate->setData($arrData);
+                        $entryHistory[$entry_id] = $objListTemplate->parse();
+                        $trans_ids[$transaction_id] = $entry_id;
+                        
+                        $transaction_id++;
+                    }
                     
-                    // Generate as "List"
-                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_history');
-                    $objListTemplate = new \FrontendTemplate($strListTemplate);
-                    $objListTemplate->setData($arrData);
-                    $entryHistory[$entry_id] = $objListTemplate->parse();
                 }
-
+                
             }
             
             $entry_id++;
         }
         
         // set this users entries to the template
-        $this->Template->workAssignmentHistory = $entryHistory;
+        $this->Template->transactionReview = $entryHistory;
+        $this->Template->transactionRowIDs = $trans_ids;
+        
+        
+        
+        
+        // get invoice number from Psychologist sheet and add to template
+        $range = 'Psychologists';
+        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $values = $response->getValues();
+        
+        $entry_id = 1;
+        foreach($values as $entry) {
+            
+            // if the id matches this entry, it is related to our user
+            if($entry_id != 1) {
+                
+                if($user == $entry[1]) {
+                    
+                    if($entry[0] != '')
+                        $this->Template->invoiceNumber = sprintf('%06d', $entry[0]);
+                    else
+                        $this->Template->invoiceNumber = "000001";
+                }
+                
+            }
+            
+            $entry_id++;
+        }
+        
+        
+        
+        
+        
+        
+        
         
 	}
+	
+	function getServiceNameFromCode($service_code){
+    	switch ($service_code) {
+    		case 1:
+    			return 'Meeting';
+    			break;
+    		case 2:
+    			return 'Psych/Achvmt';
+    			break;
+    		case 3:
+    			return 'Psych';
+    			break;
+    		case 4:
+    			return 'Achvmt';
+    			break;
+    		case 5:
+    			return 'Psych/Achvmt/Obs';
+    			break;
+    		case 6:
+    			return 'Psych/Obs';
+    			break;
+    		case 7:
+    			return 'Achvmt/Obs';
+    			break;
+    		case 8:
+    			return 'Psych/Achvmt/Additional';
+    			break;
+    		case 9:
+    			return 'Psych/Additional';
+    			break;
+    		case 10:
+    			return 'Achvmt/Additional';
+    			break;
+    		case 11:
+    			return 'Rating Scales';
+    			break;
+    		case 12:
+    			return 'Mtg Late Cancel';
+    			break;
+    		case 13:
+    			return 'Test Late Cancel';
+    			break;
+    		case 14:
+    			return 'Parking';
+    			break;
+    		case 15:
+    			return 'Review District Report';
+    			break;
+    		case 16:
+    			return 'Obs';
+    			break;
+    		case 17:
+    			return 'Record Review';
+    			break;
+    		default:
+    		    return 'Invalid Service Code';
+    		    break;
+    	}
+    }
+
+	
 } 
