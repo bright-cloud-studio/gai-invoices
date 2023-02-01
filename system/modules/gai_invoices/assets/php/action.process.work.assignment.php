@@ -20,7 +20,11 @@
     
     
     // clean and protect price
-    $vars['price'] = preg_replace('/[^\p{L}\p{N}\s]/u', '', $vars['price']);
+    
+    // first remove dollar sign
+    $price = str_replace('$','',$vars['price']);
+    // remove decimal and trailing numbers
+    $price = floor($price);
     
     
     
@@ -43,7 +47,7 @@
                 $vars['school'],
                 $vars['student_name'],
                 $vars['service_provided'],
-                $vars['price'],
+                $price,
                 $vars['lasid'],
                 $vars['sasid'],
                 $vars['meeting_date'],
@@ -65,6 +69,11 @@
                 $meeting_duration = hoursToMinutes(date("H:i",strtotime($vars['meeting_end_' . $x]) - strtotime($vars['meeting_start_' . $x])));
             else
                 $meeting_duration = 0;
+                
+             // first remove dollar sign
+            $price = str_replace('$','',$vars['price_' . $x]);
+            // remove decimal and trailing numbers
+            $price = floor($price);
             
             $newRow = [
                 date('F'),
