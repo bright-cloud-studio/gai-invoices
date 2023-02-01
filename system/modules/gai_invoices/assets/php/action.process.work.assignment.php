@@ -17,14 +17,13 @@
     
     $meeting_duration = 0;
     
-    
-    
-    // clean and protect price
-    
-    // first remove dollar sign
-    $price = str_replace('$','',$vars['price']);
-    // remove decimal and trailing numbers
-    $price = floor($price);
+    $price = '';
+    if($vars['price'] != '') {
+        // first remove dollar sign
+        $price = str_replace('$','',$vars['price']);
+        // remove decimal and trailing numbers
+        $price = floor($price);
+    }
     
     
     
@@ -62,7 +61,9 @@
             $valueRange->setValues($rows);
             $range = 'Transactions';
             $options = ['valueInputOption' => 'USER_ENTERED'];
-            $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
+            if($vars['price'] != '') {
+                $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
+            }
         } else {
             
             if($vars['meeting_end_' . $x] != null)
@@ -98,7 +99,9 @@
             $valueRange->setValues($rows);
             $range = 'Transactions';
             $options = ['valueInputOption' => 'USER_ENTERED'];
-            $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
+            if($vars['price'] != '') {
+                $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
+            }
         }
 
     }
