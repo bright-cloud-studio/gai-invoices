@@ -1,0 +1,148 @@
+<div class="mod_add_meetings marbot90">
+	
+	<form class="flex_wrapper" id="form_add_meeting">
+		
+		<!-- Hidden Fields -->
+		<div style="display: none;">
+			<input type="text" name="psychologist" class="psychologist" value="{{user::firstname}} {{user::lastname}}">
+		</div>
+
+		<fieldset class="size100">
+			<!-- Date -->	
+			<div class="widget widget-text size50">
+				<label for="date" class="size50">
+					Date
+				</label>
+				<input type="text" name="date" id="date" value="<?= date("m/d/Y") ?>" required="">
+			</div>
+		</fieldset>
+		
+		<fieldset class="size100">
+			<!-- District -->	
+			<div class="widget widget-text size50">
+				<label for="district" class="size50">
+					District
+				</label>
+				<input type="text" name="district" id="district" value="" required="">
+			</div>
+			<!-- School -->	
+			<div class="widget widget-text size50">
+				<label for="school" class="size50">
+					School
+				</label>
+				<input type="text" name="school" id="school" value="" required="">
+			</div>
+			<!-- Student Name -->	
+			<div class="widget widget-text size50">
+				<label for="student_name" class="size50">
+					Student Name (Initials)
+				</label>
+				<input type="text" name="student_name" id="student_name" value="" required="">
+			</div>
+			<!-- Date of Birth -->	
+			<div class="widget widget-text size50">
+				<label for="date_of_birth" class="size50">
+					Date of Birth
+				</label>
+				<input type="text" name="date_of_birth" id="date_of_birth" value="" required="">
+			</div>
+			<!-- LASID -->	
+			<div class="widget widget-text size50">
+				<label for="lasid" class="size50">
+					LASID #
+				</label>
+				<input type="text" name="lasid" id="lasid" value="" required="">
+			</div>
+			<!-- SASID -->	
+			<div class="widget widget-text size50">
+				<label for="sasid" class="size50">
+					SASID
+				</label>
+				<input type="text" name="sasid" id="sasid" value="" required="">
+			</div>
+		</fieldset>
+
+		<!-- The section of the form with the meeting details -->
+		<div class="meeting_details">
+			
+			<!-- Duplicate for "Add Another Transaction" -->
+			<fieldset class="transaction size100">
+				
+				<!-- Service Provided -->	
+				<div class="widget widget-select size50">
+					<label for="service_provided" class="size50">
+						Meeting Provided
+					</label>
+					<select name="service_provided" id="service_provided">
+						<option value="NONE"></option>
+						<option value="1">Meeting</option>
+						<option value="12">Mtg Late Cancel</option>
+						<option value="13">Test Late Cancel</option>
+						
+						<!-- These options need to be controllable in the Member's settings page -->
+						
+						<!--
+						<option value="18">Misc. Travel Expenses</option>
+						<option value="19">Editing Services</option>
+						<option value="20">Meeting Coverage Coordinator</option>
+						-->
+						
+						<!-- Lets hide this option for now until we can control it from their Member settings page
+						<!--<option value="14">Parking</option>-->
+					</select>
+				</div>
+	
+				<!-- Price -->	
+				<div class="widget widget-text size50">
+					<label for="price" class="size50">
+						Price
+					</label>
+					<input type="text" name="price" id="price" value="" required="">
+				</div>
+				
+				<!-- Meeting Start -->	
+				<div class="widget widget-text size50">
+					<label for="meeting_start" class="size50">
+						Start Time
+					</label>
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="">
+				</div>
+				
+				<!-- Meeting End -->	
+				<div class="widget widget-text size50">
+					<label for="meeting_end" class="size50">
+						End Time
+					</label>
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="">
+				</div>
+				
+				<!-- Meeting Date -->	
+				<div class="widget widget-text size50" id="meeting_date">
+					<label for="meeting_date" class="size50">
+						Meeting Date
+					</label>
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="">
+				</div>
+	
+				<!-- Notes -->
+				<div class="widget widget-textarea size100">
+					<label for="notes" class="size100">
+						Notes
+					</label>
+					<textarea name="notes" id="notes" rows="4" cols="40" maxlength="500"></textarea>
+				</div>
+				
+			</fieldset>
+
+		</div>
+
+		<!-- Submit Button -->
+		<div class="widget widget-submit center_element size100">
+			<a id="process_work_assignment" class="btn process_work_assignment" onClick="addMeeting()">Add Meeting</a>
+		</div>
+	
+	</form>
+  
+  
+  
+</div>
