@@ -276,11 +276,13 @@
         }
         
         // Date of Birth
+        /*
         var date_of_birth = $(".mod_add_meetings #date_of_birth").val();
         if(date_of_birth == '') {
             $(".message").append("Date of Birth cannot be empty<br>");
             validateFailed['date_of_birth'] = 1;
         }
+        */
         
         // LASID SASID
         
