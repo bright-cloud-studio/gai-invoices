@@ -39,13 +39,17 @@
 				</label>
 				<input type="text" name="student_name" id="student_name" value="" required="">
 			</div>
+			
 			<!-- Date of Birth -->	
+			<!--
 			<div class="widget widget-text size50">
 				<label for="date_of_birth" class="size50">
 					Date of Birth
 				</label>
 				<input type="text" name="date_of_birth" id="date_of_birth" value="" required="">
 			</div>
+			-->
+			
 			<!-- LASID -->	
 			<div class="widget widget-text size50">
 				<label for="lasid" class="size50">
@@ -65,6 +69,7 @@
 		<!-- The section of the form with the meeting details -->
 		<div class="meeting_details">
 			
+
 			<!-- Duplicate for "Add Another Transaction" -->
 			<fieldset class="transaction size100">
 				
@@ -77,7 +82,25 @@
 						<option value="NONE"></option>
 						<option value="1">Meeting</option>
 						<option value="12">Mtg Late Cancel</option>
-						<option value="13">Test Late Cancel</option>
+						<option value="15">Review District Report</option>
+						
+						<?php
+							$objUser = \FrontendUser::getInstance();
+							foreach($objUser->meeting_options as $option) {
+								if($option == "misc_travel_expenses") {
+									echo '<option value="18">Misc. Travel Expenses</option>';
+								}
+								if($option == "editing_services") {
+									echo '<option value="19">Editing Services</option>';
+								}
+								if($option == "meeting_coverage_coordinator") {
+									echo '<option value="20">Meeting Coverage Coordinator</option>';
+								}
+								if($option == "parking") {
+									echo '<option value="14">Parking</option>';
+								}
+							}
+						?>
 						
 						<!-- These options need to be controllable in the Member's settings page -->
 						
@@ -142,7 +165,15 @@
 		</div>
 	
 	</form>
-  
-  
+	
+	
+	<div class="messages marbot60 center_element">
+		
+		<span class="message"></span>
+		
+	</div>
+
   
 </div>
+
+
