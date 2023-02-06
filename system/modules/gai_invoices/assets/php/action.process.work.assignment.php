@@ -122,11 +122,11 @@
     $range = 'Fall!AA' . $vars['sheet_row'];
     $spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
     
-    if($vars['psychologist'] == $vars['shared_1']) { $range = 'Work Assignment!AB' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_2']) { $range = 'Work Assignment!AD' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_3']) { $range = 'Work Assignment!AF' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_4']) { $range = 'Work Assignment!AH' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_5']) { $range = 'Work Assignment!AJ' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_1']) { $range = 'Fall!AB' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_2']) { $range = 'Fall!AD' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_3']) { $range = 'Fall!AF' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_4']) { $range = 'Fall!AH' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_5']) { $range = 'Fall!AJ' . $vars['sheet_row']; }
     
     
     $options = ['valueInputOption' => 'USER_ENTERED'];
