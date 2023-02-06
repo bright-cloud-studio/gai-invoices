@@ -16,6 +16,9 @@
 	
 	<!-- Second, they will fill out this form to generate Transactions and mark this Work Assignment as processed -->
 	<div class="generate_transactions marbot60">
+	
+		<a id="anchor_form" class="anchor_form" name="anchor_form"></a>
+	
 		<?php if (empty($this->workAssignmentForm)): ?>
 			<p class="empty">There are no Work Assignments to build forms from</p>
 		<?php else: ?>
@@ -25,7 +28,7 @@
 	</div>
 	
 	
-	<div class="messages marbot60">
+	<div class="messages marbot60 center_element">
 		
 		<span class="message"></span>
 		
