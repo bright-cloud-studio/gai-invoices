@@ -360,3 +360,66 @@
 
     }
     
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // This is for misc. billing
+    function addMiscBilling(){
+
+        $(".message").empty();
+        
+        
+        var validated = 0;
+        
+        var validateFailed = [];
+        
+        // Label
+        var label = $(".mod_misc_billing #label").val();
+        if(label == '') {
+            $(".message").append("Label cannot be empty<br>");
+            validateFailed['label'] = 1;
+        }
+    
+        // Price
+        var price = $(".mod_misc_billing #price").val();
+        if(price == '') {
+            $(".message").append("Price cannot be empty<br>");
+            validateFailed['price'] = 1;
+        }
+        
+        // Notes
+        var price = $(".mod_misc_billing #notes").val();
+        if(price == '') {
+            $(".message").append("Price cannot be empty<br>");
+            validateFailed['price'] = 1;
+        }
+
+        
+        
+        if($.isEmptyObject(validateFailed)) {
+            // get every form field and add them to the ajax data line
+            var datastring = $("#form_misc_billing").serialize();
+            
+            // trigger this function when our form runs
+            $.ajax({
+                url: '/system/modules/gai_invoices/assets/php/action.misc.billing.php',
+                type: 'POST',
+                data: datastring,
+                success:function(result){
+                    // redirect us to the success page
+                    window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/misc-billing/success.html");
+                },
+                error:function(result){
+                    $(".message").html("There was an error using the AJAX call for addMiscBilling()");
+                }
+            });
+        }
+
+    }
+    
