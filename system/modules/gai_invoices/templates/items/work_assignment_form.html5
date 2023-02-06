@@ -69,6 +69,11 @@
 			<div class="widget widget-submit center_element size50">
 				<a id="handoff_work_assignment" class="btn handoff_work_assignment" onClick="handoffWorkAssignment('<?= $unique_id ?>')">Share</a>
 			</div>
+			
+			<div class="size100 center_element">
+				<span style="font-weight: 600; color: red; margin: 30px 0;">NOTE: Spelling is important! Start entering a name and it will auto-complete the correct spelling for you.</span>
+			</div>
+			
 			<?php } ?>
 			
 		</fieldset>
@@ -165,7 +170,7 @@
 					<label for="price" class="size50">
 						Price
 					</label>
-					<input type="text" name="price" id="price" value="" required="">
+					<input type="text" name="price" id="price" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting Start -->	
@@ -173,7 +178,7 @@
 					<label for="meeting_start" class="size50">
 						Start Time
 					</label>
-					<input type="text" name="meeting_start" id="meeting_start" value="" required="">
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting End -->	
@@ -181,7 +186,7 @@
 					<label for="meeting_end" class="size50">
 						End Time
 					</label>
-					<input type="text" name="meeting_end" id="meeting_end" value="" required="">
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting Date -->	
@@ -189,7 +194,7 @@
 					<label for="meeting_date" class="size50">
 						Meeting Date
 					</label>
-					<input type="text" name="meeting_date" id="meeting_date" value="" required="">
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off">
 				</div>
 	
 				<!-- Notes -->
@@ -220,25 +225,39 @@
 					<label for="service_provided" class="size50">
 						Service Provided
 					</label>
+					
 					<select name="service_provided" id="service_provided">
-						<option value="NONE"></option>
-						<option value="1">Meeting</option>
-						<option value="2">Psych/Achvmt</option>
-						<option value="3">Psych</option>
-						<option value="4">Achvmt</option>
-						<option value="5">Psych/Achvmt/Obs</option>
-						<option value="6">Psych/Obs</option>
-						<option value="7">Achvmt/Obs</option>
-						<option value="8">Psych/Achvmt/Additional</option>
-						<option value="9">Psych/Additional</option>
-						<option value="10">Achvmt/Additional</option>
-						<option value="11">Rating Scales</option>
-						<option value="12">Mtg Late Cancel</option>
-						<option value="13">Test Late Cancel</option>
-						<option value="14">Parking</option>
-						<option value="15">Review District Report</option>
-						<option value="16">Obs</option>
-						<option value="17">Record Review</option>
+						<?php
+							if($this->report_submitted == "Yes" || $this->report_submitted == "yes") {
+								if($this->type_of_testing == "Meeting") { echo '<option value="1" selected>Meeting</option>';}
+								if($this->type_of_testing == "Psych/Achvmt") { echo '<option value="2" selected>Psych/Achvmt</option>';}
+								if($this->type_of_testing == "Psych") { echo '<option value="3" selected>Psych</option>';}
+								if($this->type_of_testing == "Achvmt") { echo '<option value="4" selected>Achvmt</option>';}
+								if($this->type_of_testing == "Psych/Achvmt/Obs") { echo '<option value="5" selected>Psych/Achvmt/Obs</option>';}
+								if($this->type_of_testing == "Psych/Obs") { echo '<option value="6" selected>Psych/Obs</option>';}
+								if($this->type_of_testing == "Achvmt/Obs") { echo '<option value="7" selected>Achvmt/Obs</option>';}
+								if($this->type_of_testing == "Psych/Achvmt/Additional") { echo '<option value="8" selected>Psych/Achvmt/Additional</option>';}
+								if($this->type_of_testing == "Psych/Additional") { echo '<option value="9" selected>Psych/Additional</option>';}
+								if($this->type_of_testing == "Achvmt/Additional") { echo '<option value="10" selected>Achvmt/Additional</option>';}
+								if($this->type_of_testing == "Rating Scales") { echo '<option value="11" selected>Rating Scales</option>';}
+								if($this->type_of_testing == "Mtg Late Cancel") { echo '<option value="12" selected>Mtg Late Cancel</option>';}
+								if($this->type_of_testing == "Test Late Cancel") { echo '<option value="13" selected>Test Late Cancel</option>';}
+								if($this->type_of_testing == "Parking") { echo '<option value="14" selected>Parking</option>';}
+								if($this->type_of_testing == "Meeting") { echo '<option value="15" selected>Review District Report</option>';}
+								if($this->type_of_testing == "Meeting") { echo '<option value="16" selected>Obs</option>';}
+								if($this->type_of_testing == "Meeting") { echo '<option value="17" selected>Record Review</option>';}
+								if($this->type_of_testing == "Misc. Travel Expenses") { echo '<option value="18" selected>Misc. Travel Expenses</option>';}
+								if($this->type_of_testing == "Editing Services") { echo '<option value="19" selected>Editing Services</option>';}
+								if($this->type_of_testing == "Meeting Coverage Coordinator") { echo '<option value="20" selected>Meeting Coverage Coordinator</option>';}
+								echo '<option value="1">Meeting</option>';
+								echo '<option value="13">Test Late Cancel</option>';
+							} else {
+								echo '<option value="13" selected>Test Late Cancel</option>';
+								echo '<option value="1">Meeting</option>';
+							}
+							
+						?>
+						
 					</select>
 				</div>
 	
@@ -247,7 +266,7 @@
 					<label for="price" class="size50">
 						Price
 					</label>
-					<input type="text" name="price" id="price" value="" required="">
+					<input type="text" name="price" id="price" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting Start -->	
@@ -255,7 +274,7 @@
 					<label for="meeting_start" class="size50">
 						Start Time
 					</label>
-					<input type="text" name="meeting_start" id="meeting_start" value="" required="">
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting End -->	
@@ -263,7 +282,7 @@
 					<label for="meeting_end" class="size50">
 						End Time
 					</label>
-					<input type="text" name="meeting_end" id="meeting_end" value="" required="">
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting Date -->	
@@ -271,7 +290,7 @@
 					<label for="meeting_date" class="size50">
 						Meeting Date
 					</label>
-					<input type="text" name="meeting_date" id="meeting_date" value="" required="">
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Notes -->
@@ -295,9 +314,12 @@
 		<!-- Checkbox to stop showing this work assignment to the user -->
 		<div class="widget widget-checkbox size100 center_element size100 center_element">
 			<fieldset id="complete_work_assignment" class="checkbox_container size100 center_element">
+				
 				<input type="hidden" name="complete_work_assignment" value="">
-				<span><input type="checkbox" name="complete_work_assignment" id="complete_work_assignment" class="checkbox" value="yes"> <label id="complete_work_assignment" for="complete_work_assignment">Complete Work Assignment</label></span>
+				<span><input type="checkbox" name="complete_work_assignment" id="complete_work_assignment" class="checkbox" value="yes"> <label id="complete_work_assignment" for="complete_work_assignment">Finalize Work Assignment</label></span>
+				<span style=" margin-top: 15px; width: 100%; font-weight: 600; color: red;">NOTE: Finalizing a Work Assignment will remove it from your list. Only check this box when you are completely done with this student.</span>
 			</fieldset>
+			
 		</div>
 
 		<!-- Submit Button -->
