@@ -36,6 +36,7 @@
 					<td></td>
 					<td></td>
 					<td></td>
+					<td></td>
 					<td>Total:</td>
 					<td class="price">$<span class="number"><?= $GLOBALS['review_total'] ?></span></td>
 					<?php // Reset our price as for some reason its being calculated twice ?>
