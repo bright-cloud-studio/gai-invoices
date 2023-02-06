@@ -129,6 +129,7 @@ class ModTransactionReview extends \Contao\Module
                         $arrData['notes']               = $entry[14];
                         $arrData['reviewed']            = $entry[15];
                         $arrData['deleted']             = $entry[16];
+                        $arrData['label']               = $entry[17];
     
                         // Generate as "List"
                         $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
@@ -239,6 +240,9 @@ class ModTransactionReview extends \Contao\Module
     			break;
     		case 17:
     			return 'Record Review';
+    			break;
+    		case 99:
+    			return 'Misc. Billing';
     			break;
     		default:
     		    return 'Invalid Service Code';
