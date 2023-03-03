@@ -18,20 +18,27 @@
 		</fieldset>
 		
 		<fieldset class="size100">
+
 			<!-- District -->	
-			<div class="widget widget-text size50">
+			<div class="widget widget-select size50">
 				<label for="district" class="size50">
 					District
 				</label>
-				<input type="text" name="district" id="district" value="" required="">
+				<select name="district" id="district">
+					<option value="NONE"></option>
+				</select>
 			</div>
+			
 			<!-- School -->	
-			<div class="widget widget-text size50">
+			<div class="widget widget-select size50">
 				<label for="school" class="size50">
 					School
 				</label>
-				<input type="text" name="school" id="school" value="" required="">
+				<select name="school" id="school" disabled>
+					<option value="NONE"></option>
+				</select>
 			</div>
+
 			<!-- Student Name -->	
 			<div class="widget widget-text size50">
 				<label for="student_name" class="size50">
@@ -39,17 +46,7 @@
 				</label>
 				<input type="text" name="student_name" id="student_name" value="" required="">
 			</div>
-			
-			<!-- Date of Birth -->	
-			<!--
-			<div class="widget widget-text size50">
-				<label for="date_of_birth" class="size50">
-					Date of Birth
-				</label>
-				<input type="text" name="date_of_birth" id="date_of_birth" value="" required="">
-			</div>
-			-->
-			
+
 			<!-- LASID -->	
 			<div class="widget widget-text size50">
 				<label for="lasid" class="size50">
@@ -57,13 +54,15 @@
 				</label>
 				<input type="text" name="lasid" id="lasid" value="" required="">
 			</div>
+			
 			<!-- SASID -->	
 			<div class="widget widget-text size50">
 				<label for="sasid" class="size50">
-					SASID
+					SASID #
 				</label>
 				<input type="text" name="sasid" id="sasid" value="" required="">
 			</div>
+			
 		</fieldset>
 
 		<!-- The section of the form with the meeting details -->
@@ -101,17 +100,6 @@
 								}
 							}
 						?>
-						
-						<!-- These options need to be controllable in the Member's settings page -->
-						
-						<!--
-						<option value="18">Misc. Travel Expenses</option>
-						<option value="19">Editing Services</option>
-						<option value="20">Meeting Coverage Coordinator</option>
-						-->
-						
-						<!-- Lets hide this option for now until we can control it from their Member settings page
-						<!--<option value="14">Parking</option>-->
 					</select>
 				</div>
 	
@@ -128,7 +116,7 @@
 					<label for="meeting_start" class="size50">
 						Start Time
 					</label>
-					<input type="text" name="meeting_start" id="meeting_start" value="" required="">
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting End -->	
@@ -136,7 +124,7 @@
 					<label for="meeting_end" class="size50">
 						End Time
 					</label>
-					<input type="text" name="meeting_end" id="meeting_end" value="" required="">
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting Date -->	
@@ -144,7 +132,7 @@
 					<label for="meeting_date" class="size50">
 						Meeting Date
 					</label>
-					<input type="text" name="meeting_date" id="meeting_date" value="" required="">
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off">
 				</div>
 	
 				<!-- Notes -->
