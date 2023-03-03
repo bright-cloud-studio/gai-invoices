@@ -24,20 +24,11 @@
     
     $options = ['valueInputOption' => 'USER_ENTERED'];
     
-    
-    
+    // loop for the total transactions amount, update the "Reviewed" column
     for ($x = 1; $x <= $vars['trans_total']; $x++) {
         $range = 'Transactions!P' . $vars['row_id_'.$x];
         $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
     }
-    
-    
-    /*
-    foreach($vars['row_id'] as $row_id) {
-        $range = 'Work Assignment!O' . $row_id;
-        $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
-    }
-    */
 
     // display some text to return back to the ajax call
     echo "success";
