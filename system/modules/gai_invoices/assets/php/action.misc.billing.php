@@ -19,6 +19,8 @@
     // remove decimal and trailing numbers
     $price = floor($price);
     
+    // store our newly created Transaction with the filled in data.
+    // transactions have more fields than we need so fill in the blanks with ''
     $newRow = [
         date('F'),
         $vars['date'],
