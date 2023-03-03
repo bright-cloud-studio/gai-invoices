@@ -1,0 +1,76 @@
+<tr>
+	
+	<?php if($this->service == 'Misc. Billing' ) { ?>
+		
+		<td><input type="text" name="update update_<?= $this->row_id ?>" id="update update_<?= $this->row_id ?>" class="update update_<?= $this->row_id ?>" value="" required=""></td>
+		<td style="display: none;"><input type="text" name="row_id>" id="row_id" class="row_id" value="<?= $this->row_id ?>" required=""></td>
+		
+		<td><input type="checkbox" name="delete_<?= $this->row_id ?>" id="delete delete_<?= $this->row_id ?>" class="delete delete_<?= $this->row_id ?>" value="yes"></td>
+		
+		<td><?= $this->label ?></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><?= $this->service ?></td>
+		<td><input type="text" name="price_<?= $this->row_id ?>" id="price price_<?= $this->row_id ?>" class="price price_<?= $this->row_id ?>" value="<?= $this->price ?>" required=""></td>
+	
+	<?php } else { ?>
+		
+		<td><input type="text" name="update update_<?= $this->row_id ?>" id="update update_<?= $this->row_id ?>" class="update update_<?= $this->row_id ?>" value="" required=""></td>
+		<td style="display: none;"><input type="text" name="row_id>" id="row_id" class="row_id" value="<?= $this->row_id ?>" required=""></td>
+		
+		<td><input type="checkbox" name="delete_<?= $this->row_id ?>" id="delete delete_<?= $this->row_id ?>" class="delete delete_<?= $this->row_id ?>" value="yes"></td>
+		
+		<td><?= $this->district ?></td>
+		<td><?= $this->school ?></td>
+		<td><?= $this->student_initials ?></td>
+		
+		<?php
+			if($this->lasid == '' && $this->sasid == '') { ?>
+				<td></td>
+			<?php } else {
+				if($this->lasid == '') { ?>
+					<td>S<?= $this->sasid ?></td>
+				<?php } else { ?>
+				<td>L<?= $this->lasid ?></td>
+				 <?php }
+			} ?>
+	
+		
+		<td>
+			<select name="service_provided_<?= $this->row_id ?>" id="service_provided">
+				<?php if($this->service == 'Meeting'){ echo '<option value="1" selected>Meeting</option>'; } else { echo '<option value="1">Meeting</option>'; }; ?>
+				<?php if($this->service == 'Psych/Achvmt'){ echo '<option value="2" selected>Psych/Achvmt</option>'; } else { echo '<option value="2">Psych/Achvmt</option>'; }; ?>
+				<?php if($this->service == 'Psych'){ echo '<option value="3" selected>Psych</option>'; } else { echo '<option value="3">Psych</option>'; }; ?>
+				<?php if($this->service == 'Achvmt'){ echo '<option value="4" selected>Achvmt</option>'; } else { echo '<option value="4">Achvmt</option>'; }; ?>
+				<?php if($this->service == 'Psych/Achvmt/Obs'){ echo '<option value="5" selected>Psych/Achvmt/Obs</option>'; } else { echo '<option value="5">Psych/Achvmt/Obs</option>'; }; ?>
+				<?php if($this->service == 'Psych/Obs'){ echo '<option value="6" selected>Psych/Obs</option>'; } else { echo '<option value="6">Psych/Obs</option>'; }; ?>
+				<?php if($this->service == 'Achvmt/Obs'){ echo '<option value="7" selected>Achvmt/Obs</option>'; } else { echo '<option value="7">Achvmt/Obs</option>'; }; ?>
+				<?php if($this->service == 'Psych/Achvmt/Additional'){ echo '<option value="8" selected>Psych/Achvmt/Additional</option>'; } else { echo '<option value="8">Psych/Achvmt/Additional</option>'; }; ?>
+				<?php if($this->service == 'Psych/Additional'){ echo '<option value="9" selected>Psych/Additional</option>'; } else { echo '<option value="9">Psych/Additional</option>'; }; ?>
+				<?php if($this->service == 'Achvmt/Additional'){ echo '<option value="10" selected>Achvmt/Additional</option>'; } else { echo '<option value="10">Achvmt/Additional</option>'; }; ?>
+				<?php if($this->service == 'Rating Scales'){ echo '<option value="11" selected>Rating Scales</option>'; } else { echo '<option value="11">Rating Scales</option>'; }; ?>
+				<?php if($this->service == 'Mtg Late Cancel'){ echo '<option value="12" selected>Mtg Late Cancel</option>'; } else { echo '<option value="12">Mtg Late Cancel</option>'; }; ?>
+				<?php if($this->service == 'Test Late Cancel'){ echo '<option value="13" selected>Test Late Cancel</option>'; } else { echo '<option value="13">Test Late Cancel</option>'; }; ?>
+				<?php if($this->service == 'Parking'){ echo '<option value="14" selected>Parking</option>'; } else { echo '<option value="14">Parking</option>'; }; ?>
+				<?php if($this->service == 'Review District Report'){ echo '<option value="15" selected>Review District Report</option>'; } else { echo '<option value="15">Review District Report</option>'; }; ?>
+				<?php if($this->service == 'Obs'){ echo '<option value="16" selected>Obs</option>'; } else { echo '<option value="16">Obs</option>'; }; ?>
+				<?php if($this->service == 'Record Review'){ echo '<option value="17" selected>Record Review</option>'; } else { echo '<option value="17">Record Review</option>'; }; ?>
+				<?php if($this->service == 'Misc. Travel Expenses'){ echo '<option value="18" selected>Misc. Travel Expenses</option>'; } else { echo '<option value="18">Misc. Travel Expenses</option>'; }; ?>
+				<?php if($this->service == 'Editing Services'){ echo '<option value="19" selected>Editing Services</option>'; } else { echo '<option value="19">Editing Services</option>'; }; ?>
+				<?php if($this->service == 'Meeting Coverage Coordinator'){ echo '<option value="20" selected>Meeting Coverage Coordinator</option>'; } else { echo '<option value="20">Meeting Coverage Coordinator</option>'; }; ?>
+				<?php if($this->service == 'Psych/Achvmt/Additional/Obs'){ echo '<option value="21" selected>Psych/Achvmt/Additional/Obs</option>'; } else { echo '<option value="21">Psych/Achvmt/Additional/Obs</option>'; }; ?>
+				<?php if($this->service == 'Psych/Achvmt/Additionalx2/Obs'){ echo '<option value="22" selected>Psych/Achvmt/Additionalx2/Obs</option>'; } else { echo '<option value="22">Psych/Achvmt/Additionalx2/Obs</option>'; }; ?>
+				<?php if($this->service == 'Psych/Achvmt Law'){ echo '<option value="97" selected>Psych/Achvmt Law</option>'; } else { echo '<option value="97">Psych/Achvmt Law</option>'; }; ?>
+				<?php if($this->service == 'Psych Law'){ echo '<option value="98" selected>Psych Law</option>'; } else { echo '<option value="98">Psych Law</option>'; }; ?>
+				<?php if($this->service == 'Misc. Billing'){ echo '<option value="99" selected>Misc. Billing</option>'; } else { echo '<option value="99">Misc. Billing</option>'; }; ?>
+				
+			</select>
+			
+		</td>
+		
+		
+		<td><input type="text" name="price_<?= $this->row_id ?>" id="price price_<?= $this->row_id ?>" class="price price_<?= $this->row_id ?>" value="<?= $this->price ?>" required=""></td>
+		
+	<?php } ?>
+</tr>
