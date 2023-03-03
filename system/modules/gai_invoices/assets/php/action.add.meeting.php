@@ -14,7 +14,6 @@
     $service = new \Google_Service_Sheets($client);
     $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
     
-    
     // first remove dollar sign
     $price = str_replace('$','',$vars['price']);
     // remove decimal and trailing numbers
@@ -26,13 +25,16 @@
     else
         $meeting_duration = 0;
     
+    // remove periods and spaces from the student initials in the event they were fancy and added them.
+    $studentName = str_replace( array('.', ' '), '', $vars['student_name']);
+    
     $newRow = [
         date('F'),
         $vars['date'],
         $vars['psychologist'],
         $vars['district'],
         $vars['school'],
-        $vars['student_name'],
+        $studentName,
         $vars['service_provided'],
         $price,
         $vars['lasid'],
@@ -53,7 +55,6 @@
  
     // display some text to return back to the ajax call
     echo "success";
-    
     
     // Converts our H:i format into pure minutes
     function hoursToMinutes($hours) 
