@@ -80,7 +80,7 @@ class ModTransactionReview extends \Contao\Module
     protected function compile()
     {
         $rand_ver = rand(1,9999);
-        $GLOBALS['TL_BODY'][] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+        $GLOBALS['TL_BODY']['transaction_review'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
      
         // get the user and build their name
         $objUser = \FrontendUser::getInstance();
@@ -99,46 +99,51 @@ class ModTransactionReview extends \Contao\Module
         $trans_ids = array();
         $objUser = \FrontendUser::getInstance();
         
+        // get the current month
+        $month = date('F');
+        
         $entry_id = 1;
         $transaction_id = 1;
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
-                
+                // if this isnt flagged as Deleted
                 if($entry[16] != 1) {
-                
-                    if($user == $entry[2]) {
-                        $arrData = array();
-                        $arrData['row_id']              = $entry_id;
-                        $arrData['transaction_id']      = $transaction_id;
-                        $arrData['billing_month']       = $entry[0];
-                        $arrData['date_submitted']      = $entry[1];
-                        $arrData['psychologist']        = $entry[2];
-                        $arrData['district']            = $entry[3];
-                        $arrData['school']              = $entry[4];
-                        $arrData['student_initials']    = $entry[5];
-                        $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
-                        $arrData['price']               = $entry[7];
-                        $arrData['lasid']               = $entry[8];
-                        $arrData['sasid']               = $entry[9];
-                        $arrData['meeting_date']        = $entry[10];
-                        $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
-                        $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
-                        $arrData['meeting_duration']    = $entry[13];
-                        $arrData['notes']               = $entry[14];
-                        $arrData['reviewed']            = $entry[15];
-                        $arrData['deleted']             = $entry[16];
-                        $arrData['label']               = $entry[17];
-    
-                        // Generate as "List"
-                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
-                        $objListTemplate = new \FrontendTemplate($strListTemplate);
-                        $objListTemplate->setData($arrData);
-                        $entryHistory[$entry_id] = $objListTemplate->parse();
-                        $trans_ids[$transaction_id] = $entry_id;
-                        
-                        $transaction_id++;
+                    // if the billing month on this transaction matches the current month
+                    if($entry[0] == $month) {
+                        if($user == $entry[2]) {
+                            $arrData = array();
+                            $arrData['row_id']              = $entry_id;
+                            $arrData['transaction_id']      = $transaction_id;
+                            $arrData['billing_month']       = $entry[0];
+                            $arrData['date_submitted']      = $entry[1];
+                            $arrData['psychologist']        = $entry[2];
+                            $arrData['district']            = $entry[3];
+                            $arrData['school']              = $entry[4];
+                            $arrData['student_initials']    = $entry[5];
+                            $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
+                            $arrData['price']               = $entry[7];
+                            $arrData['lasid']               = $entry[8];
+                            $arrData['sasid']               = $entry[9];
+                            $arrData['meeting_date']        = $entry[10];
+                            $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
+                            $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
+                            $arrData['meeting_duration']    = $entry[13];
+                            $arrData['notes']               = $entry[14];
+                            $arrData['reviewed']            = $entry[15];
+                            $arrData['deleted']             = $entry[16];
+                            $arrData['label']               = $entry[17];
+        
+                            // Generate as "List"
+                            $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
+                            $objListTemplate = new \FrontendTemplate($strListTemplate);
+                            $objListTemplate->setData($arrData);
+                            $entryHistory[$entry_id] = $objListTemplate->parse();
+                            $trans_ids[$transaction_id] = $entry_id;
+                            
+                            $transaction_id++;
+                        }
                     }
                     
                 }
