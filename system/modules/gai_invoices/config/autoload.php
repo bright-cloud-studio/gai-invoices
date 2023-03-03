@@ -21,6 +21,7 @@ ClassLoader::addClasses(array
     'Bcs\Module\ModWorkAssignmentHistory'       => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignmentHistory.php',
     'Bcs\Module\ModTransactionReview'           => 'system/modules/gai_invoices/library/Bcs/Module/ModTransactionReview.php',
     'Bcs\Module\ModAdminReview'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAdminReview.php',
+    'Bcs\Module\ModSendInvoiceEmails'           => 'system/modules/gai_invoices/library/Bcs/Module/ModSendInvoiceEmails.php',
 ));
 
 /* Register the templates */
@@ -40,6 +41,9 @@ TemplateLoader::addFiles(array
 	'mod_transaction_review'        => 'system/modules/gai_invoices/templates/modules',
 	'transaction_review_list'       => 'system/modules/gai_invoices/templates/items',
     
-    'mod_admin_review'        => 'system/modules/gai_invoices/templates/modules',
-	'admin_review_list'       => 'system/modules/gai_invoices/templates/items',
+    'mod_admin_review'               => 'system/modules/gai_invoices/templates/modules',
+	'admin_review_list'              => 'system/modules/gai_invoices/templates/items',
+    
+    'mod_send_invoice_emails'        => 'system/modules/gai_invoices/templates/modules',
+    'send_invoice_emails_list'       => 'system/modules/gai_invoices/templates/items',
 ));
