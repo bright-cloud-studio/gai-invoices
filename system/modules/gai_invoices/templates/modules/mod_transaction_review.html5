@@ -73,9 +73,11 @@
 				
 				<!-- Checkbox to stop showing this work assignment to the user -->
 				<div class="widget widget-checkbox size100 center_element size100 center_element">
-					<fieldset id="complete_work_assignment" class="checkbox_container size100 center_element">
-						<input type="hidden" name="complete_work_assignment" value="">
-						<span><input type="checkbox" name="complete_work_assignment" id="complete_work_assignment" class="checkbox" value="yes"> <label id="complete_work_assignment" for="complete_work_assignment">I have reviewed these transactions</label></span>
+					<fieldset id="reviewed_confirmed" class="checkbox_container size100 center_element">
+						<span>
+							<input type="checkbox" name="reviewed_confirmed" id="reviewed_confirmed" class="checkbox" value="yes">
+							<label id="reviewed_confirmed" for="reviewed_confirmed">I have reviewed these transactions</label>
+						</span>
 					</fieldset>
 				</div>
 				
