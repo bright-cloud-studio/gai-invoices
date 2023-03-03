@@ -19,3 +19,4 @@ $GLOBALS['TL_DCA']['tl_module']['palettes']['mod_misc_billing'] 		    = '{title_
 $GLOBALS['TL_DCA']['tl_module']['palettes']['mod_work_assignment_history'] 	= '{title_legend},name,headline,type;{template_legend:hide},customTpl;{expert_legend:hide},guests,cssID,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['mod_transaction_review'] 		= '{title_legend},name,headline,type;{template_legend:hide},customTpl;{expert_legend:hide},guests,cssID,space';
 $GLOBALS['TL_DCA']['tl_module']['palettes']['mod_admin_review'] 		    = '{title_legend},name,headline,type;{template_legend:hide},customTpl;{expert_legend:hide},guests,cssID,space';
+$GLOBALS['TL_DCA']['tl_module']['palettes']['mod_send_invoice_emails'] 		    = '{title_legend},name,headline,type;{template_legend:hide},customTpl;{expert_legend:hide},guests,cssID,space';
