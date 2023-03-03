@@ -25,7 +25,7 @@
 	
 	<?php } else { ?>
 	
-		<td><a onClick='deleteTransaction("<?= $this->row_id ?>");'>DELETE</a></td>
+		<td><a class="delete" onClick='deleteTransaction("<?= $this->row_id ?>");'>DELETE</a></td>
 		<td><?= $this->district ?></td>
 		<td><?= $this->school ?></td>
 		<td><?= $this->student_initials ?></td>
