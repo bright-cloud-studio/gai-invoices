@@ -19,3 +19,4 @@ $GLOBALS['TL_LANG']['FMD']['mod_misc_billing']              = array('Miscellaneo
 $GLOBALS['TL_LANG']['FMD']['mod_work_assignment_history'] 	= array('Work Assignment History', 'Displays history of processed Work Assignments');
 $GLOBALS['TL_LANG']['FMD']['mod_transaction_review']        = array('Transaction Review', 'List and review transactions submitted in the last month');
 $GLOBALS['TL_LANG']['FMD']['mod_admin_review']              = array('Admin Review', 'Review and edit all transactions for the last billing month');
+$GLOBALS['TL_LANG']['FMD']['mod_send_invoice_emails']       = array('Send Invoice Emails', 'Choose which schools and psychologist to send the previous months invoice');
