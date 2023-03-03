@@ -168,7 +168,7 @@
 				<!-- Price -->	
 				<div class="widget widget-text size50">
 					<label for="price" class="size50">
-						Price
+						Hour Rate
 					</label>
 					<input type="text" name="price" id="price" value="" required="" autocomplete="off">
 				</div>
@@ -226,10 +226,12 @@
 						Service Provided
 					</label>
 					
+					<?php $displayString = 'display: none;'; ?>
+					
 					<select name="service_provided" id="service_provided">
 						<?php
 							if($this->report_submitted == "Yes" || $this->report_submitted == "yes") {
-								if($this->type_of_testing == "Meeting") { echo '<option value="1" selected>Meeting</option>';}
+								if($this->type_of_testing == "Meeting") { echo '<option value="1" selected>Meeting</option>'; $displayString = '';}
 								if($this->type_of_testing == "Psych/Achvmt") { echo '<option value="2" selected>Psych/Achvmt</option>';}
 								if($this->type_of_testing == "Psych") { echo '<option value="3" selected>Psych</option>';}
 								if($this->type_of_testing == "Achvmt") { echo '<option value="4" selected>Achvmt</option>';}
@@ -240,20 +242,23 @@
 								if($this->type_of_testing == "Psych/Additional") { echo '<option value="9" selected>Psych/Additional</option>';}
 								if($this->type_of_testing == "Achvmt/Additional") { echo '<option value="10" selected>Achvmt/Additional</option>';}
 								if($this->type_of_testing == "Rating Scales") { echo '<option value="11" selected>Rating Scales</option>';}
-								if($this->type_of_testing == "Mtg Late Cancel") { echo '<option value="12" selected>Mtg Late Cancel</option>';}
-								if($this->type_of_testing == "Test Late Cancel") { echo '<option value="13" selected>Test Late Cancel</option>';}
+								if($this->type_of_testing == "Mtg Late Cancel") { echo '<option value="12" selected>Mtg Late Cancel</option>'; $displayString = '';}
+								if($this->type_of_testing == "Test Late Cancel") { echo '<option value="13" selected>Test Late Cancel</option>'; $displayString = '';}
 								if($this->type_of_testing == "Parking") { echo '<option value="14" selected>Parking</option>';}
-								if($this->type_of_testing == "Meeting") { echo '<option value="15" selected>Review District Report</option>';}
-								if($this->type_of_testing == "Meeting") { echo '<option value="16" selected>Obs</option>';}
-								if($this->type_of_testing == "Meeting") { echo '<option value="17" selected>Record Review</option>';}
+								if($this->type_of_testing == "Review District Report") { echo '<option value="15" selected>Review District Report</option>';}
+								if($this->type_of_testing == "Obs") { echo '<option value="16" selected>Obs</option>';}
+								if($this->type_of_testing == "Record Review") { echo '<option value="17" selected>Record Review</option>';}
 								if($this->type_of_testing == "Misc. Travel Expenses") { echo '<option value="18" selected>Misc. Travel Expenses</option>';}
 								if($this->type_of_testing == "Editing Services") { echo '<option value="19" selected>Editing Services</option>';}
 								if($this->type_of_testing == "Meeting Coverage Coordinator") { echo '<option value="20" selected>Meeting Coverage Coordinator</option>';}
 								echo '<option value="1">Meeting</option>';
 								echo '<option value="13">Test Late Cancel</option>';
+								echo '<option value="15">Review District Report</option>';
 							} else {
 								echo '<option value="13" selected>Test Late Cancel</option>';
 								echo '<option value="1">Meeting</option>';
+								echo '<option value="15">Review District Report</option>';
+								$displayString = '';
 							}
 							
 						?>
@@ -264,13 +269,13 @@
 				<!-- Price -->	
 				<div class="widget widget-text size50">
 					<label for="price" class="size50">
-						Price
+						Hourly Rate
 					</label>
 					<input type="text" name="price" id="price" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting Start -->	
-				<div class="widget widget-text size50" id="meeting_start" style="display: none;">
+				<div class="widget widget-text size50" id="meeting_start" style="<?= $displayString ?>">
 					<label for="meeting_start" class="size50">
 						Start Time
 					</label>
@@ -278,7 +283,7 @@
 				</div>
 				
 				<!-- Meeting End -->	
-				<div class="widget widget-text size50" id="meeting_end" style="display: none;">
+				<div class="widget widget-text size50" id="meeting_end" style="<?= $displayString ?>">
 					<label for="meeting_end" class="size50">
 						End Time
 					</label>
@@ -286,7 +291,7 @@
 				</div>
 				
 				<!-- Meeting Date -->	
-				<div class="widget widget-text size50" id="meeting_date" style="display: none;">
+				<div class="widget widget-text size50" id="meeting_date" style="<?= $displayString ?>">
 					<label for="meeting_date" class="size50">
 						Meeting Date
 					</label>
@@ -303,7 +308,6 @@
 				
 			</fieldset>
 
-			
 		</div>
 		
 		<!-- Add Another Transaction Button -->
@@ -311,22 +315,23 @@
 			<a id="add_another_transaction" class="btn add_another_transaction" onClick="addAnotherTransaction('<?= $unique_id ?>');">Add Meeting</a>
 		</div>
 		
+		<!-- Submit Button -->
+		<div class="widget widget-submit center_element size100 marbot60">
+			<a id="process_work_assignment" class="btn process_work_assignment" onClick="processWorkAssignment('<?= $unique_id ?>')">Process Work Assignment</a>
+		</div>
+		
 		<!-- Checkbox to stop showing this work assignment to the user -->
 		<div class="widget widget-checkbox size100 center_element size100 center_element">
 			<fieldset id="complete_work_assignment" class="checkbox_container size100 center_element">
 				
-				<input type="hidden" name="complete_work_assignment" value="">
-				<span><input type="checkbox" name="complete_work_assignment" id="complete_work_assignment" class="checkbox" value="yes"> <label id="complete_work_assignment" for="complete_work_assignment">Finalize Work Assignment</label></span>
+				<span><input type="checkbox" name="complete_work_assignment" id="complete_work_assignment" class="checkbox" value="yes">
+				<label id="complete_work_assignment" for="complete_work_assignment">Finalize Work Assignment</label></span>
+				
 				<span style=" margin-top: 15px; width: 100%; font-weight: 600; color: red;">NOTE: Finalizing a Work Assignment will remove it from your list. Only check this box when you are completely done with this student.</span>
 			</fieldset>
 			
 		</div>
 
-		<!-- Submit Button -->
-		<div class="widget widget-submit center_element size100">
-			<a id="process_work_assignment" class="btn process_work_assignment" onClick="processWorkAssignment('<?= $unique_id ?>')">Process Work Assignment</a>
-		</div>
-	
 	</form>
 	
 </div>
