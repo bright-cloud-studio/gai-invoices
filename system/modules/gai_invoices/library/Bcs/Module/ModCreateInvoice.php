@@ -87,7 +87,7 @@ class ModCreateInvoice extends \Contao\Module
     {
         // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
-        $GLOBALS['TL_BODY'][] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+        $GLOBALS['TL_BODY']['gai_invoice'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
         
         // get the user and build their name
         $objUser = \FrontendUser::getInstance();
@@ -105,6 +105,22 @@ class ModCreateInvoice extends \Contao\Module
         
         $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
         $values = $response->getValues();
+        
+        
+        // to get NEW UNSHARED FIRST, do this
+        
+        // move shared new to the end
+        //$values = $this->sharedNewToEnd($user, $values);
+        // move shared non-new to the end
+       // $values = $this->sharedToEnd($user, $values);
+        // move non-new entries to the end
+        //$values = $this->processedToEnd($user, $values);
+        
+        
+        
+
+        
+        
         
         // an array to store this users entries
         $entryList = array();
@@ -215,6 +231,110 @@ class ModCreateInvoice extends \Contao\Module
         $this->Template->workAssignmentForm = $entryForm;
 
 	}
+	
+    // Pushes certain Transaction entries to the END of an array
+    function sharedNewToEnd($user, $array) {
+        foreach ($array as $key => $val) {
+            
+            
+            // if you are the primary psy
+            if($val['3'] == $user) {
+                // if this is unprocessed and has been shared
+                if($val['26'] == "" && $val["27"] != "") {
+                    $item = $array[$key];
+                    unset($array[$key]);
+                    array_push($array, $item);
+                }
+            } else {
+                
+                $sharedNew = false;
+                
+                // if shared 1 is you and unprocessed
+                if($val['27'] == $user && $val['28'] == "")
+                    $sharedNew = true;
+                // if shared 2 is you and unprocessed
+                if($val['29'] == $user && $val['30'] == "")
+                    $sharedNew = true;
+                // if shared 3 is you and unprocessed
+                if($val['31'] == $user && $val['32'] == "")
+                    $sharedNew = true;
+                // if shared 4 is you and unprocessed
+                if($val['33'] == $user && $val['34'] == "")
+                    $sharedNew = true;
+                // if shared 5 is you and unprocessed
+                if($val['35'] == $user && $val['36'] == "")
+                    $sharedNew = true;
+                    
+                if($sharedNew == true) {
+                    $item = $array[$key];
+                    unset($array[$key]);
+                    array_push($array, $item);
+                }
+            }
+        }
+        return $array;
+    }
+    
+    // Pushes certain Transaction entries to the END of an array
+    function sharedToEnd($user, $array) {
+        foreach ($array as $key => $val) {
+            
+            // if you are the primary psy
+            if($val['3'] == $user) {
+                // if this is unprocessed and has been shared
+                if($val['26'] == "1" && $val["27"] != "") {
+                    $item = $array[$key];
+                    unset($array[$key]);
+                    array_push($array, $item);
+                }
+            } else {
+                
+                $sharedProcessed = false;
+                
+                // if shared 1 is you and unprocessed
+                if($val['27'] == $user && $val['28'] != "")
+                    $sharedProcessed = true;
+                // if shared 2 is you and unprocessed
+                if($val['29'] == $user && $val['30'] != "")
+                    $sharedProcessed = true;
+                // if shared 3 is you and unprocessed
+                if($val['31'] == $user && $val['32'] != "")
+                    $sharedProcessed = true;
+                // if shared 4 is you and unprocessed
+                if($val['33'] == $user && $val['34'] != "")
+                    $sharedProcessed = true;
+                // if shared 5 is you and unprocessed
+                if($val['35'] == $user && $val['36'] != "")
+                    $sharedProcessed = true;
+                    
+                if($sharedProcessed == true) {
+                    $item = $array[$key];
+                    unset($array[$key]);
+                    array_push($array, $item);
+                }
+            }
+            
+        }
+        return $array;
+    }
+    
+    // Pushes certain Transaction entries to the END of an array
+    function processedToEnd($user, $array) {
+        foreach ($array as $key => $val) {
+            
+            // if you are the primary psy
+            if($val['3'] == $user) {
+                // if this is processed and has not been shared
+                if($val['26'] == "1" && $val["27"] == "") {
+                    $item = $array[$key];
+                    unset($array[$key]);
+                    array_push($array, $item);
+                }
+            }
+            
+        }
+        return $array;
+    }
 
 } 
 
