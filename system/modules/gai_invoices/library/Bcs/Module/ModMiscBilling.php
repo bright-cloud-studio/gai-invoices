@@ -83,7 +83,7 @@ class ModMiscBilling extends \Contao\Module
     {
         // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
-        $GLOBALS['TL_BODY'][] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+        $GLOBALS['TL_BODY']['misc_billing'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
         
 	}
 } 
