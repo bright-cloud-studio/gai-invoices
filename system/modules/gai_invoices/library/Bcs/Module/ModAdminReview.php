@@ -80,11 +80,7 @@ class ModAdminReview extends \Contao\Module
     protected function compile()
     {
         $rand_ver = rand(1,9999);
-        $GLOBALS['TL_BODY'][] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
-     
-        // get the user and build their name
-        $objUser = \FrontendUser::getInstance();
-        $user = $objUser->firstname . " " . $objUser->lastname;
+        $GLOBALS['TL_BODY']['admin_review'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
         
         // Get this user's unprocessed listings from Sheets
         $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
@@ -94,10 +90,15 @@ class ModAdminReview extends \Contao\Module
         $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
         $values = $response->getValues();
         
+        
         // an array to store this users entries
         $entryHistory = array();
         $trans_ids = array();
         $objUser = \FrontendUser::getInstance();
+        
+        // get the current month
+        $today = date('F');
+        $month = date("F", strtotime ( '-1 month' , strtotime ( $today ) )) ;
         
         $entry_id = 1;
         $transaction_id = 1;
@@ -105,10 +106,11 @@ class ModAdminReview extends \Contao\Module
             
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
-                
+                // if this isnt flagged as deleted
                 if($entry[16] != 1) {
-                
-                    if($user == $entry[2]) {
+                    
+                    // if the billing month on this transaction matches the current month
+                    if($entry[0] == $month) {
                         $arrData = array();
                         $arrData['row_id']              = $entry_id;
                         $arrData['transaction_id']      = $transaction_id;
@@ -132,10 +134,10 @@ class ModAdminReview extends \Contao\Module
                         $arrData['label']               = $entry[17];
     
                         // Generate as "List"
-                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
+                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'admin_review_list');
                         $objListTemplate = new \FrontendTemplate($strListTemplate);
                         $objListTemplate->setData($arrData);
-                        $entryHistory[$entry_id] = $objListTemplate->parse();
+                        $entryHistory[$arrData['psychologist']][$entry_id] = $objListTemplate->parse();
                         $trans_ids[$transaction_id] = $entry_id;
                         
                         $transaction_id++;
@@ -249,6 +251,17 @@ class ModAdminReview extends \Contao\Module
     		    break;
     	}
     }
-
-	
+    
+    // Pushes certain Transaction entries to the END of an array
+    function arrayMoveToEnd($array, $entry, $value) {
+        foreach ($array as $key => $val) {
+            // if the service code 
+            if ($val[$entry] == $value) {
+                $item = $array[$key];
+                unset($array[$key]);
+                array_push($array, $item);
+            }
+        }
+        return $array;
+    }
 } 
