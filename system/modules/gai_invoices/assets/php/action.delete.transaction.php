@@ -14,7 +14,7 @@
     $service = new \Google_Service_Sheets($client);
     $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
     
-    // Mark this Work Assignment as Processed
+    // Flag: 1 = Deleted, 0 or NULL = Not Deleted
     $updateRow = [
        "1",
     ];
@@ -26,12 +26,6 @@
     
     $range = 'Transactions!Q' . $vars['row_id'];
     $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
-    
-    /* Outdated version of this code
-    $range = 'Transactions!' . $vars['row_id'] . ':' . $vars['row_id'];
-    $requestBody = new Google_Service_Sheets_ClearValuesRequest();
-    $response = $service->spreadsheets_values->clear($spreadsheetId, $range, $requestBody);
-    */
 
     // display some text to return back to the ajax call
     echo "success";
