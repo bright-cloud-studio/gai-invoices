@@ -109,7 +109,9 @@
     
     // Mark this Work Assignment as Processed
     $processed = 1;
-    if($vars['complete_work_assignment'] == "yes") { $processed = 2; }
+    if(isset($vars['complete_work_assignment'])) {
+        if($vars['complete_work_assignment'] == "yes") { $processed = 2; }
+    }
     $updateRow = [
         $processed
     ];
@@ -122,11 +124,11 @@
     $range = 'Fall!AA' . $vars['sheet_row'];
     $spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
     
-    if($vars['psychologist'] == $vars['shared_1']) { $range = 'Fall!AB' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_2']) { $range = 'Fall!AD' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_3']) { $range = 'Fall!AF' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_4']) { $range = 'Fall!AH' . $vars['sheet_row']; }
-    if($vars['psychologist'] == $vars['shared_5']) { $range = 'Fall!AJ' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_1']) { $range = 'Fall!AC' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_2']) { $range = 'Fall!AE' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_3']) { $range = 'Fall!AG' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_4']) { $range = 'Fall!AI' . $vars['sheet_row']; }
+    if($vars['psychologist'] == $vars['shared_5']) { $range = 'Fall!AK' . $vars['sheet_row']; }
     
     
     $options = ['valueInputOption' => 'USER_ENTERED'];
