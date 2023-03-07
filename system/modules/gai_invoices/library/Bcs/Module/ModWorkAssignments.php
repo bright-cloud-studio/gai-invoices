@@ -17,14 +17,14 @@ use Google;
 
 
  
-class ModCreateInvoice extends \Contao\Module
+class ModWorkAssignments extends \Contao\Module
 {
  
     /**
      * Template
      * @var string
      */
-    protected $strTemplate = 'mod_create_invoice';
+    protected $strTemplate = 'mod_work_assignments';
   
     // our google api stuffs
     protected $client;
@@ -51,12 +51,8 @@ class ModCreateInvoice extends \Contao\Module
         $this->$client->addScope(Google\Service\Sheets::SPREADSHEETS);
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
-        
         // Set the ID for our specific spreadsheet
-        // DEV
-        // ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
-        // LIVE
-        ModCreateInvoice::$spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
+        ModWorkAssignments::$spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
 		
 	}
 	
@@ -70,7 +66,7 @@ class ModCreateInvoice extends \Contao\Module
         {
             $objTemplate = new \BackendTemplate('be_wildcard');
  
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['create_invoice'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['work_assignments'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
@@ -87,14 +83,14 @@ class ModCreateInvoice extends \Contao\Module
     {
         // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
-        $GLOBALS['TL_BODY']['gai_invoice'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+        $GLOBALS['TL_BODY']['work_assignments'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
         
         // get the user and build their name
         $objUser = \FrontendUser::getInstance();
         $user = $objUser->firstname . " " . $objUser->lastname;
         
         // Get this user's unprocessed listings from Sheets
-        $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
+        $spreadsheet = $this->$service->spreadsheets->get(ModWorkAssignments::$spreadsheetId);
         
         // get all of our unarchived Transactions
         // DEV
@@ -103,24 +99,8 @@ class ModCreateInvoice extends \Contao\Module
         // LIVE
         $range = 'Fall';
         
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModWorkAssignments::$spreadsheetId, $range);
         $values = $response->getValues();
-        
-        
-        // to get NEW UNSHARED FIRST, do this
-        
-        // move shared new to the end
-        //$values = $this->sharedNewToEnd($user, $values);
-        // move shared non-new to the end
-       // $values = $this->sharedToEnd($user, $values);
-        // move non-new entries to the end
-        //$values = $this->processedToEnd($user, $values);
-        
-        
-        
-
-        
-        
         
         // an array to store this users entries
         $entryList = array();
@@ -130,14 +110,12 @@ class ModCreateInvoice extends \Contao\Module
         // 2nd - Non-new
         // 3rd - NEW Shared
         // 4th - Non-new Shared
-        
         $listNew = array();
         $listNonNew = array();
         $listNewShared = array();
         $listNonNewShared = array();
         
         $entryForm = array();
-        //$objUser = \FrontendUser::getInstance();
         
         $show = 0;
         $entry_id = 1;
@@ -223,13 +201,8 @@ class ModCreateInvoice extends \Contao\Module
                         $objListTemplate->setData($arrData);
                         
                         $entryList[$entry_id] = $objListTemplate->parse();
-                        
-                        
-                        
-                        
+
                         // SORTING
-                
-                
                         // if this is shared
                         if($shared_total > 0) {
                             
@@ -300,13 +273,7 @@ class ModCreateInvoice extends \Contao\Module
                             
                         }
                 
-                        
-                        
-                        
 
-                        
-                        
-                        
                         $index++;
                         
                         // Generate as "Form"
@@ -334,112 +301,5 @@ class ModCreateInvoice extends \Contao\Module
         $this->Template->workAssignmentListNonNewShared = $listNonNewShared;
 
 	}
-	
-    // Pushes certain Transaction entries to the END of an array
-    function sharedNewToEnd($user, $array) {
-        foreach ($array as $key => $val) {
-            
-            
-            // if you are the primary psy
-            if($val['3'] == $user) {
-                // if this is unprocessed and has been shared
-                if($val['26'] == "" && $val["27"] != "") {
-                    $item = $array[$key];
-                    unset($array[$key]);
-                    array_push($array, $item);
-                }
-            } else {
-                
-                $sharedNew = false;
-                
-                // if shared 1 is you and unprocessed
-                if($val['27'] == $user && $val['28'] == "")
-                    $sharedNew = true;
-                // if shared 2 is you and unprocessed
-                if($val['29'] == $user && $val['30'] == "")
-                    $sharedNew = true;
-                // if shared 3 is you and unprocessed
-                if($val['31'] == $user && $val['32'] == "")
-                    $sharedNew = true;
-                // if shared 4 is you and unprocessed
-                if($val['33'] == $user && $val['34'] == "")
-                    $sharedNew = true;
-                // if shared 5 is you and unprocessed
-                if($val['35'] == $user && $val['36'] == "")
-                    $sharedNew = true;
-                    
-                if($sharedNew == true) {
-                    $item = $array[$key];
-                    unset($array[$key]);
-                    array_push($array, $item);
-                }
-            }
-        }
-        return $array;
-    }
-    
-    // Pushes certain Transaction entries to the END of an array
-    function sharedToEnd($user, $array) {
-        foreach ($array as $key => $val) {
-            
-            // if you are the primary psy
-            if($val['3'] == $user) {
-                // if this is unprocessed and has been shared
-                if($val['26'] == "1" && $val["27"] != "") {
-                    $item = $array[$key];
-                    unset($array[$key]);
-                    array_push($array, $item);
-                }
-            } else {
-                
-                $sharedProcessed = false;
-                
-                // if shared 1 is you and unprocessed
-                if($val['27'] == $user && $val['28'] != "")
-                    $sharedProcessed = true;
-                // if shared 2 is you and unprocessed
-                if($val['29'] == $user && $val['30'] != "")
-                    $sharedProcessed = true;
-                // if shared 3 is you and unprocessed
-                if($val['31'] == $user && $val['32'] != "")
-                    $sharedProcessed = true;
-                // if shared 4 is you and unprocessed
-                if($val['33'] == $user && $val['34'] != "")
-                    $sharedProcessed = true;
-                // if shared 5 is you and unprocessed
-                if($val['35'] == $user && $val['36'] != "")
-                    $sharedProcessed = true;
-                    
-                if($sharedProcessed == true) {
-                    $item = $array[$key];
-                    unset($array[$key]);
-                    array_push($array, $item);
-                }
-            }
-            
-        }
-        return $array;
-    }
-    
-    // Pushes certain Transaction entries to the END of an array
-    function processedToEnd($user, $array) {
-        foreach ($array as $key => $val) {
-            
-            // if you are the primary psy
-            if($val['3'] == $user) {
-                // if this is processed and has not been shared
-                if($val['26'] == "1" && $val["27"] == "") {
-                    $item = $array[$key];
-                    unset($array[$key]);
-                    array_push($array, $item);
-                }
-            }
-            
-        }
-        return $array;
-    }
 
 } 
-
-
-
