@@ -52,7 +52,7 @@ class ModWorkAssignmentHistory extends \Contao\Module
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
         // Set the ID for our specific spreadsheet
-        ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+        ModWorkAssignmentHistory::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
 		
 	}
 	
@@ -88,11 +88,11 @@ class ModWorkAssignmentHistory extends \Contao\Module
         $user = $objUser->firstname . " " . $objUser->lastname;
         
         // Get this user's unprocessed listings from Sheets
-        $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
+        $spreadsheet = $this->$service->spreadsheets->get(ModWorkAssignmentHistory::$spreadsheetId);
         
         // get all of our unarchived Transactions
         $range = 'Invoices - Psy';
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModWorkAssignmentHistory::$spreadsheetId, $range);
         $values = $response->getValues();
         
         // an array to store this users entries
