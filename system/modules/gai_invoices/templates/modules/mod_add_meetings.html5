@@ -81,6 +81,7 @@
 						<option value="NONE"></option>
 						<option value="1">Meeting</option>
 						<option value="12">Mtg Late Cancel</option>
+						<option value="13">Test Late Cancel</option>
 						<option value="15">Review District Report</option>
 						
 						<?php
@@ -106,7 +107,7 @@
 				<!-- Price -->	
 				<div class="widget widget-text size50">
 					<label for="price" class="size50">
-						Price
+						Hourly Rate
 					</label>
 					<input type="text" name="price" id="price" value="" required="">
 				</div>
