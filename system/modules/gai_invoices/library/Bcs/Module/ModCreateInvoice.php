@@ -124,12 +124,25 @@ class ModCreateInvoice extends \Contao\Module
         
         // an array to store this users entries
         $entryList = array();
+        
+        // SORTING
+        // 1st - NEW
+        // 2nd - Non-new
+        // 3rd - NEW Shared
+        // 4th - Non-new Shared
+        
+        $listNew = array();
+        $listNonNew = array();
+        $listNewShared = array();
+        $listNonNewShared = array();
+        
         $entryForm = array();
         //$objUser = \FrontendUser::getInstance();
         
         $show = 0;
         $entry_id = 1;
         $index = 1;
+        
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
@@ -208,7 +221,91 @@ class ModCreateInvoice extends \Contao\Module
                         $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_list');
                         $objListTemplate = new \FrontendTemplate($strListTemplate);
                         $objListTemplate->setData($arrData);
+                        
                         $entryList[$entry_id] = $objListTemplate->parse();
+                        
+                        
+                        
+                        
+                        // SORTING
+                
+                
+                        // if this is shared
+                        if($shared_total > 0) {
+                            
+                            if($arrData['psychologist'] == $user) {
+                                if($arrData['processed'] == '') {
+                                    $listNewShared[$entry_id] = $objListTemplate->parse();
+                                } else {
+                                    $listNonNewShared[$entry_id] = $objListTemplate->parse();
+                                }
+                            } else {
+                                
+                                // shared user 1
+                                if($arrData['shared_1'] == $user) {
+                                    if($arrData['processed_1'] == 1) {
+                                        $listNonNewShared[$entry_id] = $objListTemplate->parse();
+                                    } else {
+                                        $listNewShared[$entry_id] = $objListTemplate->parse();
+                                    }
+                                }
+                                
+                                // shared user 1
+                                if($arrData['shared_2'] == $user) {
+                                    if($arrData['processed_2'] == 1) {
+                                        $listNonNewShared[$entry_id] = $objListTemplate->parse();
+                                    } else {
+                                        $listNewShared[$entry_id] = $objListTemplate->parse();
+                                    }
+                                }
+                                
+                                // shared user 1
+                                if($arrData['shared_3'] == $user) {
+                                    if($arrData['processed_3'] == 1) {
+                                        $listNonNewShared[$entry_id] = $objListTemplate->parse();
+                                    } else {
+                                        $listNewShared[$entry_id] = $objListTemplate->parse();
+                                    }
+                                }
+                                
+                                // shared user 1
+                                if($arrData['shared_4'] == $user) {
+                                    if($arrData['processed_4'] == 1) {
+                                        $listNonNewShared[$entry_id] = $objListTemplate->parse();
+                                    } else {
+                                        $listNewShared[$entry_id] = $objListTemplate->parse();
+                                    }
+                                }
+                                
+                                // shared user 1
+                                if($arrData['shared_5'] == $user) {
+                                    if($arrData['processed_5'] == 1) {
+                                        $listNonNewShared[$entry_id] = $objListTemplate->parse();
+                                    } else {
+                                        $listNewShared[$entry_id] = $objListTemplate->parse();
+                                    }
+                                }
+                                
+                            }
+
+                            
+                        } else {
+                            
+                            // unprocessed and not shared
+                            if($arrData['processed'] == '') {
+                                $listNew[$entry_id] = $objListTemplate->parse();
+                            } else {
+                                $listNonNew[$entry_id] = $objListTemplate->parse();
+                            }
+                            
+                        }
+                
+                        
+                        
+                        
+
+                        
+                        
                         
                         $index++;
                         
@@ -229,6 +326,12 @@ class ModCreateInvoice extends \Contao\Module
         // set this users entries to the template
         $this->Template->workAssignmentList = $entryList;
         $this->Template->workAssignmentForm = $entryForm;
+        
+        // SORTING
+        $this->Template->workAssignmentListNew = $listNew;
+        $this->Template->workAssignmentListNonNew = $listNonNew;
+        $this->Template->workAssignmentListNewShared = $listNewShared;
+        $this->Template->workAssignmentListNonNewShared = $listNonNewShared;
 
 	}
 	
