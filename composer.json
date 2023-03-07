@@ -14,7 +14,8 @@
     "require":{
         "php": "^8.0",
         "contao/core-bundle": "^4.13",
-        "google/apiclient": "v2.12.6"
+        "google/apiclient": "v2.12.6",
+        "phpmailer/phpmailer": "^6.8.0"
     },
     "require-dev": {
         "contao/manager-plugin": "^2.0"
