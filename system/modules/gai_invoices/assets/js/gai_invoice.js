@@ -204,7 +204,25 @@
 
 
 
+    // Send Invoice Emails
+    function sendInvoiceEmails(){
+        
+        var datastring = $("form#send_invoice_emails").serialize();
+            
+        // trigger this function when our form runs
+        $.ajax({
+            url: '/system/modules/gai_invoices/assets/php/action.send.invoice.emails.php',
+            type: 'POST',
+            data: datastring,
+            success:function(result){
+                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/send-invoice-emails/send-invoice-emails-success.html");
+            },
+            error:function(result){
+                $(".message").html("There was an error using the AJAX call for sendInvoiceEmails");
+            }
+        });
 
+    }
 
 
 
