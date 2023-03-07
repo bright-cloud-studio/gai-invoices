@@ -80,188 +80,142 @@ class ModSendInvoiceEmails extends \Contao\Module
     protected function compile()
     {
         $rand_ver = rand(1,9999);
-        $GLOBALS['TL_BODY']['admin_review'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+        $GLOBALS['TL_BODY']['send_invoice_emails'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+        
+        // get the user and build their name
+        $objUser = \FrontendUser::getInstance();
+        $user = $objUser->firstname . " " . $objUser->lastname;
         
         // Get this user's unprocessed listings from Sheets
         $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
         
-        // get all of our unarchived Transactions
-        $range = 'Transactions';
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
-        $values = $response->getValues();
-        
-        
         // an array to store this users entries
-        $entryHistory = array();
-        $trans_ids = array();
+        $entryPsy = array();
+        $psys = array();
+        $entrySchool = array();
+        $schools = array();
         $objUser = \FrontendUser::getInstance();
         
         // get the current month
         $today = date('F');
-        $month = date("F", strtotime ( '-1 month' , strtotime ( $today ) )) ;
+        $month = date("n", strtotime ( '-1 month' , strtotime ( $today ) )) ;
         
-        $entry_id = 1;
-        $transaction_id = 1;
-        foreach($values as $entry) {
-            
-            // if the id matches this entry, it is related to our user
-            if($entry_id != 1) {
-                // if this isnt flagged as deleted
-                if($entry[16] != 1) {
-                    
-                    // if the billing month on this transaction matches the current month
-                    if($entry[0] == $month) {
-                        $arrData = array();
-                        $arrData['row_id']              = $entry_id;
-                        $arrData['transaction_id']      = $transaction_id;
-                        $arrData['billing_month']       = $entry[0];
-                        $arrData['date_submitted']      = $entry[1];
-                        $arrData['psychologist']        = $entry[2];
-                        $arrData['district']            = $entry[3];
-                        $arrData['school']              = $entry[4];
-                        $arrData['student_initials']    = $entry[5];
-                        $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
-                        $arrData['price']               = $entry[7];
-                        $arrData['lasid']               = $entry[8];
-                        $arrData['sasid']               = $entry[9];
-                        $arrData['meeting_date']        = $entry[10];
-                        $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
-                        $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
-                        $arrData['meeting_duration']    = $entry[13];
-                        $arrData['notes']               = $entry[14];
-                        $arrData['reviewed']            = $entry[15];
-                        $arrData['deleted']             = $entry[16];
-                        $arrData['label']               = $entry[17];
-    
-                        // Generate as "List"
-                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'send_invoice_emails_list');
-                        $objListTemplate = new \FrontendTemplate($strListTemplate);
-                        $objListTemplate->setData($arrData);
-                        $entryHistory[$arrData['psychologist']][$entry_id] = $objListTemplate->parse();
-                        $trans_ids[$transaction_id] = $entry_id;
-                        
-                        $transaction_id++;
-                    }
-                    
-                }
-                
+        
+        // Get every psy so we can get their email
+        $rangePsys = 'Psychologists';
+        $responsePsys = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $rangePsys);
+        $valuesPsys = $responsePsys->getValues();
+        $entry_id = 0;
+        foreach($valuesPsys as $entry) {
+            if($entry_id != 0) {
+                $psys[$entry[1]]    = $entry[7];
             }
-            
             $entry_id++;
         }
         
-        // set this users entries to the template
-        $this->Template->transactionReview = $entryHistory;
-        $this->Template->transactionRowIDs = $trans_ids;
+        // Get every school so we can get their email
+        $rangeSchools = 'Schools';
+        $responseSchools = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $rangeSchools);
+        $valuesSchools = $responseSchools->getValues();
+        $entry_id = 0;
+        foreach($valuesSchools as $entry) {
+            if($entry_id != 0) {
+                $schools[$entry[2]][$entry[3]]['em']    = $entry[6];
+                $schools[$entry[2]][$entry[3]]['cc']    = $entry[7];
+            }
+            $entry_id++;
+        }
         
         
         
-        
-        // get invoice number from Psychologist sheet and add to template
-        $range = 'Psychologists';
+        // get all of our unarchived Transactions
+        $range = 'Invoices - Psy';
         $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
         $values = $response->getValues();
         
         $entry_id = 1;
+        $psy_total = 1;
         foreach($values as $entry) {
             
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                if($user == $entry[1]) {
+                if($month == $entry[1]) {
+                    $arrData = array();
+                    $arrData['row_id']          = $entry_id;
+                    $arrData['id']              = $psy_total;
+                    $arrData['billing_year']    = $entry[0];
+                    $arrData['billing_month']   = $entry[1];
+                    $arrData['invoice_number']  = $entry[2];
+                    $arrData['psychologist']    = $entry[3];
+                    $arrData['date_issued']     = $entry[4];
+                    $arrData['date_due']        = $entry[5];
+                    $arrData['invoice_link']    = $entry[6];
+                    $arrData['email_sent']      = $entry[7];
+                    $arrData['email']           = $psys[$entry[3]];
                     
-                    if($entry[0] != '')
-                        $this->Template->invoiceNumber = sprintf('%06d', $entry[0]);
-                    else
-                        $this->Template->invoiceNumber = "000001";
+                    // Generate as "List"
+                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'send_invoice_emails_list');
+                    $objListTemplate = new \FrontendTemplate($strListTemplate);
+                    $objListTemplate->setData($arrData);
+                    $entryPsy[$entry_id] = $objListTemplate->parse();
+                    $psy_total++;
                 }
-                
+
             }
             
             $entry_id++;
         }
+        $this->Template->psy_total = $psy_total-1;
         
         
+        // get all of our unarchived Transactions
+        $range = 'Invoices - School';
+        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $values = $response->getValues();
+        
+        $entry_id = 1;
+        $school_total = 1;
+        foreach($values as $entry) {
+            
+            // if the id matches this entry, it is related to our user
+            if($entry_id != 1) {
+                
+                if($month == $entry[1]) {
+                    $arrData = array();
+                    $arrData['row_id']          = $entry_id;
+                    $arrData['id']              = $school_total;
+                    $arrData['billing_year']    = $entry[0];
+                    $arrData['billing_month']   = $entry[1];
+                    $arrData['invoice_number']  = $entry[2];
+                    $arrData['district_name']   = $entry[3];
+                    $arrData['school_name']     = $entry[4];
+                    $arrData['date_issued']     = $entry[5];
+                    $arrData['date_due']        = $entry[6];
+                    $arrData['invoice_link']    = $entry[7];
+                    $arrData['email_sent']      = $entry[8];
+                    $arrData['email']           = $schools[$entry[3]][$entry[4]]['em'];
+                    $arrData['cc']           = $schools[$entry[3]][$entry[4]]['cc'];
+                    
+                    // Generate as "List"
+                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'send_invoice_emails_school_list');
+                    $objListTemplate = new \FrontendTemplate($strListTemplate);
+                    $objListTemplate->setData($arrData);
+                    $entrySchool[$entry_id] = $objListTemplate->parse();
+                    $school_total++;
+                }
+
+            }
+            
+            $entry_id++;
+        }
+        $this->Template->school_total = $school_total-1;
         
         
-        
-        
-        
-        
+        // set this users entries to the template
+        $this->Template->invoicesPsychologists = $entryPsy;
+        $this->Template->invoicesSchools = $entrySchool;
+  
 	}
 	
-	function getServiceNameFromCode($service_code){
-    	switch ($service_code) {
-    		case 1:
-    			return 'Meeting';
-    			break;
-    		case 2:
-    			return 'Psych/Achvmt';
-    			break;
-    		case 3:
-    			return 'Psych';
-    			break;
-    		case 4:
-    			return 'Achvmt';
-    			break;
-    		case 5:
-    			return 'Psych/Achvmt/Obs';
-    			break;
-    		case 6:
-    			return 'Psych/Obs';
-    			break;
-    		case 7:
-    			return 'Achvmt/Obs';
-    			break;
-    		case 8:
-    			return 'Psych/Achvmt/Additional';
-    			break;
-    		case 9:
-    			return 'Psych/Additional';
-    			break;
-    		case 10:
-    			return 'Achvmt/Additional';
-    			break;
-    		case 11:
-    			return 'Rating Scales';
-    			break;
-    		case 12:
-    			return 'Mtg Late Cancel';
-    			break;
-    		case 13:
-    			return 'Test Late Cancel';
-    			break;
-    		case 14:
-    			return 'Parking';
-    			break;
-    		case 15:
-    			return 'Review District Report';
-    			break;
-    		case 16:
-    			return 'Obs';
-    			break;
-    		case 17:
-    			return 'Record Review';
-    			break;
-    		case 99:
-    			return 'Misc. Billing';
-    			break;
-    		default:
-    		    return 'Invalid Service Code';
-    		    break;
-    	}
-    }
-    
-    // Pushes certain Transaction entries to the END of an array
-    function arrayMoveToEnd($array, $entry, $value) {
-        foreach ($array as $key => $val) {
-            // if the service code 
-            if ($val[$entry] == $value) {
-                $item = $array[$key];
-                unset($array[$key]);
-                array_push($array, $item);
-            }
-        }
-        return $array;
-    }
 } 
