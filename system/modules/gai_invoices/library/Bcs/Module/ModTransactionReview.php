@@ -50,7 +50,7 @@ class ModTransactionReview extends \Contao\Module
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
         // Set the ID for our specific spreadsheet
-        ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+        ModTransactionReview::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
 		
 	}
 	
@@ -87,11 +87,11 @@ class ModTransactionReview extends \Contao\Module
         $user = $objUser->firstname . " " . $objUser->lastname;
         
         // Get this user's unprocessed listings from Sheets
-        $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
+        $spreadsheet = $this->$service->spreadsheets->get(ModTransactionReview::$spreadsheetId);
         
         // get all of our unarchived Transactions
         $range = 'Transactions';
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModTransactionReview::$spreadsheetId, $range);
         $values = $response->getValues();
         
         // an array to store this users entries
@@ -162,7 +162,7 @@ class ModTransactionReview extends \Contao\Module
         
         // get invoice number from Psychologist sheet and add to template
         $range = 'Psychologists';
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModTransactionReview::$spreadsheetId, $range);
         $values = $response->getValues();
         
         $entry_id = 1;
