@@ -3,16 +3,20 @@
 <div class="mod_create_invoice marbot90">
 	
 	<!-- First, this will list the users Work Assignments -->
+	
+	
+	<!-- SORTING -->
 	<div class="list_work_assignments marbot60">
 		<h2>Select Work Assignment</h2>
-		
-		<?php if (empty($this->workAssignmentList)): ?>
-			<p class="empty">You currently have no Work Assignments</p>
-		<?php else: ?>
-			<?= implode('', $this->workAssignmentList) ?>
-		<?php endif; ?>
+		<h3>Primary Assignments</h3>
+		<?= implode('', $this->workAssignmentListNew) ?>
+		<?= implode('', $this->workAssignmentListNonNew) ?><br>
+		<h3>Shared</h3>
+		<?= implode('', $this->workAssignmentListNewShared) ?>
+		<?= implode('', $this->workAssignmentListNonNewShared) ?>
 		
 	</div>
+
 	
 	<!-- Second, they will fill out this form to generate Transactions and mark this Work Assignment as processed -->
 	<div class="generate_transactions marbot60">
