@@ -35,6 +35,6 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email
     'email_recipient_cc'   => array('recipient_cc'),
     'email_recipient_bcc'  => array('gai_bcc'),
     'email_replyTo'        => array('gai_from_address'),
-    'attachment_tokens'    => array(),
+    'attachment_tokens'    => array('invoice_token'),
     
 );
