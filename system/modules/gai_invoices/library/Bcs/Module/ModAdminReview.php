@@ -50,7 +50,7 @@ class ModAdminReview extends \Contao\Module
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
         // Set the ID for our specific spreadsheet
-        ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+        ModAdminReview::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
 		
 	}
 	
@@ -83,11 +83,11 @@ class ModAdminReview extends \Contao\Module
         $GLOBALS['TL_BODY']['admin_review'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
         
         // Get this user's unprocessed listings from Sheets
-        $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
+        $spreadsheet = $this->$service->spreadsheets->get(ModAdminReview::$spreadsheetId);
         
         // get all of our unarchived Transactions
         $range = 'Transactions';
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModAdminReview::$spreadsheetId, $range);
         $values = $response->getValues();
         
         
@@ -159,7 +159,7 @@ class ModAdminReview extends \Contao\Module
         
         // get invoice number from Psychologist sheet and add to template
         $range = 'Psychologists';
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModAdminReview::$spreadsheetId, $range);
         $values = $response->getValues();
         
         $entry_id = 1;
