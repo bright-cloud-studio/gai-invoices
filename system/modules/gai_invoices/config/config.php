@@ -25,16 +25,16 @@ $GLOBALS['FE_MOD']['gai_invoices']['mod_send_invoice_emails'] 	    = 'Bcs\Module
 $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email'] = array
 (
     'recipients'           => array('recipient_email'),
-    'email_subject'        => array('domain', 'member_*', 'recipient_email'),
-    'email_text'           => array('domain', 'member_*', 'recipient_email'),
-    'email_html'           => array('domain', 'member_*', 'recipient_email'),
-    'file_name'            => array('domain', 'member_*', 'recipient_email'),
-    'file_content'         => array('domain', 'member_*', 'recipient_email'),
-    'email_sender_name'    => array('recipient_email'),
-    'email_sender_address' => array('recipient_email'),
-    'email_recipient_cc'   => array('recipient_email'),
-    'email_recipient_bcc'  => array('recipient_email'),
-    'email_replyTo'        => array('recipient_email'),
+    'email_subject'        => array('recipient_name', 'invoice_number'),
+    'email_text'           => array('recipient_name', 'invoice_number', 'invoice_url'),
+    'email_html'           => array('recipient_name', 'invoice_number', 'invoice_url'),
+    'file_name'            => array('invoice_filename', 'invoice_url'),
+    'file_content'         => array('invoice_url', 'invoice_file'),
+    'email_sender_name'    => array('gai_from_name'),
+    'email_sender_address' => array('gai_from_address'),
+    'email_recipient_cc'   => array('recipient_cc'),
+    'email_recipient_bcc'  => array('gai_bcc'),
+    'email_replyTo'        => array('gai_from_address'),
     'attachment_tokens'    => array(),
     
 );
