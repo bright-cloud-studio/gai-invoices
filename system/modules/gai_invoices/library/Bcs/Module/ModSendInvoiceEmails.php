@@ -50,7 +50,7 @@ class ModSendInvoiceEmails extends \Contao\Module
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
         // Set the ID for our specific spreadsheet
-        ModCreateInvoice::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+        ModSendInvoiceEmails::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
 		
 	}
 	
@@ -87,7 +87,7 @@ class ModSendInvoiceEmails extends \Contao\Module
         $user = $objUser->firstname . " " . $objUser->lastname;
         
         // Get this user's unprocessed listings from Sheets
-        $spreadsheet = $this->$service->spreadsheets->get(ModCreateInvoice::$spreadsheetId);
+        $spreadsheet = $this->$service->spreadsheets->get(ModSendInvoiceEmails::$spreadsheetId);
         
         // an array to store this users entries
         $entryPsy = array();
@@ -103,7 +103,7 @@ class ModSendInvoiceEmails extends \Contao\Module
         
         // Get every psy so we can get their email
         $rangePsys = 'Psychologists';
-        $responsePsys = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $rangePsys);
+        $responsePsys = $this->$service->spreadsheets_values->get(ModSendInvoiceEmails::$spreadsheetId, $rangePsys);
         $valuesPsys = $responsePsys->getValues();
         $entry_id = 0;
         foreach($valuesPsys as $entry) {
@@ -115,7 +115,7 @@ class ModSendInvoiceEmails extends \Contao\Module
         
         // Get every school so we can get their email
         $rangeSchools = 'Schools';
-        $responseSchools = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $rangeSchools);
+        $responseSchools = $this->$service->spreadsheets_values->get(ModSendInvoiceEmails::$spreadsheetId, $rangeSchools);
         $valuesSchools = $responseSchools->getValues();
         $entry_id = 0;
         foreach($valuesSchools as $entry) {
@@ -130,7 +130,7 @@ class ModSendInvoiceEmails extends \Contao\Module
         
         // get all of our unarchived Transactions
         $range = 'Invoices - Psy';
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModSendInvoiceEmails::$spreadsheetId, $range);
         $values = $response->getValues();
         
         $entry_id = 1;
@@ -171,7 +171,7 @@ class ModSendInvoiceEmails extends \Contao\Module
         
         // get all of our unarchived Transactions
         $range = 'Invoices - School';
-        $response = $this->$service->spreadsheets_values->get(ModCreateInvoice::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModSendInvoiceEmails::$spreadsheetId, $range);
         $values = $response->getValues();
         
         $entry_id = 1;
