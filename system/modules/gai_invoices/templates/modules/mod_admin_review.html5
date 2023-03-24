@@ -1,3 +1,29 @@
+<!-- Navigation Menu -->
+
+<div class="mod_admin_review_nav marbot60 size100 no-pad flex_wrapper">
+	<a name="anchor_nav"></a>
+	<h2 class="size100 no-pad">Navigation</h2>
+	<?php
+		$i = 1;
+		foreach($this->psychologists as $psy) { ?>
+			<div class="size33" onclick="jumpToPsy(<?= $i ?>)"><?= $psy ?></div>
+			<?php
+			$i++;
+		}
+	?>
+	
+</div>
+
+<div class="size100" style="display: none;">
+	<div class="widget widget-text size50">
+		<label for="current_psy" class="size50">
+			Current Psy ID
+		</label>
+		<input type="text" name="current_psy" id="current_psy" value="1" required="">
+	</div>
+</div>
+
+
 <!-- Table to display our monthly transactions for this user -->
 <div class="mod_admin_review marbot60 size100 no-pad flex_wrapper">
 	
@@ -44,15 +70,10 @@
 				</table>
 				
 				<div class="size50 center_element">
-					<?php if($psyCount == ($psyTotal)) { ?>
-						<a class="btn" onclick="reviewNextPsy('<?= $psyCount+1 ?>', true);">Finish Admin Review</a>
-					<?php } else { ?>
-						<a class="btn" onclick="reviewNextPsy('<?= $psyCount+1 ?>');">Review Next Psychologist</a>
-					<?php } ?>
-					
+					<a class="btn" onclick="jumpToPsy('<?= $psyCount ?>');">Process Changes</a>
 				</div>
 				
-				<div class="size100" style="">
+				<div class="size100" style="display: none;">
 					<div class="widget widget-text size50">
 						<label for="rows" class="size50">
 							Updated Row IDs
@@ -60,7 +81,7 @@
 						<input type="text" name="rows" id="rows" value="" required="">
 					</div>
 				</div>
-			
+				
 			</form>
 
 			</div>
@@ -70,7 +91,7 @@
 	?>
 	
 	<?php endif; ?>
-	
+
 	<div class="messages marbot60 center_element">
 		
 		<span class="message"></span>
