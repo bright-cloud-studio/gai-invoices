@@ -37,12 +37,12 @@ $GLOBALS['TL_DCA']['tl_transactions'] = array
         (
             'mode'                    => 0,
             'panelLayout'             => 'filter;search,limit',
-            'fields'                  => array('approved','country'),
+            'fields'                  => array('date','psychologist'),
         ),
         'label' => array
         (
             'fields'                  => array('width'),
-            'format'                  => '<span style="font-weight: bold;">Width:</span> %s'
+            'format'                  => '<span style="font-weight: bold;">Date:</span> %s <span style="font-weight: bold;">Psychologist:</span> %s'
         ),
         'global_operations' => array
         (
@@ -95,7 +95,7 @@ $GLOBALS['TL_DCA']['tl_transactions'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                     => '{size_legend},width;{products_legend},1_1,1_2,1_3,1_4;{publish_legend},published;'
+        'default'                     => '{transaction_legend},date,psychologist,district,school,student_name,service_provided,price,lasid,sasid,meeting_date,meeting_start,meeting_end,meeting_duration,notes;{internal_legend},reviewed,deleted,misc_billing,sheet_row;{publish_legend},published;'
     ),
  
     // Fields
