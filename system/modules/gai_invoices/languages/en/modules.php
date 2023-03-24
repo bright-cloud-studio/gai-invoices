@@ -10,9 +10,11 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
-$GLOBALS['TL_LANG']['MOD']['gai_invoices']                  = array('GAI Invoices', 'Custom modules for the Dashboard');
+/* Back end modules */
+$GLOBALS['TL_LANG']['MOD']['transactions']                  = array('Transactions', 'Stored Transactions for the Duplicate Checker');
 
 /* Front end modules */
+$GLOBALS['TL_LANG']['MOD']['gai_invoices']                  = array('GAI Invoices', 'Custom modules for the Dashboard');
 $GLOBALS['TL_LANG']['FMD']['mod_work_assignments']          = array('Work Assignments', 'Displays Work Assignments and allows creation of transactions for them');
 $GLOBALS['TL_LANG']['FMD']['mod_add_meetings']              = array('Add Meetings', 'Manually add meeting transactions without a Work Assignment');
 $GLOBALS['TL_LANG']['FMD']['mod_misc_billing']              = array('Miscellaneous Billing', 'Manually add miscellaneous billing');
