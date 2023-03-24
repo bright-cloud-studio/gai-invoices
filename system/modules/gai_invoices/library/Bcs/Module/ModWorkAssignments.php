@@ -12,16 +12,13 @@
 
   
 namespace Bcs\Module;
-
 use Google;
-
-
  
 class ModWorkAssignments extends \Contao\Module
 {
  
     /**
-     * Template
+     * Template3
      * @var string
      */
     protected $strTemplate = 'mod_work_assignments';
@@ -53,7 +50,6 @@ class ModWorkAssignments extends \Contao\Module
         $this->$service = new \Google_Service_Sheets($this->$client);
         // Set the ID for our specific spreadsheet
         ModWorkAssignments::$spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
-		
 	}
 	
     /**
@@ -115,14 +111,20 @@ class ModWorkAssignments extends \Contao\Module
         $listNewShared = array();
         $listNonNewShared = array();
         
+        $filterDistricts = array();
+        $filterSchools = array();
+        $filterStudents = array();
+        
         $entryForm = array();
         
         $show = 0;
         $entry_id = 1;
         $index = 1;
         
+        $is_primary_psy = true;
+        
         foreach($values as $entry) {
-            
+
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
@@ -195,6 +197,12 @@ class ModWorkAssignments extends \Contao\Module
                         $arrData['shared_total'] = $shared_total;
                         
                         
+                        // Filters
+                        $filterDistricts[$arrData['district']] = $arrData['district'];
+                        $filterSchools[$arrData['school']] = $arrData['school'];
+                        $filterStudents[$arrData['student_name']] = $arrData['student_name'];
+                        
+                        
                         // Generate as "List"
                         $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_list');
                         $objListTemplate = new \FrontendTemplate($strListTemplate);
@@ -230,6 +238,7 @@ class ModWorkAssignments extends \Contao\Module
                                     } else {
                                         $listNewShared[$entry_id] = $objListTemplate->parse();
                                     }
+                                    $is_primary_psy = false;
                                 }
                                 
                                 // shared user 1
@@ -261,7 +270,7 @@ class ModWorkAssignments extends \Contao\Module
                                 
                             }
 
-                            
+
                         } else {
                             
                             // unprocessed and not shared
@@ -272,8 +281,12 @@ class ModWorkAssignments extends \Contao\Module
                             }
                             
                         }
+                        
+                        if($arrData['psychologist'] == $user)
+                            $arrData['is_primary_psy'] = 'true';
+                        else
+                            $arrData['is_primary_psy'] = 'false';
                 
-
                         $index++;
                         
                         // Generate as "Form"
@@ -299,6 +312,14 @@ class ModWorkAssignments extends \Contao\Module
         $this->Template->workAssignmentListNonNew = $listNonNew;
         $this->Template->workAssignmentListNewShared = $listNewShared;
         $this->Template->workAssignmentListNonNewShared = $listNonNewShared;
+        
+        // Filters
+        ksort($filterDistricts);
+        ksort($filterSchools);
+        ksort($filterStudents);
+        $this->Template->workAssignmentFilterDistricts = $filterDistricts;
+        $this->Template->workAssignmentFilterSchools = $filterSchools;
+        $this->Template->workAssignmentFilterStudents = $filterStudents;
 
 	}
 
