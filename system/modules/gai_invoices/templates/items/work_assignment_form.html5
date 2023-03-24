@@ -12,6 +12,9 @@
 ?>
 
 <!-- Work Assignment as a form -->
+
+
+
 <div class="work_assignment_form <?= $unique_id ?>" style="display: none;">
 	
 	<h2 class="marbot30">Step Two: Submit Transaction</h2>
@@ -21,23 +24,124 @@
 	<form class="flex_wrapper" id="form_<?= $unique_id ?>">
 		
 		
+		
+		
 		<!-- Hidden Fields -->
-		<div style="display: none;">
-			<input type="text" name="sheet_row" class="sheet_row" value="<?= $this->sheet_row ?>">
-			<input type="text" name="psychologist" class="psychologist" value="{{user::firstname}} {{user::lastname}}">
-			<input type="text" name="transactions" class="trans_total" value="1">
-			<input type="text" name="shared_total" class="shared_total" value="<?= $this->shared_total ?>">
-			<input type="text" name="shared_1" class="shared_1" value="<?= $this->shared_1 ?>">
-			<input type="text" name="shared_2" class="shared_2" value="<?= $this->shared_2 ?>">
-			<input type="text" name="shared_3" class="shared_3" value="<?= $this->shared_3 ?>">
-			<input type="text" name="shared_4" class="shared_4" value="<?= $this->shared_4 ?>">
-			<input type="text" name="shared_5" class="shared_5" value="<?= $this->shared_5 ?>">
-		</div>
+		<fieldset class="size100 hidden">
+			
+			<h4 class="size100 marbot15">Hidden Values</h4>
+			
+			<!-- Sheet Row -->	
+			<div class="widget widget-text size50">
+				<label for="sheet_row" class="size50">
+					Sheet Row
+				</label>
+				<input type="text" name="sheet_row" class="sheet_row" value="<?= $this->sheet_row ?>">
+			</div>
+			
+			<!-- Psychologist -->	
+			<div class="widget widget-text size50">
+				<label for="psychologist" class="size50">
+					Psychologist
+				</label>
+				<input type="text" name="psychologist" class="psychologist" value="{{user::firstname}} {{user::lastname}}">
+			</div>
+			
+			<!-- Transactions -->	
+			<div class="widget widget-text size50">
+				<label for="transactions" class="size50">
+					Transactions
+				</label>
+				<input type="text" name="transactions" class="trans_total" value="1">
+			</div>
+			
+			<!-- Shared Total -->	
+			<div class="widget widget-text size50">
+				<label for="shared_total" class="size50">
+					Shared Total
+				</label>
+				<input type="text" name="shared_total" class="shared_total" id="shared_total" value="<?= $this->shared_total ?>">
+			</div>
+			
+			<!-- Report Submitted -->	
+			<div class="widget widget-text size50">
+				<label for="report_submitted" class="size50">
+					Report Submitted
+				</label>
+				<input type="text" name="report_submitted" class="report_submitted" id="report_submitted" value="<?= $this->report_submitted ?>">
+			</div>
+			
+			<!-- Type of Testing -->	
+			<div class="widget widget-text size50">
+				<label for="type_of_testing" class="size50">
+					Type of Testing
+				</label>
+				<input type="text" name="type_of_testing" class="type_of_testing" id="type_of_testing" value="<?= $this->type_of_testing ?>">
+			</div>
+			
+			<!-- Is Primary Psychologist -->	
+			<div class="widget widget-text size50">
+				<label for="is_primary_psy" class="size50">
+					Is Primary Psychologist
+				</label>
+				<input type="text" name="is_primary_psy" class="is_primary_psy" id="is_primary_psy" value="<?= $this->is_primary_psy ?>">
+			</div>
+			
+			<!-- Shared 1 -->	
+			<div class="widget widget-text size50">
+				<label for="shared_1" class="size50">
+					Shared 1
+				</label>
+				<input type="text" name="shared_1" class="shared_1" value="<?= $this->shared_1 ?>">
+			</div>
+			<!-- Shared 2 -->	
+			<div class="widget widget-text size50">
+				<label for="shared_2" class="size50">
+					Shared 2
+				</label>
+				<input type="text" name="shared_2" class="shared_2" value="<?= $this->shared_2 ?>">
+			</div>
+			<!-- Shared 3 -->	
+			<div class="widget widget-text size50">
+				<label for="shared_3" class="size50">
+					Shared 3
+				</label>
+				<input type="text" name="shared_3" class="shared_3" value="<?= $this->shared_3 ?>">
+			</div>
+			<!-- Shared 4 -->	
+			<div class="widget widget-text size50">
+				<label for="shared_4" class="size50">
+					Shared 4
+				</label>
+				<input type="text" name="shared_4" class="shared_4" value="<?= $this->shared_4 ?>">
+			</div>
+			<!-- Shared 5 -->	
+			<div class="widget widget-text size50">
+				<label for="shared_5" class="size50">
+					Shared 5
+				</label>
+				<input type="text" name="shared_5" class="shared_5" value="<?= $this->shared_5 ?>">
+			</div>
+	
+			
+		</fieldset>
+		
+		
+		
+
+		
+		
+		
+		
+		
+		
+		
 		
 		
 		
 		<fieldset class="size100 handoff_form" id="handoff_form" style="display: none;">
 			
+			<h4 class="size100 marbot15">Work Assignment Details</h4>
 			
 			<div class="size100">
 				<p>Enter the full name of the Psycholigist who will take-on this Work Assignment</p>
@@ -80,18 +184,24 @@
 		
 		
 		
+		
+		
+		
+		
 		<fieldset class="size100">
+			
+			<h4 class="size100 marbot15">Work Assignment Details</h4>
 			
 			<!-- Date -->	
 			<div class="widget widget-text size50">
 				<label for="date" class="size50">
-					Date
+					Today's Date
 				</label>
 				<input type="text" name="date" id="date" value="<?= date("m/d/Y") ?>" required="">
 			</div>
-		</fieldset>
-		
-		<fieldset class="size100">
+			
+			<!-- Empty block beside Today's Date -->
+			<div class="widget widget-blank size50"></div>
 			
 			<!-- District -->	
 			<div class="widget widget-text size50">
@@ -146,160 +256,69 @@
 		
 
 
-		<!-- These "templates" are used to be copied programatically -->
-		<div class="templates" style="display: none;">
-			
-			<!-- Duplicate for "Add Another Transaction" -->
-			<fieldset class="transaction size100">
-				
-				<!-- Service Provided -->	
-				<div class="widget widget-select size50">
-					<label for="service_provided" class="size50">
-						Meeting Provided
-					</label>
-					<select name="service_provided" id="service_provided">
-						<option value="NONE"></option>
-						<option value="1">Meeting</option>
-						<option value="12">Mtg Late Cancel</option>
-						<option value="15">Review of District Report</option>
-					</select>
-				</div>
-	
-				<!-- Price -->	
-				<div class="widget widget-text size50">
-					<label for="price" class="size50">
-						Hour Rate
-					</label>
-					<input type="text" name="price" id="price" value="" required="" autocomplete="off">
-				</div>
-				
-				<!-- Meeting Start -->	
-				<div class="widget widget-text size50">
-					<label for="meeting_start" class="size50">
-						Start Time
-					</label>
-					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off">
-				</div>
-				
-				<!-- Meeting End -->	
-				<div class="widget widget-text size50">
-					<label for="meeting_end" class="size50">
-						End Time
-					</label>
-					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off">
-				</div>
-				
-				<!-- Meeting Date -->	
-				<div class="widget widget-text size50" id="meeting_date">
-					<label for="meeting_date" class="size50">
-						Meeting Date
-					</label>
-					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off">
-				</div>
-	
-				<!-- Notes -->
-				<div class="widget widget-textarea size100">
-					<label for="notes" class="size100">
-						Notes
-					</label>
-					<textarea name="notes" id="notes" rows="4" cols="40" maxlength="500"></textarea>
-				</div>
-				
-			</fieldset>
-
-		</div>
-
-
-
-
 
 
 		<!-- This holds our copied "templates" and our one default serivce -->
-		<div class="transactions">
+		<div class="transactions size100 no-pad">
 			
 			<!-- Duplicate for "Add Another Transaction" -->
 			<fieldset class="transaction main_service size100">
 				
+				<h4 class="size100 marbot15">Transaction Details</h4>
+
+				<!-- Select Primary Service button -->
+				<div class="widget widget-text size50">
+					<label for="select_service_provided" class="size50">
+						Service Provided
+					</label>
+					<input type="button" name="select_service_provided" class="select_service_provided btn"  value="Select a Service">
+				</div>
+				
+				<!-- Empty block beside Today's Date -->
+				<div class="widget widget-blank size50"></div>
+				
 				<!-- Service Provided -->	
-				<div class="widget widget-select size50">
+				<div class="widget widget-select size50 hidden" id="service_provided">
 					<label for="service_provided" class="size50">
 						Service Provided
 					</label>
-					
-					<?php $displayString = 'display: none;'; ?>
-					
-					<select name="service_provided" id="service_provided">
-						<?php
-							if($this->report_submitted == "Yes" || $this->report_submitted == "yes") {
-								if($this->type_of_testing == "Meeting") { echo '<option value="1" selected>Meeting</option>'; $displayString = '';}
-								if($this->type_of_testing == "Psych/Achvmt") { echo '<option value="2" selected>Psych/Achvmt</option>';}
-								if($this->type_of_testing == "Psych") { echo '<option value="3" selected>Psych</option>';}
-								if($this->type_of_testing == "Achvmt") { echo '<option value="4" selected>Achvmt</option>';}
-								if($this->type_of_testing == "Psych/Achvmt/Obs") { echo '<option value="5" selected>Psych/Achvmt/Obs</option>';}
-								if($this->type_of_testing == "Psych/Obs") { echo '<option value="6" selected>Psych/Obs</option>';}
-								if($this->type_of_testing == "Achvmt/Obs") { echo '<option value="7" selected>Achvmt/Obs</option>';}
-								if($this->type_of_testing == "Psych/Achvmt/Additional") { echo '<option value="8" selected>Psych/Achvmt/Additional</option>';}
-								if($this->type_of_testing == "Psych/Additional") { echo '<option value="9" selected>Psych/Additional</option>';}
-								if($this->type_of_testing == "Achvmt/Additional") { echo '<option value="10" selected>Achvmt/Additional</option>';}
-								if($this->type_of_testing == "Rating Scales") { echo '<option value="11" selected>Rating Scales</option>';}
-								if($this->type_of_testing == "Mtg Late Cancel") { echo '<option value="12" selected>Mtg Late Cancel</option>'; $displayString = '';}
-								if($this->type_of_testing == "Test Late Cancel") { echo '<option value="13" selected>Test Late Cancel</option>'; $displayString = '';}
-								if($this->type_of_testing == "Parking") { echo '<option value="14" selected>Parking</option>';}
-								if($this->type_of_testing == "Review District Report") { echo '<option value="15" selected>Review District Report</option>';}
-								if($this->type_of_testing == "Obs") { echo '<option value="16" selected>Obs</option>';}
-								if($this->type_of_testing == "Record Review") { echo '<option value="17" selected>Record Review</option>';}
-								if($this->type_of_testing == "Misc. Travel Expenses") { echo '<option value="18" selected>Misc. Travel Expenses</option>';}
-								if($this->type_of_testing == "Editing Services") { echo '<option value="19" selected>Editing Services</option>';}
-								if($this->type_of_testing == "Meeting Coverage Coordinator") { echo '<option value="20" selected>Meeting Coverage Coordinator</option>';}
-								echo '<option value="1">Meeting</option>';
-								echo '<option value="13">Test Late Cancel</option>';
-								echo '<option value="15">Review District Report</option>';
-							} else {
-								echo '<option value="13" selected>Test Late Cancel</option>';
-								echo '<option value="1">Meeting</option>';
-								echo '<option value="15">Review District Report</option>';
-								$displayString = '';
-							}
-							
-						?>
-						
-					</select>
+					<select name="service_provided" id="service_provided"></select>
 				</div>
 	
 				<!-- Price -->	
-				<div class="widget widget-text size50">
-					<label for="price" class="size50">
+				<div class="widget widget-text size50 hidden" id="price">
+					<label for="price" id="price_label" class="size50">
 						Hourly Rate
 					</label>
 					<input type="text" name="price" id="price" value="" required="" autocomplete="off">
 				</div>
 				
 				<!-- Meeting Start -->	
-				<div class="widget widget-text size50" id="meeting_start" style="<?= $displayString ?>">
+				<div class="widget widget-text size50 hidden" id="meeting_start">
 					<label for="meeting_start" class="size50">
 						Start Time
 					</label>
-					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off">
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off" readonly="readonly">
 				</div>
 				
 				<!-- Meeting End -->	
-				<div class="widget widget-text size50" id="meeting_end" style="<?= $displayString ?>">
+				<div class="widget widget-text size50 hidden" id="meeting_end">
 					<label for="meeting_end" class="size50">
 						End Time
 					</label>
-					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off">
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off" readonly="readonly">
 				</div>
 				
 				<!-- Meeting Date -->	
-				<div class="widget widget-text size50" id="meeting_date" style="<?= $displayString ?>">
+				<div class="widget widget-text size50 hidden" id="meeting_date">
 					<label for="meeting_date" class="size50">
 						Meeting Date
 					</label>
-					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off">
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off" readonly="readonly">
 				</div>
 				
 				<!-- Notes -->
-				<div class="widget widget-textarea size100">
+				<div class="widget widget-textarea size100 hidden" id="notes">
 					<label for="notes" class="size100">
 						Notes
 					</label>
@@ -310,10 +329,11 @@
 
 		</div>
 		
-		<!-- Add Another Transaction Button -->
-		<div class="widget widget-submit size100">
-			<a id="add_another_transaction" class="btn add_another_transaction" onClick="addAnotherTransaction('<?= $unique_id ?>');">Add Meeting</a>
-		</div>
+		
+		
+		
+		
+
 		
 		<!-- Submit Button -->
 		<div class="widget widget-submit center_element size100 marbot60">
@@ -331,6 +351,12 @@
 			</fieldset>
 			
 		</div>
+		
+		
+		
+		
+
+		
 
 	</form>
 	
