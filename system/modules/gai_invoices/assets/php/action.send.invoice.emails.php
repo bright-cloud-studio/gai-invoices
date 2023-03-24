@@ -3,6 +3,10 @@
     // Start PHP session and include Composer, which also brings in our Google Sheets PHP stuffs
 	session_start();
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+	
+	use Contao\Model;
+	use NotificationCenter\Model\Notification;
+	
     
     // Store the passed form values
     $vars = $_POST;
@@ -30,6 +34,11 @@
     $myfile = fopen("email_".$date.".txt", "w") or die("Unable to open file!");
     
     
+    
+    $objNotification = Notification::findByPk(5);
+    
+    
+    /*
     // loop through psys and send emails
     for ($x = 1; $x <= $vars['psy_total']; $x++) {
         
@@ -91,6 +100,8 @@
         }
         
     }
+    
+    */
 
     fclose($myfile);
     
