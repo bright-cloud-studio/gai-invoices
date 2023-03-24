@@ -11,7 +11,7 @@
 			<!-- Date -->	
 			<div class="widget widget-text size50">
 				<label for="date" class="size50">
-					Date
+					Today's Date
 				</label>
 				<input type="text" name="date" id="date" value="<?= date("m/d/Y") ?>" required="">
 			</div>
@@ -117,7 +117,7 @@
 					<label for="meeting_start" class="size50">
 						Start Time
 					</label>
-					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off">
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off" readonly="readonly">
 				</div>
 				
 				<!-- Meeting End -->	
@@ -125,7 +125,7 @@
 					<label for="meeting_end" class="size50">
 						End Time
 					</label>
-					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off">
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off" readonly="readonly">
 				</div>
 				
 				<!-- Meeting Date -->	
@@ -133,7 +133,7 @@
 					<label for="meeting_date" class="size50">
 						Meeting Date
 					</label>
-					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off">
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off" readonly="readonly">
 				</div>
 	
 				<!-- Notes -->
