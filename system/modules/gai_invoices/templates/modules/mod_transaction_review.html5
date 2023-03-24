@@ -19,6 +19,7 @@
 			<thead>
 				<tr>
 					<th></th>
+					<th>REVIEWED</th>
 					<th>DISTRICT</th>
 					<th>SCHOOL</th>
 					<th>STUDENT NAME</th>
@@ -37,8 +38,9 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td>Total:</td>
-					<td class="price">$<span class="number"><?= $GLOBALS['review_total'] ?></span></td>
+					<td></td>
+					<td><strong>TOTAL:</strong></td>
+					<td class="price"><strong>$<span class="number"><?= $GLOBALS['review_total'] ?></span></strong></td>
 					<?php // Reset our price as for some reason its being calculated twice ?>
 					<?php $GLOBALS['review_total'] = 0; ?>
 				</tr>
