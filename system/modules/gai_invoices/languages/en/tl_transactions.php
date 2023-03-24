@@ -25,6 +25,7 @@ $GLOBALS['TL_LANG']['tl_transactions']['alias']                      = array('Al
 $GLOBALS['TL_LANG']['tl_transactions']['published']                  = array('Published', 'Show this record on the front end.');
 
 /* Fields */
+$GLOBALS['TL_LANG']['tl_transactions']['transaction_legend']         = 'Transaction Information';
 $GLOBALS['TL_LANG']['tl_transactions']['date']                       = array('Date', 'Today\'s Date');
 $GLOBALS['TL_LANG']['tl_transactions']['psychologist']               = array('Psychologist', 'Psycholigist this transactions is for');
 $GLOBALS['TL_LANG']['tl_transactions']['district']                   = array('District', 'District the school is in');
@@ -39,6 +40,7 @@ $GLOBALS['TL_LANG']['tl_transactions']['meeting_start']              = array('Me
 $GLOBALS['TL_LANG']['tl_transactions']['meeting_end']                = array('Meeting End', 'The time the meeting ended');
 $GLOBALS['TL_LANG']['tl_transactions']['meeting_duration']           = array('Meeting Duration', 'The amount of minutes the meeting lasted for');
 $GLOBALS['TL_LANG']['tl_transactions']['notes']                      = array('Notes', 'Notes added by the psychologist');
+$GLOBALS['TL_LANG']['tl_transactions']['internal_legend']            = 'Internal Use Only Data';
 $GLOBALS['TL_LANG']['tl_transactions']['reviewed']                   = array('Reviewed', 'INTERAL USE ONLY');
 $GLOBALS['TL_LANG']['tl_transactions']['deleted']                    = array('Deleted', 'INTERNAL USE ONLY');
 $GLOBALS['TL_LANG']['tl_transactions']['misc_billing']               = array('Misc. Billing', 'INTERNAL USE ONLY');
