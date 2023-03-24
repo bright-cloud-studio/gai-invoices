@@ -39,5 +39,12 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email
     
 );
 
+/* Back end modules */
+$GLOBALS['BE_MOD']['content']['transactions'] = array(
+	'tables' => array('tl_transactions'),
+	'icon'   => 'system/modules/gai_invoices/assets/icons/location.png',
+	'exportLocations' => array('Bcs\Backend\TransactionsBackend', 'exportListings')
+);
+
 /* Models */
 $GLOBALS['TL_MODELS']['tl_transactions'] = 'Bcs\Model\Transactions';
