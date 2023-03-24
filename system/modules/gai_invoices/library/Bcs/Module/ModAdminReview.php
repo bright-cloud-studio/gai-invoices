@@ -94,6 +94,7 @@ class ModAdminReview extends \Contao\Module
         // an array to store this users entries
         $entryHistory = array();
         $trans_ids = array();
+        $psychologists = array();
         $objUser = \FrontendUser::getInstance();
         
         // get the current month
@@ -141,6 +142,9 @@ class ModAdminReview extends \Contao\Module
                         $trans_ids[$transaction_id] = $entry_id;
                         
                         $transaction_id++;
+                        
+                        $psychologists[$arrData['psychologist']] = $arrData['psychologist'];
+                        
                     }
                     
                 }
@@ -151,6 +155,7 @@ class ModAdminReview extends \Contao\Module
         }
         
         // set this users entries to the template
+        $this->Template->psychologists = $psychologists;
         $this->Template->transactionReview = $entryHistory;
         $this->Template->transactionRowIDs = $trans_ids;
         
