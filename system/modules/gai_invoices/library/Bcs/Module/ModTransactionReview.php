@@ -134,6 +134,14 @@ class ModTransactionReview extends \Contao\Module
                             $arrData['reviewed']            = $entry[15];
                             $arrData['deleted']             = $entry[16];
                             $arrData['label']               = $entry[17];
+                            $arrData['work_assignment_id']  = $entry[18];
+                            
+                            
+                            if($entry[6] == 1) {
+                                $dur = ceil($arrData['meeting_duration'] / 60);
+                                $arrData['price'] = $dur * $arrData['price'];
+                            }
+                            
         
                             // Generate as "List"
                             $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
