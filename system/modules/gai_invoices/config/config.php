@@ -38,3 +38,6 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email
     'attachment_tokens'    => array('invoice_token'),
     
 );
+
+/* Models */
+$GLOBALS['TL_MODELS']['tl_transactions'] = 'Bcs\Model\Transactions';
