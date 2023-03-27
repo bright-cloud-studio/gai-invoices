@@ -1,5 +1,5 @@
 
-    // When our page is fully loaded
+    // ON FINISHED LOADING
     $( document ).ready(function() {
         
         // When the "Complete Work Assignment" button is clicked
@@ -146,7 +146,14 @@
     });
     
     
-    // Jump to a specific Psychologist instead of going in order
+    
+    
+    
+    
+    
+    
+    // ADMIN REVIEW
+    // Change to a specific Psychologist
     function jumpToPsy(id_next){
         
         // get our current form id
@@ -190,8 +197,8 @@
                 data: datastring,
                 success:function(result){
                     // hide current form, show next form
-                    $('div.psy_' + id_current).hide();
-                    $('div.psy_' + id_next).show();
+                    $('div.psy_' + id_current).fadeOut();
+                    $('div.psy_' + id_next).fadeIn();
                     // update the current id to our new one
                     $("input#current_psy").val(id_next);
                     
@@ -216,23 +223,18 @@
         } else {
             
             // hide current form, show next form
-            $('div.psy_' + id_current).hide();
-            $('div.psy_' + id_next).show();
+            $('div.psy_' + id_current).fadeOut();
+            $('div.psy_' + id_next).fadeIn();
             // update the current id to our new one
             $("input#current_psy").val(id_next);
         }
 
     }
+    
+    
 
-
-
-
-
-
-
-
-
-    // Send Invoice Emails
+    // SEND INVOICE EMAILS
+    // The main function to send out emails
     function sendInvoiceEmails(){
         
         var datastring = $("form#send_invoice_emails").serialize();
@@ -259,15 +261,8 @@
 
 
 
-
-
-
-
-
-
-
-
-    // Changes which Work Assignment Form is visible when clicking a Work Asssignment List item
+    // WORK ASSIGNMENTS
+    // Displays form for a work assignment when the list's link is clicked
     function selectWorkAssignment(id){
 
         // Lets untick all of our "Finalize Work Assignment" checkboxes
@@ -286,7 +281,14 @@
 
     }
 
-    // this is the big bad booty daddy that will generate our Transactions on Google Sheets and mark our Work Assignment as Processed
+
+
+
+
+
+
+    // WORK ASSIGNMENTS
+    // The main function to send entered data to Sheets
     function processWorkAssignment(id){
 
         var validateFailed = [];
@@ -333,71 +335,6 @@
 
                 }
             }
-            
-            
-            var transCount = $('.' + id + ' .transactions fieldset.transaction').length ;
-            
-            var selectedMeeting = [];
-            var meetingPrice = [];
-            var meetingTimeStart = [];
-            var meetingTimeEnd = [];
-            var meetingDate = [];
-            
-            // loop through each meeting and validate
-            for(var i = 2; i <= transCount; i++)
-            {
-                
-                // meeting provided
-                selectedMeeting[i] = $("#form_" + id + " #service_provided_" + i).find(":selected").text();
-                
-                var selectionString = selectedMeeting[i];
-                if(selectionString == '') {
-                    selectionString = "Added Meeting " + (i-1) + ": ";
-                } else {
-                    //selectionString += " " + i + ": ";
-                    if(i > 2)
-                        selectionString = "Added " + selectionString + " " + (i-1) + ": ";
-                    else
-                        selectionString = "Added " + selectionString + ": ";
-                }
-                
-                if(selectedMeeting[i] == '') {
-                    validateMessage += selectionString + "'Meeting Provided' MUST NOT be empty<br>";
-                    validateFailed['selected_meeting'] = 1;
-                }
-                
-                
-    
-                // Price
-                meetingPrice[i] = $("#form_" + id + " #price_" + i).val();
-                if(meetingPrice[i] == '') {
-                    validateMessage += selectionString + "Hourly Rate MUST NOT be empty<br>";
-                    validateFailed['meeting_price'] = 1;
-                }
-                
-                // Start Time
-                meetingTimeStart[i] = $("#form_" + id + " #meeting_start_" + transCount).val();
-                if(meetingTimeStart[i] == '') {
-                    validateMessage += selectionString + "Start Time MUST NOT be empty<br>";
-                    validateFailed['meeting_start'] = 1;
-                }
-                
-                // End Time
-                meetingTimeEnd[i] = $("#form_" + id + " #meeting_end_" + transCount).val();
-                if(meetingTimeEnd[i] == '') {
-                    validateMessage += selectionString + "End Time MUST NOT be empty<br>";
-                    validateFailed['meeting_end'] = 1;
-                }
-                
-                // Meeting Date
-                meetingDate[i] = $("#form_" + id + " #meeting_date_" + transCount).val();
-                if(meetingDate[i] == '') {
-                    validateMessage += selectionString + "Date MUST NOT be empty<br>";
-                    validateFailed['meeting_date'] = 1;
-                }
-                
-            }
-        
         }
 
         if($.isEmptyObject(validateFailed)) {
@@ -445,16 +382,32 @@
         
     }
     
-     // Changes which Work Assignment Form is visible when clicking a Work Asssignment List item
+    
+    
+    
+    
+    
+    
+    
+    // WORK ASSIGNMENTS
+    // Display the 
     function handoffSelected(id){
 
         // close all handoff forms
         $('#handoff_form').fadeOut();
         
         // Then, show this specific one
-        $('#form_' + id + ' #handoff_form').fadeIn();
+        $('#form_' + id + ' #handoff_form').fadeToggle();
+        
 
     }
+    
+    
+    
+    
+    
+    
+    
     
     // this is the big bad booty daddy that will generate our Transactions on Google Sheets and mark our Work Assignment as Processed
     function handoffWorkAssignment(id){
@@ -478,6 +431,13 @@
         
     }
     
+    
+    
+    
+    
+    
+    
+    
     // This will update the user's transactions as "Reviewed"
     function reviewTransactions(id){
 
@@ -499,7 +459,14 @@
         });
 
     }
-
+    
+    
+    
+    
+    
+    
+    
+    
      // This will update the user's transactions as "Reviewed"
     function deleteTransaction(id, work_assignment_id=0){
         
@@ -543,69 +510,14 @@
             }
         });
     }
-    
-    
-    
-    
-    
-    // This is for misc. billing
-    function addMiscBilling(){
 
-        $(".message").empty();
-        
-        
-        var validated = 0;
-        
-        var validateFailed = [];
-        
-        // Label
-        var label = $(".mod_misc_billing #label").val();
-        if(label == '') {
-            $(".message").append("Label cannot be empty<br>");
-            validateFailed['label'] = 1;
-        }
-    
-        // Price
-        var price = $(".mod_misc_billing #price").val();
-        if(price == '') {
-            $(".message").append("Price cannot be empty<br>");
-            validateFailed['price'] = 1;
-        }
-        
-        // Notes
-        var price = $(".mod_misc_billing #notes").val();
-        if(price == '') {
-            $(".message").append("Price cannot be empty<br>");
-            validateFailed['price'] = 1;
-        }
 
-        
-        
-        if($.isEmptyObject(validateFailed)) {
-            // get every form field and add them to the ajax data line
-            var datastring = $("#form_misc_billing").serialize();
-            
-            // trigger this function when our form runs
-            $.ajax({
-                url: '/system/modules/gai_invoices/assets/php/action.misc.billing.php',
-                type: 'POST',
-                data: datastring,
-                success:function(result){
-                    // redirect us to the success page
-                    window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/misc-billing/success.html");
-                },
-                error:function(result){
-                    $(".message").html("There was an error using the AJAX call for addMiscBilling()");
-                }
-            });
-        }
 
-    }
 
-    
-    
-    
-    
+
+
+
+
     // This generates Transactions manually for meetings without Work Assignments
     function addMeeting(){
 
@@ -671,11 +583,13 @@
         }
         
         // Meeting Date
-        var meeting_date = $(".mod_add_meetings #meeting_date").val();
+        var meeting_date = $(".mod_add_meetings input#meeting_date").val();
         if(meeting_date == '') {
             validateMessage += "Meeting Date MUST NOT be empty<br>";
             validateFailed['meeting_date'] = 1;
         }
+        
+        
 
         if($.isEmptyObject(validateFailed)) {
             // get every form field and add them to the ajax data line
@@ -719,114 +633,65 @@
     }
     
     
+
     
     
     
     
     
-    
-    
-    // Duplicate our Transaction template, clear its values, insert into the form
-    function addAnotherTransaction(id){
+        // This is for misc. billing
+    function addMiscBilling(){
+
+        $(".message").empty();
         
-        // get total of Transactions already listed in the form
-        var transCount = $('.' + id + ' .transactions fieldset.transaction').length + 1;
         
-        // set our hidden transactions total value
-        $('.' + id + ' .trans_total').val(transCount);
+        var validated = 0;
         
-        // Clone the first Transaction as a base
-        var cloned =  $('.' + id + ' .templates fieldset.transaction:first').clone();
+        var validateFailed = [];
         
-        // Modify the cloned "Services Provided" field to have a unique ID
-        cloned.find("label[for='service_provided']").attr('for', 'service_provided_' + transCount);
-        cloned.find('select#service_provided').val(' ');
-        cloned.find('select#service_provided').attr('name', 'service_provided_' + transCount);
-        cloned.find('select#service_provided').attr('id', 'service_provided_' + transCount);
+        // Label
+        var label = $(".mod_misc_billing #label").val();
+        if(label == '') {
+            $(".message").append("Label cannot be empty<br>");
+            validateFailed['label'] = 1;
+        }
+    
+        // Price
+        var price = $(".mod_misc_billing #price").val();
+        if(price == '') {
+            $(".message").append("Price cannot be empty<br>");
+            validateFailed['price'] = 1;
+        }
+        
+        // Notes
+        var price = $(".mod_misc_billing #notes").val();
+        if(price == '') {
+            $(".message").append("Price cannot be empty<br>");
+            validateFailed['price'] = 1;
+        }
 
         
-        // Modify the cloned "Price" field to have a unique ID
-        cloned.find("label[for='price']").attr('for', 'price_' + transCount);
-        cloned.find('input#price').val("");
-        cloned.find('input#price').attr('name', 'price_' + transCount);
-        cloned.find('input#price').attr('id', 'price_' + transCount);
         
-        // Modify the cloned "Meeting Start" field to have a unique ID
-        cloned.find("label[for='meeting_start']").attr('for', 'meeting_start_' + transCount);
-        cloned.find('input#meeting_start').val("");
-        cloned.find('input#meeting_start').attr('name', 'meeting_start_' + transCount);
-        cloned.find('input#meeting_start').attr('id', 'meeting_start_' + transCount);
-        
-        // Modify the cloned "Meeting End" field to have a unique ID
-        cloned.find("label[for='meeting_end']").attr('for', 'meeting_end_' + transCount);
-        cloned.find('input#meeting_end').val("");
-        cloned.find('input#meeting_end').attr('name', 'meeting_end_' + transCount);
-        cloned.find('input#meeting_end').attr('id', 'meeting_end_' + transCount);
-        
-        // Modify the cloned "Meeting Date" field to have a unique ID
-        cloned.find("label[for='meeting_date']").attr('for', 'meeting_date_' + transCount);
-        cloned.find('input#meeting_date').val("");
-        cloned.find('input#meeting_date').attr('name', 'meeting_date_' + transCount);
-        cloned.find('input#meeting_date').attr('id', 'meeting_date_' + transCount);
-        
-        // Modify the cloned "Notes" field to have a unique ID
-        cloned.find("label[for='notes']").attr('for', 'notes_' + transCount);
-        cloned.find('textarea#notes').val("");
-        cloned.find('textarea#notes').attr('name', 'notes_' + transCount);
-        cloned.find('textarea#notes').attr('id', 'notes_' + transCount);
-        
-        // Append the cloned and updated Transaction to the list of other Transactions
-        cloned.appendTo('.' + id + ' .transactions');
-        
-        $('#meeting_start_' + transCount).datetimepicker({
-            datepicker:false,
-			format: 'H:i',
-			formatTime: 'g:i A',
-			step: 15,
-			minTime:'6:00',
-			maxTime:'18:15',
-			onSelectTime:function(ct,$i){
-				var priceElement = $($i).closest('.transaction').find("input#meeting_end_" + transCount);
-				priceElement.datetimepicker({maxTime: ct.setMinutes(ct.getMinutes()+255)});
-			}
-        });
-        
-        $('#meeting_end_' + transCount).datetimepicker({
-            datepicker:false,
-			format: 'H:i',
-			formatTime: 'g:i A',
-			step: 15,
-			minTime:'6:00',
-			maxTime:'18:15'
-        });
-    
-        $('#meeting_date_' + transCount).datetimepicker({
-            timepicker:false,
-            format:'m-d-Y'
-        });
-        
-        $('.transactions').on('change','#service_provided_' + transCount, function(){
-    		// Statement
-    		console.log("ding");
-    		if(this.value == 1 || this.value == 12) {
-    			var priceElement = $(this).closest('.transaction').find("input#price_" + transCount);
-    			priceElement.val(50);
-    		} else if(this.value == 13) {
-    			var priceElement = $(this).closest('.transaction').find("input#price_" + transCount);
-    			priceElement.val(200);
-    		} else if(this.value == 15) {
-    			var priceElement = $(this).closest('.transaction').find("input#price_" + transCount);
-    			priceElement.val(200);
-    		} else {
-    			var priceElement = $(this).closest('.transaction').find("input#price_" + transCount);
-    			priceElement.val("");
-    		}
-    		
-    	});
+        if($.isEmptyObject(validateFailed)) {
+            // get every form field and add them to the ajax data line
+            var datastring = $("#form_misc_billing").serialize();
+            
+            // trigger this function when our form runs
+            $.ajax({
+                url: '/system/modules/gai_invoices/assets/php/action.misc.billing.php',
+                type: 'POST',
+                data: datastring,
+                success:function(result){
+                    // redirect us to the success page
+                    window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/misc-billing/success.html");
+                },
+                error:function(result){
+                    $(".message").html("There was an error using the AJAX call for addMiscBilling()");
+                }
+            });
+        }
 
     }
-    
-    
     
     
     
