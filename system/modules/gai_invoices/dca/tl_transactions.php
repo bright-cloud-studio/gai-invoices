@@ -41,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_transactions'] = array
         ),
         'label' => array
         (
-            'fields'                  => array('width'),
+            'fields'                  => array('date', 'psychologist'),
             'format'                  => '<span style="font-weight: bold;">Date:</span> %s <span style="font-weight: bold;">Psychologist:</span> %s'
         ),
         'global_operations' => array
