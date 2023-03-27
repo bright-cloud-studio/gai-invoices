@@ -36,10 +36,10 @@ $GLOBALS['TL_DCA']['tl_transactions'] = array
         'sorting' => array
         (
             // Mode 2 - Records are sotrted by a switchable field
-            // Flag 2 - Sort descending
-            'mode'                    => 1,
+            // Flag 12 - Sort descending
+            'mode'                    => 2,
             'fields'                  => array('date'),
-            'flag'                    => 1,
+            'flag'                    => 12,
             'panelLayout'             => 'filter;search,limit'
         ),
         'label' => array
