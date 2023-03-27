@@ -1,0 +1,54 @@
+<?php
+	if($this->price != null) {
+		
+		$ourPrice = preg_replace('/[^\p{L}\p{N}\s]/u', '', $this->price);
+		$GLOBALS['review_total'] = $GLOBALS['review_total'] + $ourPrice;
+		
+	} else {
+		$GLOBALS['review_total'] = $GLOBALS['review_total'] + 0;
+	}
+	
+	$reviewed = "No";
+	if($this->reviewed == 1)
+		$reviewed = "Yes";
+
+?>
+<tr>
+	
+	<?php if($this->service == 'Misc. Billing' ) { ?>
+	
+		<td><a onClick='deleteTransaction("<?= $this->row_id ?>");'>DELETE</a></td>
+		<td><?= $reviewed ?></td>
+		<td>Misc. Billing: <?= $this->label ?></td>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td><?= $this->service ?></td>
+		<td>$<?= $ourPrice ?></td>
+		
+	
+	
+	<?php } else { ?>
+		
+		<?php if($this->work_assignment_id != '') { ?>
+			<td><a class="delete" onClick='deleteTransaction("<?= $this->row_id ?>", "<?= $this->work_assignment_id ?>");'>DELETE</a></td>
+		<?php } else { ?>
+			<td><a class="delete" onClick='deleteTransaction("<?= $this->row_id ?>");'>DELETE</a></td>
+		<?php } ?>
+		<td><?= $reviewed ?></td>
+		<td><?= $this->district ?></td>
+		<td><?= $this->school ?></td>
+		<td><?= $this->student_initials ?></td>
+		
+		<?php if($this->lasid != '') { ?>
+			<td>L<?= $this->lasid ?></td>
+		<?php } if($this->sasid != '') { ?>
+			<td>S<?= $this->sasid ?></td>
+		<?php } ?>
+		
+		<td><?= $this->service ?></td>
+		<td>$<?= $ourPrice ?></td>
+		
+		
+	<?php } ?>
+</tr>
