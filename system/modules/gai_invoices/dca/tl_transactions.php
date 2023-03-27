@@ -39,7 +39,7 @@ $GLOBALS['TL_DCA']['tl_transactions'] = array
             // Flag 2 - Sort descending
             'mode'                    => 2,
             'flag'                    => 12,
-            'panelLayout'             => 'filter;search,limit',
+            'panelLayout'             => 'sort,filter;search,limit',
             'fields'                  => array('date','psychologist'),
         ),
         'label' => array
