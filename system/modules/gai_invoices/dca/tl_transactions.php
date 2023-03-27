@@ -37,7 +37,7 @@ $GLOBALS['TL_DCA']['tl_transactions'] = array
         (
             // Mode 2 - Records are sotrted by a switchable field
             // Flag 2 - Sort descending
-            'mode'                    => 0,
+            'mode'                    => 1,
             'panelLayout'             => 'sort,filter;search,limit',
             'fields'                  => array('date','psychologist'),
         ),
