@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Bright Cloud Studio's Modal Gallery
+ * Bright Cloud Studio's GAI Invoices
  *
- * Copyright (C) 2021 Bright Cloud Studio
+ * Copyright (C) 2022-2023 Bright Cloud Studio
  *
- * @package    bright-cloud-studio/modal-gallery
+ * @package    bright-cloud-studio/gai-invoices
  * @link       https://www.brightcloudstudio.com/
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
@@ -127,8 +127,151 @@ class ModWorkAssignmentHistory extends \Contao\Module
             $entry_id++;
         }
         
+        
+        
+        // Preview of upcoming transaction
+        $range = 'Transactions';
+        $response = $this->$service->spreadsheets_values->get(ModWorkAssignmentHistory::$spreadsheetId, $range);
+        $values = $response->getValues();
+        
+        $entryHistory = array();
+        $entry_id = 1;
+        $transaction_id = 1;
+        foreach($values as $entry) {
+            
+            // if the id matches this entry, it is related to our user
+            if($entry_id != 1) {
+                // if this isnt flagged as Deleted
+                if($entry[16] != 1) {
+                    // if the billing month on this transaction matches the current month
+
+                        if($user == $entry[2]) {
+                            $arrData = array();
+                            $arrData['row_id']              = $entry_id;
+                            $arrData['transaction_id']      = $transaction_id;
+                            $arrData['billing_month']       = $entry[0];
+                            $arrData['date_submitted']      = $entry[1];
+                            $arrData['psychologist']        = $entry[2];
+                            $arrData['district']            = $entry[3];
+                            $arrData['school']              = $entry[4];
+                            $arrData['student_initials']    = $entry[5];
+                            $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
+                            $arrData['price']               = $entry[7];
+                            $arrData['lasid']               = $entry[8];
+                            $arrData['sasid']               = $entry[9];
+                            $arrData['meeting_date']        = $entry[10];
+                            $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
+                            $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
+                            $arrData['meeting_duration']    = $entry[13];
+                            $arrData['notes']               = $entry[14];
+                            $arrData['reviewed']            = $entry[15];
+                            $arrData['deleted']             = $entry[16];
+                            $arrData['label']               = $entry[17];
+                            $arrData['work_assignment_id']  = $entry[18];
+                            
+                            
+                            if($entry[6] == 1) {
+                                $dur = ceil($arrData['meeting_duration'] / 60);
+                                $arrData['price'] = $dur * $arrData['price'];
+                            }
+                            
+        
+                            // Generate as "List"
+                            $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'invoice_preview_list');
+                            $objListTemplate = new \FrontendTemplate($strListTemplate);
+                            $objListTemplate->setData($arrData);
+                            $entryHistory[$entry_id] = $objListTemplate->parse();
+                            $trans_ids[$transaction_id] = $entry_id;
+                            
+                            $transaction_id++;
+                        }
+
+                    
+                }
+                
+            }
+            
+            $entry_id++;
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         // set this users entries to the template
         $this->Template->workAssignmentHistory = $entryHistory;
         
+        $this->Template->transactionReview = $entryHistory;
+        
 	}
+	
+	
+	
+		function getServiceNameFromCode($service_code){
+    	switch ($service_code) {
+    		case 1:
+    			return 'Meeting';
+    			break;
+    		case 2:
+    			return 'Psych/Achvmt';
+    			break;
+    		case 3:
+    			return 'Psych';
+    			break;
+    		case 4:
+    			return 'Achvmt';
+    			break;
+    		case 5:
+    			return 'Psych/Achvmt/Obs';
+    			break;
+    		case 6:
+    			return 'Psych/Obs';
+    			break;
+    		case 7:
+    			return 'Achvmt/Obs';
+    			break;
+    		case 8:
+    			return 'Psych/Achvmt/Additional';
+    			break;
+    		case 9:
+    			return 'Psych/Additional';
+    			break;
+    		case 10:
+    			return 'Achvmt/Additional';
+    			break;
+    		case 11:
+    			return 'Rating Scales';
+    			break;
+    		case 12:
+    			return 'Mtg Late Cancel';
+    			break;
+    		case 13:
+    			return 'Test Late Cancel';
+    			break;
+    		case 14:
+    			return 'Parking';
+    			break;
+    		case 15:
+    			return 'Review District Report';
+    			break;
+    		case 16:
+    			return 'Obs';
+    			break;
+    		case 17:
+    			return 'Record Review';
+    			break;
+    		case 99:
+    			return 'Misc. Billing';
+    			break;
+    		default:
+    		    return 'Invalid Service Code';
+    		    break;
+    	}
+    }
+	
 } 
