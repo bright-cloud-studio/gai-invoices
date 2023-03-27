@@ -1,8 +1,9 @@
 <?php
-
+    
     // Start PHP session and include Composer, which also brings in our Google Sheets PHP stuffs
 	session_start();
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+    
     
     // Store the passed form values
     $vars = $_POST;
@@ -11,6 +12,16 @@
 	$cleanName = str_replace(' ', '_', $vars['psychologist']);
 	$cleanName = str_replace('.', '', $cleanName);
 	$cleanName = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanName));
+    
+    // Clean the price, remove symbols and decimals if there are any
+	$price = '';
+    if($vars['price'] != '') {
+        // first remove dollar sign
+        $price = str_replace('$','',$vars['price']);
+        // remove decimal and trailing numbers
+        $price = floor($price);
+    }
+    
     
     
     
@@ -24,6 +35,8 @@
     fclose($myfile);
     
     
+    
+    
 
     // Create a client connection to Google
     $client = new Google\Client();
@@ -34,100 +47,55 @@
     
     $meeting_duration = 0;
     
-    $price = '';
-    if($vars['price'] != '') {
-        // first remove dollar sign
-        $price = str_replace('$','',$vars['price']);
-        // remove decimal and trailing numbers
-        $price = floor($price);
+    
+    $service_provided = '';
+    if(isset($vars['service_provided'])) {
+        $service_provided = $vars['service_provided'];
     }
 
-    // For each transaction fieldset on the form, create a new row in the Transactions table on Sheets
-    for ($x = 1; $x <= $vars["transactions"]; $x++) {
-        
-        //if this is the first transaction
-        if($x == 1) {
             
-            if($vars['meeting_end'] != null)
-                $meeting_duration = hoursToMinutes(date("H:i",strtotime($vars['meeting_end']) - strtotime($vars['meeting_start'])));
-            else
-                $meeting_duration = 0;
-            
-            $newRow = [
-                date('F'),
-                $vars['date'],
-                $vars['psychologist'],
-                $vars['district'],
-                $vars['school'],
-                $vars['student_name'],
-                $vars['service_provided'],
-                $price,
-                $vars['lasid'],
-                $vars['sasid'],
-                $vars['meeting_date'],
-                $vars['meeting_start'],
-                $vars['meeting_end'],
-                $meeting_duration,
-                $vars['notes'],
-                '', // Reviewed
-                '', // Deleted
-                '', // Misc Billing
-                $vars['sheet_row'] // Work Assignment ID
-            ];
-            
-            $rows = [$newRow];
-            $valueRange = new \Google_Service_Sheets_ValueRange();
-            $valueRange->setValues($rows);
-            $range = 'Transactions';
-            $options = ['valueInputOption' => 'USER_ENTERED'];
-            if($vars['price'] != '') {
-                $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
-            }
-        } else {
-            
-            if($vars['meeting_end_' . $x] != null)
-                $meeting_duration = hoursToMinutes(date("H:i",strtotime($vars['meeting_end_' . $x]) - strtotime($vars['meeting_start_' . $x])));
-            else
-                $meeting_duration = 0;
-                
-             // first remove dollar sign
-            $price = str_replace('$','',$vars['price_' . $x]);
-            // remove decimal and trailing numbers
-            $price = floor($price);
-            
-            $newRow = [
-                date('F'),
-                $vars['date'],
-                $vars['psychologist'],
-                $vars['district'],
-                $vars['school'],
-                $vars['student_name'],
-                $vars['service_provided_' . $x],
-                $vars['price_' . $x],
-                $vars['lasid'],
-                $vars['sasid'],
-                $vars['meeting_date_' . $x],
-                $vars['meeting_start_' . $x],
-                $vars['meeting_end_' . $x],
-                $meeting_duration,
-                $vars['notes_' . $x],
-                '', // Reviewed
-                '', // Deleted
-                '', // Misc. Billing
-                $vars['sheet_row'] // Work Assignment ID
-            ];
+	if($vars['meeting_end'] != null)
+		$meeting_duration = hoursToMinutes(date("H:i",strtotime($vars['meeting_end']) - strtotime($vars['meeting_start'])));
+	else
+		$meeting_duration = 0;
+		
+	$service_provided = '';
+	if(isset($vars['service_provided']))
+	    $service_provided = $vars['service_provided'];
+	
+	$newRow = [
+		date('F'),
+		$vars['date'],
+		$vars['psychologist'],
+		$vars['district'],
+		$vars['school'],
+		$vars['student_name'],
+		$service_provided,
+		$price,
+		$vars['lasid'],
+		$vars['sasid'],
+		$vars['meeting_date'],
+		$vars['meeting_start'],
+		$vars['meeting_end'],
+		$meeting_duration,
+		$vars['notes'],
+		'', // Reviewed
+		'', // Deleted
+		'', // Misc Billing
+		$vars['sheet_row'] // Work Assignment ID
+	];
+	
+	$rows = [$newRow];
+	$valueRange = new \Google_Service_Sheets_ValueRange();
+	$valueRange->setValues($rows);
+	$range = 'Transactions';
+	$options = ['valueInputOption' => 'USER_ENTERED'];
+	
+	if(!isset($vars['complete_work_assignment']))
+        $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
 
-            $rows = [$newRow];
-            $valueRange = new \Google_Service_Sheets_ValueRange();
-            $valueRange->setValues($rows);
-            $range = 'Transactions';
-            $options = ['valueInputOption' => 'USER_ENTERED'];
-            if($vars['price'] != '') {
-                $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
-            }
-        }
 
-    }
+
     
     
     // Mark this Work Assignment as Processed
@@ -154,6 +122,22 @@
     $options = ['valueInputOption' => 'USER_ENTERED'];
     $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
     
+    
+    
+    
+    
+    // insert into the tl_transactions table
+    $dbh = new mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
+    if ($dbh->connect_error) {
+        die("Connection failed: " . $dbh->connect_error);
+    }
+    $query = "INSERT INTO tl_transactions (date, psychologist, district, school, student_name, service_provided, price, lasid, sasid, meeting_date, meeting_start, meeting_end, meeting_duration, notes, sheet_row, published)
+                                   VALUES ('".$vars['date']."', '".$vars['psychologist']."', '".$vars['district']."', '".$vars['school']."', '".$vars['student_name']."', '".$service_provided."', '".$price."', '".$vars['lasid']."', '".$vars['sasid']."', '".$vars['meeting_date']."', '".$vars['meeting_start']."', '".$vars['meeting_end']."', '".$meeting_duration."', '".$vars['notes']."', '".$vars['sheet_row']."',  '1')";
+    $result = $dbh->query($query);
+
+
+
+
     // display some text to return back to the ajax call
     echo "success";
     
