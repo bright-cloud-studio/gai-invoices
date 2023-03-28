@@ -116,7 +116,7 @@ class ModInvoiceHistory extends \Contao\Module
                     $arrData['invoice_link']    = $entry[6];
                     
                     // Generate as "List"
-                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'invoice_history');
+                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'invoice_history_list');
                     $objListTemplate = new \FrontendTemplate($strListTemplate);
                     $objListTemplate->setData($arrData);
                     $entryHistory[$entry_id] = $objListTemplate->parse();
