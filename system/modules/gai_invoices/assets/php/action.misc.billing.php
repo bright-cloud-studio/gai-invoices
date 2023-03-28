@@ -3,6 +3,12 @@
     // Start PHP session and include Composer, which also brings in our Google Sheets PHP stuffs
 	session_start();
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
+	
+	// Connect to DB
+    $dbh = new mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
+    if ($dbh->connect_error) {
+        die("Connection failed: " . $dbh->connect_error);
+    }
     
     // Store the passed form values
     $vars = $_POST;
@@ -48,6 +54,14 @@
     $range = 'Transactions';
     $options = ['valueInputOption' => 'USER_ENTERED'];
     $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
+    
+    
+        // insert into the tl_transactions table
+    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, service_provided, notes, label, published)
+                                   VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '".$vars['district']."', '".$vars['school']."', '".$vars['student_name']."', '".$service_provided."', '".$price."', '".$vars['lasid']."', '".$vars['sasid']."', '".$vars['meeting_date']."', '".$vars['meeting_start']."', '".$vars['meeting_end']."', '".$meeting_duration."', '".$vars['notes']."', '".$vars['sheet_row']."',  '1')";
+    $result = $dbh->query($query);
+    
+    
  
     // display some text to return back to the ajax call
     echo "success";
