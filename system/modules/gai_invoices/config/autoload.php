@@ -17,7 +17,7 @@ ClassLoader::addClasses(array
     'Bcs\Module\ModWorkAssignments'             => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignments.php',
     'Bcs\Module\ModAddMeetings'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAddMeetings.php',
     'Bcs\Module\ModMiscBilling'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModMiscBilling.php',
-    'Bcs\Module\ModWorkAssignmentHistory'       => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignmentHistory.php',
+    'Bcs\Module\ModInvoiceHistory'              => 'system/modules/gai_invoices/library/Bcs/Module/ModInvoiceHistory.php',
     'Bcs\Module\ModTransactionReview'           => 'system/modules/gai_invoices/library/Bcs/Module/ModTransactionReview.php',
     'Bcs\Module\ModAdminReview'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAdminReview.php',
     'Bcs\Module\ModSendInvoiceEmails'           => 'system/modules/gai_invoices/library/Bcs/Module/ModSendInvoiceEmails.php',
@@ -35,8 +35,9 @@ TemplateLoader::addFiles(array
     'mod_add_meetings'              => 'system/modules/gai_invoices/templates/modules',
     'mod_misc_billing'              => 'system/modules/gai_invoices/templates/modules',
     
-	'mod_work_assignment_history'   => 'system/modules/gai_invoices/templates/modules',
-	'work_assignment_history'       => 'system/modules/gai_invoices/templates/items',
+	'mod_invoice_history'           => 'system/modules/gai_invoices/templates/modules',
+	'invoice_history_list'          => 'system/modules/gai_invoices/templates/items',
+    'invoice_preview_list'          => 'system/modules/gai_invoices/templates/items',
     
 	'mod_transaction_review'        => 'system/modules/gai_invoices/templates/modules',
 	'transaction_review_list'       => 'system/modules/gai_invoices/templates/items',
