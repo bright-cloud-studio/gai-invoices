@@ -137,46 +137,82 @@
 		
 		
 		
-		
-		
+	
 		<fieldset class="size100 handoff_form" id="handoff_form" style="display: none;">
 			
-			<h4 class="size100 marbot15">Work Assignment Details</h4>
+			<h4 class="size100 marbot15">Sharing Details</h4>
 			
-			<div class="size100">
-				<p>Enter the full name of the Psycholigist who will take-on this Work Assignment</p>
-				<?php if($this->shared_total > 0) { ?>
-				<p>Currently Shared With:</p>
-				<ul>
-					<?php if($this->shared_1 !='') { ?> <li><?= $this->shared_1 ?></li> <?php } ?>
-					<?php if($this->shared_2 !='') { ?> <li><?= $this->shared_2 ?></li> <?php } ?>
-					<?php if($this->shared_3 !='') { ?> <li><?= $this->shared_3 ?></li> <?php } ?>
-					<?php if($this->shared_4 !='') { ?> <li><?= $this->shared_4 ?></li> <?php } ?>
-					<?php if($this->shared_5 !='') { ?> <li><?= $this->shared_5 ?></li> <?php } ?>
-				</ul>
+			<?php if($this->is_primary_psy == "true") { ?>
+			
+				<!-- Date -->
+				<?php if($this->shared_total >= 5) { ?>
+				
+					<div class="size100">
+						<p>You have reached the maximum number of shares for this Work Assignment</p>
+					</div>
+					
+				<?php } else { ?>
+	
+					<div class="size100">
+						<p>Enter the full name of the Psycholigist who will take-on this Work Assignment</p>
+					</div>
+	
+					<div class="size50 no-pad">
+					
+						<div class="widget widget-text size100">
+							<label for="date" class="size100">
+								Psychologist's Full Name
+							</label>
+							<input type="text" name="handoff" id="handoff" class="handoff_<?= $this->id ?>" value="" required="">
+						</div>
+					
+						<div class="widget widget-submit size100">
+							<a id="handoff_work_assignment" class="btn handoff_work_assignment" onClick="handoffWorkAssignment('<?= $unique_id ?>')">Share</a>
+						</div>
+					
+					</div>
+				
+					<div class="size50 no-pad">
+					
+						<div class="size100 shared_with">
+							<?php if($this->shared_total > 0) { ?>
+							<p><strong>Currently Shared With:</strong></p>
+							<ul>
+								<?php if($this->shared_1 !='') { ?> <li><?= $this->shared_1 ?></li> <?php } ?>
+								<?php if($this->shared_2 !='') { ?> <li><?= $this->shared_2 ?></li> <?php } ?>
+								<?php if($this->shared_3 !='') { ?> <li><?= $this->shared_3 ?></li> <?php } ?>
+								<?php if($this->shared_4 !='') { ?> <li><?= $this->shared_4 ?></li> <?php } ?>
+								<?php if($this->shared_5 !='') { ?> <li><?= $this->shared_5 ?></li> <?php } ?>
+							</ul>
+							<?php } ?>
+						</div>
+					
+					</div>
+				
+					<div class="size100 center_element">
+						<span style="font-weight: 600; color: red; margin: 30px 0;">NOTE: Spelling is important! Start entering a name and it will auto-complete the correct spelling for you.</span>
+					</div>
+				
 				<?php } ?>
-			</div>
 			
-			<!-- Date -->
-			<?php if($this->shared_total >= 5) { ?>
-				<div class="size100">
-					<p>You have reached the maximum number of shares for this Work Assignment</p>
-				</div>
 			<?php } else { ?>
-			<div class="widget widget-text size50">
-				<label for="date" class="size50">
-					Psychologist's Full Name
-				</label>
-				<input type="text" name="handoff" id="handoff" class="handoff_<?= $this->id ?>" value="" required="">
-			</div>
 			
-			<div class="widget widget-submit center_element size50">
-				<a id="handoff_work_assignment" class="btn handoff_work_assignment" onClick="handoffWorkAssignment('<?= $unique_id ?>')">Share</a>
-			</div>
-			
-			<div class="size100 center_element">
-				<span style="font-weight: 600; color: red; margin: 30px 0;">NOTE: Spelling is important! Start entering a name and it will auto-complete the correct spelling for you.</span>
-			</div>
+				<div class="size100">
+					<p>Work Assignments can only be shared by the primary psycholigist it is assigned to.</p>
+				</div>
+				
+				<div class="size100 shared_with">
+					<?php if($this->shared_total > 0) { ?>
+					<p><strong>Currently Shared With:</strong></p>
+					<ul>
+						<?php if($this->shared_1 !='') { ?> <li><?= $this->shared_1 ?></li> <?php } ?>
+						<?php if($this->shared_2 !='') { ?> <li><?= $this->shared_2 ?></li> <?php } ?>
+						<?php if($this->shared_3 !='') { ?> <li><?= $this->shared_3 ?></li> <?php } ?>
+						<?php if($this->shared_4 !='') { ?> <li><?= $this->shared_4 ?></li> <?php } ?>
+						<?php if($this->shared_5 !='') { ?> <li><?= $this->shared_5 ?></li> <?php } ?>
+					</ul>
+					<?php } ?>
+				</div>
 			
 			<?php } ?>
 			
