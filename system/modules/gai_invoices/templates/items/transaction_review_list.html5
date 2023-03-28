@@ -1,4 +1,5 @@
 <?php
+
 	if($this->price != null) {
 		
 		$ourPrice = preg_replace('/[^\p{L}\p{N}\s]/u', '', $this->price);
@@ -13,11 +14,12 @@
 		$reviewed = "Yes";
 
 ?>
+
 <tr>
 	
 	<?php if($this->service == 'Misc. Billing' ) { ?>
 	
-		<td><a onClick='deleteTransaction("<?= $this->row_id ?>");'>DELETE</a></td>
+		<td><a onClick='deleteTransaction("<?= $this->transaction_id ?>");'>DELETE</a></td>
 		<td><?= $reviewed ?></td>
 		<td>Misc. Billing: <?= $this->label ?></td>
 		<td></td>
@@ -30,11 +32,7 @@
 	
 	<?php } else { ?>
 		
-		<?php if($this->work_assignment_id != '') { ?>
-			<td><a class="delete" onClick='deleteTransaction("<?= $this->row_id ?>", "<?= $this->work_assignment_id ?>");'>DELETE</a></td>
-		<?php } else { ?>
-			<td><a class="delete" onClick='deleteTransaction("<?= $this->row_id ?>");'>DELETE</a></td>
-		<?php } ?>
+		<td><a class="delete" onClick='deleteTransaction("<?= $this->transaction_id ?>");'>DELETE</a></td>
 		<td><?= $reviewed ?></td>
 		<td><?= $this->district ?></td>
 		<td><?= $this->school ?></td>
