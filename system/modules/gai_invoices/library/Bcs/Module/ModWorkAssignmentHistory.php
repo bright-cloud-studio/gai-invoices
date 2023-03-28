@@ -134,7 +134,8 @@ class ModWorkAssignmentHistory extends \Contao\Module
         $response = $this->$service->spreadsheets_values->get(ModWorkAssignmentHistory::$spreadsheetId, $range);
         $values = $response->getValues();
         
-        $entryHistory = array();
+        $entryPreview = array();
+        $entryPreviewMisc = array();
         $entry_id = 1;
         $transaction_id = 1;
         foreach($values as $entry) {
@@ -180,7 +181,12 @@ class ModWorkAssignmentHistory extends \Contao\Module
                             $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'invoice_preview_list');
                             $objListTemplate = new \FrontendTemplate($strListTemplate);
                             $objListTemplate->setData($arrData);
-                            $entryHistory[$entry_id] = $objListTemplate->parse();
+                            
+                            if($arrData['service'] == 'Misc. Billing')
+                                $entryPreviewMisc[$entry_id] = $objListTemplate->parse();
+                            else
+                                $entryPreview[$entry_id] = $objListTemplate->parse();
+                            
                             $trans_ids[$transaction_id] = $entry_id;
                             
                             $transaction_id++;
@@ -206,7 +212,8 @@ class ModWorkAssignmentHistory extends \Contao\Module
         // set this users entries to the template
         $this->Template->workAssignmentHistory = $entryHistory;
         
-        $this->Template->transactionReview = $entryHistory;
+        $this->Template->invoicePreview = $entryPreview;
+        $this->Template->invoicePreviewMisc = $entryPreviewMisc;
         
 	}
 	
