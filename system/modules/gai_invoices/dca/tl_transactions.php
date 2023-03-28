@@ -292,6 +292,15 @@ $GLOBALS['TL_DCA']['tl_transactions'] = array
             'eval'                    => array('mandatory'=>false, 'tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ),
+        'label' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_transactions']['label'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'search'                  => true,
+            'eval'                    => array('mandatory'=>false, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
         'published' => array
         (
             'exclude'                 => true,
