@@ -46,7 +46,7 @@
     // Check for duplicate
     $duplicate = false;
     
-    $query =  "select * from tl_transactions";
+    $query =  "select * from tl_transactions WHERE deleted=''";
     $result = $dbh->query($query);
     if($result) {
         while($row = $result->fetch_assoc()) {
