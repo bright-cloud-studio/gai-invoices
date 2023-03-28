@@ -129,7 +129,7 @@ class ModWorkAssignments extends \Contao\Module
             if($entry_id != 1) {
                 
                 // If user matches Psychologist (3) and Processed (26) isnt completed (2)
-                if($user == $entry[3] && $entry[26] != 2) { $show = 1; }
+                if($user == trim($entry[3]) && $entry[26] != 2) { $show = 1; }
                 
                 // Shared
                 if($user == $entry[27] && $entry[28] != 2) { $show = 1; }
@@ -150,17 +150,17 @@ class ModWorkAssignments extends \Contao\Module
                         $arrData['date']                = $entry[0];
                         $arrData['30_days']             = $entry[1];
                         $arrData['45_days']             = $entry[2];
-                        $arrData['psychologist']        = $entry[3];
-                        $arrData['district']            = $entry[4];
-                        $arrData['school']              = $entry[5];
-                        $arrData['student_name']        = $entry[6];
+                        $arrData['psychologist']        = trim($entry[3]);
+                        $arrData['district']            = trim($entry[4]);
+                        $arrData['school']              = trim($entry[5]);
+                        $arrData['student_name']        = trim($entry[6]);
                         $arrData['date_of_birth']       = $entry[7];
                         $arrData['gender']              = $entry[8];
                         $arrData['grade']               = $entry[9];
-                        $arrData['lasid']               = $entry[10];
-                        $arrData['sasid']               = $entry[11];
-                        $arrData['initial']             = $entry[12];
-                        $arrData['type_of_testing']     = $entry[13];
+                        $arrData['lasid']               = trim($entry[10]);
+                        $arrData['sasid']               = trim($entry[11]);
+                        $arrData['initial']             = trim($entry[12]);
+                        $arrData['type_of_testing']     = trim($entry[13]);
                         $arrData['testing_date']        = $entry[14];
                         $arrData['meeting_required']    = $entry[15];
                         $arrData['meeting_date']        = $entry[16];
@@ -168,7 +168,7 @@ class ModWorkAssignments extends \Contao\Module
                         $arrData['teacher_info']        = $entry[18];
                         $arrData['team_chair']          = $entry[19];
                         $arrData['email']               = $entry[20];
-                        $arrData['report_submitted']    = $entry[21];
+                        $arrData['report_submitted']    = trim($entry[21]);
                         $arrData['invoiced_to_gai']     = $entry[22];
                         $arrData['district_invoice']    = $entry[23];
                         $arrData['notes']               = $entry[24];
