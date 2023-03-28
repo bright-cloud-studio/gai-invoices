@@ -525,7 +525,7 @@ function deleteTransaction(transaction_id){
                     
                     // AJAX call to our php script to flag this Transaction as deleted
                     $.ajax({
-                        url: '/system/modules/gai_invoices/assets/php/action.delete.transaction.new.php',
+                        url: '/system/modules/gai_invoices/assets/php/action.delete.transaction.php',
                         type: 'POST',
                         data: datastring,
                         success:function(result){
