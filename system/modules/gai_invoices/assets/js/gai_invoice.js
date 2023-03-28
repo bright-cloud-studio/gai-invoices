@@ -501,7 +501,7 @@ function reviewTransactions(id){
 
 
  // This will update the user's transactions as "Reviewed"
-function deleteTransaction(id, work_assignment_id=0){
+function deleteTransaction(transaction_id){
     
     // Create our Confirmation alert box
     $.confirm({
@@ -521,11 +521,13 @@ function deleteTransaction(id, work_assignment_id=0){
                     this.buttons.confirm.disable()
                     this.buttons.cancel.disable()
                     
+                    var datastring = $("#form_" + transaction_id).serialize();
+                    
                     // AJAX call to our php script to flag this Transaction as deleted
                     $.ajax({
-                        url: '/system/modules/gai_invoices/assets/php/action.delete.transaction.php',
-                        data:"row_id="+id+"&work_assignment_id="+work_assignment_id,
+                        url: '/system/modules/gai_invoices/assets/php/action.delete.transaction.new.php',
                         type: 'POST',
+                        data: datastring,
                         success:function(result){
                             // redirect us to the success page
                             window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/review.html");
