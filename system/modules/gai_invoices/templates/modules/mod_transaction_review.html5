@@ -31,6 +31,7 @@
 			<tbody>
 				
 				<?= implode('', $this->transactionReview) ?>
+				<?= implode('', $this->transactionReviewMisc) ?>
 				
 				<tr class="total_row">
 					<td></td>
@@ -47,6 +48,10 @@
 				
 			</tbody>
 		</table>
+		
+		<div class="forms hidden">
+			<?= implode('', $this->transactionReviewForms) ?>
+		</div>
 		
 	<?php endif; ?>
 	
