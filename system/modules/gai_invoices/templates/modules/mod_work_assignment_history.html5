@@ -1,4 +1,46 @@
-<div class="mod_work_assignment_history marbot60">
+
+
+<div class="mod_work_assignment_history_preview size100 no-pad marbot60">
+	<h4>Upcoming Invoice - Preview</h4>
+	<p>This is a preview of your next invoice. Use this for reference while waiting for the PDF copy to be generated.</p>
+
+
+	<table class="size100 no-pad">
+		<thead>
+			<tr>
+				<th>DISTRICT</th>
+				<th>SCHOOL</th>
+				<th>STUDENT NAME</th>
+				<th>STUDENT NUMBER</th>
+				<th>SERVICE</th>
+				<th>PRICE</th>
+			</tr>
+		</thead>
+		<tbody>
+
+			<?= implode('', $this->invoicePreview) ?>
+			<?= implode('', $this->invoicePreviewMisc) ?>
+			
+			<tr class="total_row">
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td><strong>TOTAL:</strong></td>
+				<td class="price"><strong>$<span class="number"><?= $GLOBALS['review_total'] ?></span></strong></td>
+				<?php // Reset our price as for some reason its being calculated twice ?>
+				<?php $GLOBALS['review_total'] = 0; ?>
+			</tr>
+			
+		</tbody>
+	</table>
+	
+	
+</div>
+
+
+<div class="mod_work_assignment_history size100 no-pad marbot60">
+	<h4>Previous Invoices</h4>
 	<?php if (empty($this->workAssignmentHistory)): ?>
 			<p class="empty">You currently have no Work Assignment History</p>
 		<?php else: ?>
