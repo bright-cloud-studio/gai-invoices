@@ -1,0 +1,93 @@
+<form id="form_<?= $this->transaction_id ?>" class="hidden">
+	<h4>Form: <?= $this->transaction_id ?></h4>
+	
+	<!-- Row ID -->	
+	<div class="widget widget-text size50">
+		<label for="row_id" class="size50">
+			Row ID
+		</label>
+		<input type="text" name="row_id" class="row_id" value="<?= $this->row_id ?>">
+	</div>
+	
+	<!-- Work Assignment ID -->	
+	<div class="widget widget-text size50">
+		<label for="work_assignment_id" class="size50">
+			Work Assignment ID
+		</label>
+		<input type="text" name="work_assignment_id" class="work_assignment_id" value="<?= $this->work_assignment_id ?>">
+	</div>
+	
+	<!-- Psycholigist -->	
+	<div class="widget widget-text size50">
+		<label for="psychologist" class="size50">
+			Psychologist
+		</label>
+		<input type="text" name="psychologist" class="psychologist" value="<?= $this->psychologist ?>">
+	</div>
+	
+	<!-- District -->	
+	<div class="widget widget-text size50">
+		<label for="district" class="size50">
+			District
+		</label>
+		<input type="text" name="district" class="district" value="<?= $this->district ?>">
+	</div>
+	
+	<!-- School -->	
+	<div class="widget widget-text size50">
+		<label for="school" class="size50">
+			School
+		</label>
+		<input type="text" name="school" class="school" value="<?= $this->school ?>">
+	</div>
+	
+	<!-- Student Initials -->	
+	<div class="widget widget-text size50">
+		<label for="student" class="size50">
+			Student Name
+		</label>
+		<input type="text" name="student" class="student" value="<?= $this->student_initials ?>">
+	</div>
+	
+	<!-- Service -->	
+	<div class="widget widget-text size50">
+		<label for="service" class="size50">
+			Service
+		</label>
+		<input type="text" name="service" class="service" value="<?= $this->service ?>">
+	</div>
+	
+	<!-- Price -->	
+	<div class="widget widget-text size50">
+		<label for="price" class="size50">
+			Price
+		</label>
+		<input type="text" name="price" class="price" value="<?= $this->price ?>">
+	</div>
+	
+	<!-- Psycholigist -->	
+	<div class="widget widget-text size50">
+		<label for="meeting_date" class="size50">
+			Meeting Date
+		</label>
+		<input type="text" name="meeting_date" class="meeting_date" value="<?= $this->meeting_date ?>">
+	</div>
+	
+	<!-- Psycholigist -->	
+	<div class="widget widget-text size50">
+		<label for="meeting_start" class="size50">
+			Meeting Start
+		</label>
+		<input type="text" name="meeting_start" class="meeting_start" value="<?= $this->meeting_start ?>">
+	</div>
+	
+	<!-- Psycholigist -->	
+	<div class="widget widget-text size50">
+		<label for="meeting_end" class="size50">
+			Meeting End
+		</label>
+		<input type="text" name="meeting_end" class="meeting_end" value="<?= $this->meeting_end ?>">
+	</div>
+	
+	
+</form>
