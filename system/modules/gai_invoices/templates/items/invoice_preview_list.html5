@@ -17,8 +17,6 @@
 	
 	<?php if($this->service == 'Misc. Billing' ) { ?>
 	
-		<td><a onClick='deleteTransaction("<?= $this->row_id ?>");'>DELETE</a></td>
-		<td><?= $reviewed ?></td>
 		<td>Misc. Billing: <?= $this->label ?></td>
 		<td></td>
 		<td></td>
@@ -30,12 +28,6 @@
 	
 	<?php } else { ?>
 		
-		<?php if($this->work_assignment_id != '') { ?>
-			<td><a class="delete" onClick='deleteTransaction("<?= $this->row_id ?>", "<?= $this->work_assignment_id ?>");'>DELETE</a></td>
-		<?php } else { ?>
-			<td><a class="delete" onClick='deleteTransaction("<?= $this->row_id ?>");'>DELETE</a></td>
-		<?php } ?>
-		<td><?= $reviewed ?></td>
 		<td><?= $this->district ?></td>
 		<td><?= $this->school ?></td>
 		<td><?= $this->student_initials ?></td>
