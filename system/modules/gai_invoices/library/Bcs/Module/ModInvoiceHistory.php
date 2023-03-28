@@ -17,14 +17,14 @@ use Google;
 
 
  
-class ModWorkAssignmentHistory extends \Contao\Module
+class ModInvoiceHistory extends \Contao\Module
 {
  
     /**
      * Template
      * @var string
      */
-    protected $strTemplate = 'mod_work_assignment_history';
+    protected $strTemplate = 'mod_invoice_history';
   
     // our google api stuffs
     protected $client;
@@ -52,7 +52,7 @@ class ModWorkAssignmentHistory extends \Contao\Module
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
         // Set the ID for our specific spreadsheet
-        ModWorkAssignmentHistory::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+        ModInvoiceHistory::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
 		
 	}
 	
@@ -66,7 +66,7 @@ class ModWorkAssignmentHistory extends \Contao\Module
         {
             $objTemplate = new \BackendTemplate('be_wildcard');
  
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['work_assignment_history'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['invoice_history'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
@@ -88,11 +88,11 @@ class ModWorkAssignmentHistory extends \Contao\Module
         $user = $objUser->firstname . " " . $objUser->lastname;
         
         // Get this user's unprocessed listings from Sheets
-        $spreadsheet = $this->$service->spreadsheets->get(ModWorkAssignmentHistory::$spreadsheetId);
+        $spreadsheet = $this->$service->spreadsheets->get(ModInvoiceHistory::$spreadsheetId);
         
         // get all of our unarchived Transactions
         $range = 'Invoices - Psy';
-        $response = $this->$service->spreadsheets_values->get(ModWorkAssignmentHistory::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModInvoiceHistory::$spreadsheetId, $range);
         $values = $response->getValues();
         
         // an array to store this users entries
@@ -116,7 +116,7 @@ class ModWorkAssignmentHistory extends \Contao\Module
                     $arrData['invoice_link']    = $entry[6];
                     
                     // Generate as "List"
-                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'work_assignment_history');
+                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'invoice_history');
                     $objListTemplate = new \FrontendTemplate($strListTemplate);
                     $objListTemplate->setData($arrData);
                     $entryHistory[$entry_id] = $objListTemplate->parse();
@@ -131,7 +131,7 @@ class ModWorkAssignmentHistory extends \Contao\Module
         
         // Preview of upcoming transaction
         $range = 'Transactions';
-        $response = $this->$service->spreadsheets_values->get(ModWorkAssignmentHistory::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModInvoiceHistory::$spreadsheetId, $range);
         $values = $response->getValues();
         
         $entryPreview = array();
@@ -210,7 +210,7 @@ class ModWorkAssignmentHistory extends \Contao\Module
         
         
         // set this users entries to the template
-        $this->Template->workAssignmentHistory = $entryHistory;
+        $this->Template->invoiceHistory = $entryHistory;
         
         $this->Template->invoicePreview = $entryPreview;
         $this->Template->invoicePreviewMisc = $entryPreviewMisc;
