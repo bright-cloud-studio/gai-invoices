@@ -45,3 +45,4 @@ $GLOBALS['TL_LANG']['tl_transactions']['reviewed']                   = array('Re
 $GLOBALS['TL_LANG']['tl_transactions']['deleted']                    = array('Deleted', 'Tracks if the psychologist has deleted this transactions');
 $GLOBALS['TL_LANG']['tl_transactions']['misc_billing']               = array('Misc. Billing', 'The display name for a Misc. Billing transaction');
 $GLOBALS['TL_LANG']['tl_transactions']['sheet_row']                  = array('Sheet Row', 'The row of the Work Assignment this transaction was generated for');
+$GLOBALS['TL_LANG']['tl_transactions']['label']                      = array('Label', 'The label used as the main descriptor for Misc. Billing Transactions');
