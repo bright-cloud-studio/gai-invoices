@@ -1,6 +1,6 @@
 
 
-<div class="mod_work_assignment_history_preview size100 no-pad marbot60">
+<div class="mod_invoice_history_preview size100 no-pad marbot60">
 	<h4>Upcoming Invoice - Preview</h4>
 	<p>This is a preview of your next invoice. Use this for reference while waiting for the PDF copy to be generated.</p>
 
@@ -39,11 +39,11 @@
 </div>
 
 
-<div class="mod_work_assignment_history size100 no-pad marbot60">
+<div class="mod_invoice_history size100 no-pad marbot60">
 	<h4>Previous Invoices</h4>
-	<?php if (empty($this->workAssignmentHistory)): ?>
-			<p class="empty">You currently have no Work Assignment History</p>
+	<?php if (empty($this->invoiceHistory)): ?>
+			<p class="empty">You currently have no invoices in your history</p>
 		<?php else: ?>
-			<?= implode('', $this->workAssignmentHistory) ?>
+			<?= implode('', $this->invoiceHistory) ?>
 		<?php endif; ?>
 </div>
