@@ -96,6 +96,8 @@ class ModTransactionReview extends \Contao\Module
         
         // an array to store this users entries
         $entryHistory = array();
+        $entryHistoryMisc = array();
+        $entryHistoryForm = array();
         $trans_ids = array();
         $objUser = \FrontendUser::getInstance();
         
@@ -127,8 +129,8 @@ class ModTransactionReview extends \Contao\Module
                             $arrData['lasid']               = $entry[8];
                             $arrData['sasid']               = $entry[9];
                             $arrData['meeting_date']        = $entry[10];
-                            $arrData['meeting_start']       = date('h:i A', strtotime($entry[11]));
-                            $arrData['meeting_end']         = date('h:i A', strtotime($entry[12]));
+                            $arrData['meeting_start']       = $entry[11];
+                            $arrData['meeting_end']         = $entry[12];
                             $arrData['meeting_duration']    = $entry[13];
                             $arrData['notes']               = $entry[14];
                             $arrData['reviewed']            = $entry[15];
@@ -147,8 +149,23 @@ class ModTransactionReview extends \Contao\Module
                             $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
                             $objListTemplate = new \FrontendTemplate($strListTemplate);
                             $objListTemplate->setData($arrData);
-                            $entryHistory[$entry_id] = $objListTemplate->parse();
+                            
+                            if($arrData['service'] == 'Misc. Billing')
+                                $entryHistoryMisc[$entry_id] = $objListTemplate->parse();
+                            else
+                                $entryHistory[$entry_id] = $objListTemplate->parse();
+                            
+                            
                             $trans_ids[$transaction_id] = $entry_id;
+                            
+                            
+                            
+                            $arrData['service']             = $entry[6];
+                            
+                            $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_form');
+                            $objListTemplate = new \FrontendTemplate($strListTemplate);
+                            $objListTemplate->setData($arrData);
+                            $entryHistoryForm[$entry_id] = $objListTemplate->parse();
                             
                             $transaction_id++;
                         }
@@ -162,7 +179,9 @@ class ModTransactionReview extends \Contao\Module
         }
         
         // set this users entries to the template
+        $this->Template->transactionReviewForms = $entryHistoryForm;
         $this->Template->transactionReview = $entryHistory;
+        $this->Template->transactionReviewMisc = $entryHistoryMisc;
         $this->Template->transactionRowIDs = $trans_ids;
         
         
