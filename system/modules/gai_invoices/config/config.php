@@ -50,4 +50,4 @@ $GLOBALS['BE_MOD']['content']['transactions'] = array(
 $GLOBALS['TL_MODELS']['tl_transactions'] = 'Bcs\Model\Transactions';
 
 /* Hooks */
-$GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Module\ModSendInvoiceEmails', 'sendInvoiceEmails');
+//$GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Module\ModSendInvoiceEmails', 'sendInvoiceEmails');
