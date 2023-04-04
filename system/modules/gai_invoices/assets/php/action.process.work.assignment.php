@@ -27,9 +27,14 @@
         $price = floor($price);
     }
     
+    $service_provided = '';
+	if(isset($vars['service_provided']))
+	    $service_provided = $vars['service_provided'];
+
+
 
     // create a file with the name "psy_datetime.txt" to log our transaction data
-    $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../transaction_logs/'.$cleanName."_".date('m_d_Y_hia').".txt", "w") or die("Unable to open file!");
+    $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../transaction_logs/work_assignment_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
     // loop through our $vars and write the key => value to our created file
     foreach($vars as $key => $var) {
         fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
@@ -60,11 +65,11 @@
                         // If Student matches
                         if($vars['student_name'] == $row['student_name']) {
                             // If Service Provided
-                            if($vars['service_provided'] == $row['service_provided']) {
+                            if($service_provided == $row['service_provided']) {
                                 // If Price matches
                                 if($price == $row['price']) {
                                     // If time-based
-                                    if($vars['service_provided'] == 1 || $vars['service_provided'] == 12 || $vars['service_provided'] == 12 || $vars['service_provided'] == 15) {
+                                    if($service_provided == 1 || $service_provided == 12 || $service_provided == 13 || $service_provided == 15) {
                                         // If Meeting Date matches
                                         if($vars['meeting_date'] == $row['meeting_date']) {
                                             // If Meeting Start
@@ -73,7 +78,7 @@
                                                 if($vars['meeting_end'] == $row['meeting_end']) {
                                                     $duplicate = true;
                                                     
-                                                    $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/'.$cleanName."_".date('m_d_Y_hia').".txt", "w") or die("Unable to open file!");
+                                                    $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/work_assignment_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
                                                     foreach($vars as $key => $var) {
                                                         fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
                                                     }
@@ -90,7 +95,7 @@
                                         // not time based
                                         $duplicate = true;
                                         
-                                        $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/'.$cleanName."_".date('m_d_Y_hia').".txt", "w") or die("Unable to open file!");
+                                        $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/work_assignment_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
                                         foreach($vars as $key => $var) {
                                             fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
                                         }
@@ -115,9 +120,14 @@
     
     
     
+    
+    
+    
     if($duplicate == "true") {
+        
         echo "duplicate";
         return;
+        
     } else {
 
         // Create a client connection to Google
@@ -141,9 +151,7 @@
     	else
     		$meeting_duration = 0;
     		
-    	$service_provided = '';
-    	if(isset($vars['service_provided']))
-    	    $service_provided = $vars['service_provided'];
+    	
     	
     	$newRow = [
     		date('F'),
@@ -173,8 +181,17 @@
     	$range = 'Transactions';
     	$options = ['valueInputOption' => 'USER_ENTERED'];
     	
-    	if(!isset($vars['complete_work_assignment']))
+    	
+    	// if there is a service provided, enter this into our Transactions sheet
+    	if(isset($vars['service_provided'])) {
             $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
+            
+            // insert into the tl_transactions table
+            $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, district, school, student_name, service_provided, price, lasid, sasid, meeting_date, meeting_start, meeting_end, meeting_duration, notes, sheet_row, published)
+                                       VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '".$vars['district']."', '".$vars['school']."', '".$vars['student_name']."', '".$service_provided."', '".$price."', '".$vars['lasid']."', '".$vars['sasid']."', '".$vars['meeting_date']."', '".$vars['meeting_start']."', '".$vars['meeting_end']."', '".$meeting_duration."', '".$vars['notes']."', '".$vars['sheet_row']."',  '1')";
+            $result = $dbh->query($query);
+    	}
+        
     
     
     
@@ -204,10 +221,7 @@
         $options = ['valueInputOption' => 'USER_ENTERED'];
         $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
         
-        // insert into the tl_transactions table
-        $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, district, school, student_name, service_provided, price, lasid, sasid, meeting_date, meeting_start, meeting_end, meeting_duration, notes, sheet_row, published)
-                                       VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '".$vars['district']."', '".$vars['school']."', '".$vars['student_name']."', '".$service_provided."', '".$price."', '".$vars['lasid']."', '".$vars['sasid']."', '".$vars['meeting_date']."', '".$vars['meeting_start']."', '".$vars['meeting_end']."', '".$meeting_duration."', '".$vars['notes']."', '".$vars['sheet_row']."',  '1')";
-        $result = $dbh->query($query);
+
     
         // display some text to return back to the ajax call
         echo "success";
