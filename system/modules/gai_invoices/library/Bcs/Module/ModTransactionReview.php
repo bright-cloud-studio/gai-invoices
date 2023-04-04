@@ -104,6 +104,22 @@ class ModTransactionReview extends \Contao\Module
         // get the current month
         $month = date('F');
         
+        
+        
+        
+        // get all of our services and store them in an array
+        $services = array();
+        $range_serv = 'Services';
+        $response_serv = $this->$service->spreadsheets_values->get(ModTransactionReview::$spreadsheetId, $range_serv);
+        $values_serv = $response_serv->getValues();
+        
+
+        foreach($values_serv as $entry_serv) {
+            $services[$entry_serv[0]] = $entry_serv[1];
+        }
+        
+        
+        
         $entry_id = 1;
         $transaction_id = 1;
         foreach($values as $entry) {
@@ -124,7 +140,7 @@ class ModTransactionReview extends \Contao\Module
                             $arrData['district']            = $entry[3];
                             $arrData['school']              = $entry[4];
                             $arrData['student_initials']    = $entry[5];
-                            $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
+                            $arrData['service']             = $services[$entry[6]];
                             $arrData['price']               = $entry[7];
                             $arrData['lasid']               = $entry[8];
                             $arrData['sasid']               = $entry[9];
