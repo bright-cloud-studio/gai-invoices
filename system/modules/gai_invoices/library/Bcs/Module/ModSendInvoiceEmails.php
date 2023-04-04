@@ -219,7 +219,7 @@ class ModSendInvoiceEmails extends \Contao\Module
 	}
 	
 	
-	public function sendEmails() {
+	public function sendInvoiceEmails() {
 	    
 	    // create a file with the name "psy_datetime.txt" to log our transaction data
         $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/..//testytest.txt', "w") or die("Unable to open file!");
