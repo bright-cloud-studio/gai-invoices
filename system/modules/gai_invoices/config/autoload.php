@@ -23,6 +23,7 @@ ClassLoader::addClasses(array
     'Bcs\Module\ModSendInvoiceEmails'           => 'system/modules/gai_invoices/library/Bcs/Module/ModSendInvoiceEmails.php',
     'Bcs\Backend\TransactionsBackend'           => 'system/modules/gai_invoices/library/Bcs/Backend/TransactionsBackend.php',
     'Bcs\Model\Transactions'                    => 'system/modules/gai_invoices/library/Bcs/Model/Transactions.php',
+    'Bcs\Frontend\SendInvoiceEmails'            => 'system/modules/gai_invoices/library/Bcs/Frontend/SendInvoiceEmails.php',
 ));
 
 /* Register the templates */
