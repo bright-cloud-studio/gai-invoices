@@ -5,7 +5,7 @@ namespace Bcs\Frontend;
 use Contao\System;
 
 
-class SendInvoiceEmails extends Contao_Frontend {
+class sendInvoiceEmails extends Contao_Frontend {
 
     protected $store_id = 0;
 
