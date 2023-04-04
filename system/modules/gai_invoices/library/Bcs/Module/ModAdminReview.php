@@ -82,6 +82,19 @@ class ModAdminReview extends \Contao\Module
         $rand_ver = rand(1,9999);
         $GLOBALS['TL_BODY']['admin_review'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
         
+        
+        // get all of our services and store them in an array
+        $services = array();
+        $range_serv = 'Services';
+        $response_serv = $this->$service->spreadsheets_values->get(ModAdminReview::$spreadsheetId, $range_serv);
+        $values_serv = $response_serv->getValues();
+        
+
+        foreach($values_serv as $entry_serv) {
+            $services[$entry_serv[0]] = $entry_serv[1];
+        }
+        
+        
         // Get this user's unprocessed listings from Sheets
         $spreadsheet = $this->$service->spreadsheets->get(ModAdminReview::$spreadsheetId);
         
@@ -121,7 +134,7 @@ class ModAdminReview extends \Contao\Module
                         $arrData['district']            = $entry[3];
                         $arrData['school']              = $entry[4];
                         $arrData['student_initials']    = $entry[5];
-                        $arrData['service']             = $this->getServiceNameFromCode($entry[6]);
+                        $arrData['service']             = $services[$entry[6]];
                         $arrData['price']               = $entry[7];
                         $arrData['lasid']               = $entry[8];
                         $arrData['sasid']               = $entry[9];
