@@ -140,7 +140,7 @@ class ModSendInvoiceEmails extends \Contao\Module
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                if($month == $entry[1]) {
+                //if($month == $entry[1]) {
                     $arrData = array();
                     $arrData['row_id']          = $entry_id;
                     $arrData['id']              = $psy_total;
@@ -160,7 +160,7 @@ class ModSendInvoiceEmails extends \Contao\Module
                     $objListTemplate->setData($arrData);
                     $entryPsy[$entry_id] = $objListTemplate->parse();
                     $psy_total++;
-                }
+               // }
 
             }
             
@@ -181,7 +181,7 @@ class ModSendInvoiceEmails extends \Contao\Module
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                if($month == $entry[1]) {
+                //if($month == $entry[1]) {
                     $arrData = array();
                     $arrData['row_id']          = $entry_id;
                     $arrData['id']              = $school_total;
@@ -203,7 +203,7 @@ class ModSendInvoiceEmails extends \Contao\Module
                     $objListTemplate->setData($arrData);
                     $entrySchool[$entry_id] = $objListTemplate->parse();
                     $school_total++;
-                }
+               // }
 
             }
             
@@ -217,5 +217,20 @@ class ModSendInvoiceEmails extends \Contao\Module
         $this->Template->invoicesSchools = $entrySchool;
   
 	}
+	
+	
+	public function sendEmails() {
+	    
+	    // create a file with the name "psy_datetime.txt" to log our transaction data
+        $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/..//testytest.txt', "w") or die("Unable to open file!");
+        // loop through our $vars and write the key => value to our created file
+        foreach($vars as $key => $var) {
+            fwrite($myfile, "bingbongnoise");
+        }
+        // were done logging, close the file we just created
+        fclose($myfile);
+	    
+	}
+	
 	
 } 
