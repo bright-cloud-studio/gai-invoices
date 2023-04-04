@@ -219,18 +219,4 @@ class ModSendInvoiceEmails extends \Contao\Module
 	}
 	
 	
-	public function sendInvoiceEmails() {
-	    
-	    // create a file with the name "psy_datetime.txt" to log our transaction data
-        $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/..//testytest.txt', "w") or die("Unable to open file!");
-        // loop through our $vars and write the key => value to our created file
-        foreach($vars as $key => $var) {
-            fwrite($myfile, "bingbongnoise");
-        }
-        // were done logging, close the file we just created
-        fclose($myfile);
-	    
-	}
-	
-	
 } 
