@@ -217,9 +217,5 @@ class ModSendInvoiceEmails extends \Contao\Module
         $this->Template->invoicesSchools = $entrySchool;
   
 	}
-    
-    public function sendInvoiceEmails() {
-    }
-	
-	
+
 } 
