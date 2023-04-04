@@ -2,6 +2,7 @@
 // ON FINISHED LOADING
 $( document ).ready(function() {
     
+    
     // When the "Complete Work Assignment" button is clicked
     $('input[name="complete_work_assignment"]').on("click", function(e) {
 
@@ -9,10 +10,19 @@ $( document ).ready(function() {
         var ourCheckbox = $(this);
         ourCheckbox.prop( "checked", false );
         
+        var content_start = '<div class="size100 marbot60">Checking this box will permanently remove this Work Assignment from your list. This is an optioanl feature to cut down on clutter and IS NOT needed to process a work assignment. Please confirm you would like to remove this work assignment from your list.</div>';
+        var content_form = '' +
+    	'<form action="" class="formName">' +
+    	    '<div class="form-group">' +
+    	    	'<div class="size100 marbot15">Type the word "REMOVE" (All capitalized) to permanently remove this work assignment from your list.</div>'+
+    	    	'<div class="size100"><input type="text" name="del_string" id="del_string"/></div>' +
+    	    '</div>' +
+        '</form>';
+        
         // Open a Confirmation popup
         $.confirm({
-            title: 'Work Assignment - Finalize',
-            content: 'Finalizing a Work Assignment will permanently remove it from your list. Please confirm you would like to finalize this Work Assignment when it is processed.',
+            title: 'Work Assignment - Remove Work Assignment from your list (OPTIONAL)',
+            content: content_start + content_form,
             icon: 'fa fa-warning  fa-bounce',
             type: 'red',
             useBootstrap: false,
@@ -20,11 +30,14 @@ $( document ).ready(function() {
             theme: 'material',
             buttons: {
                 confirm: {
-                    text: 'FINALIZE',
+                    text: 'REMOVE THIS WORK ASSIGNMENT FROM YOUR LIST',
                     btnClass: 'btn-red',
                     action: function(){
                         
-                        // We have successfully confirmed our action
+                     var ourString = this.$content.find('#del_string').val();
+                        if(ourString != "REMOVE") {
+                            return false;
+                        } else {
                         
                         // disable the other buttons
                         this.buttons.confirm.disable()
@@ -32,6 +45,8 @@ $( document ).ready(function() {
                         
                         // now we check ourselves
                         ourCheckbox.prop( "checked", true );
+                        
+                        }
                         
                     }
                 },
@@ -185,10 +200,15 @@ function processWorkAssignment(id){
     var validateFailed = [];
     var validateMessage = '';
     
-    if( $('input#complete_work_assignment').is(':checked') == false){
+    
+    var selectedService = $("#form_" + id + " .main_service #service_provided").find(":selected").text();
+    
+    // if finalize is checked and service is empty, skip validation
+    if( $('input#complete_work_assignment').is(':checked') == true && selectedService == ''){
+    } else {
+        
 
         // Service Provided
-        var selectedService = $("#form_" + id + " .main_service #service_provided").find(":selected").text();
         if(selectedService == '') {
             validateMessage += "Service Provided MUST NOT be empty<br>";
             validateFailed['selectedService'] = 1;
@@ -226,7 +246,23 @@ function processWorkAssignment(id){
 
             }
         }
+        
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
     // VALIDATION - SUCCESS
     if($.isEmptyObject(validateFailed)) {
@@ -503,10 +539,19 @@ function reviewTransactions(id){
  // This will update the user's transactions as "Reviewed"
 function deleteTransaction(transaction_id){
     
+    var content_start = '<div class="size100 marbot60">Please confirm you would like to REMOVE this Transaction from your Invoice</div>';
+    var content_form = '' +
+	'<form action="" class="formName">' +
+	    '<div class="form-group">' +
+	    	'<div class="size100 marbot15">Type the word "REMOVE" (All capitalized) to remove this transaction permanently from your Invoice</div>'+
+	    	'<div class="size100"><input type="text" name="del_string" id="del_string"/></div>' +
+	    '</div>' +
+    '</form>';
+    
     // Create our Confirmation alert box
     $.confirm({
         title: 'Transaction - Delete',
-        content: 'Please confirm you would like to PERMANENTLY delete this Transaction',
+        content: content_start + content_form,
         icon: 'fa fa-warning  fa-bounce',
         type: 'red',
         useBootstrap: false,
@@ -518,24 +563,36 @@ function deleteTransaction(transaction_id){
                 btnClass: 'btn-red',
                 action: function(){
                     
-                    this.buttons.confirm.disable()
-                    this.buttons.cancel.disable()
                     
-                    var datastring = $("#form_" + transaction_id).serialize();
+                    var ourString = this.$content.find('#del_string').val();
+                    if(ourString != "REMOVE") {
+                        return false;
+                    } else {
+
+                        
+                        this.buttons.confirm.disable()
+                        this.buttons.cancel.disable()
+                        
+                        var datastring = $("#form_" + transaction_id).serialize();
+                        
+                        // AJAX call to our php script to flag this Transaction as deleted
+                        $.ajax({
+                            url: '/system/modules/gai_invoices/assets/php/action.delete.transaction.php',
+                            type: 'POST',
+                            data: datastring,
+                            success:function(result){
+                                // redirect us to the success page
+                                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/review.html");
+                            },
+                            error:function(result){
+                                $(".message").html("There was an error using the AJAX call for deleteTransaction");
+                            }
+                        });
+                        
+                        return false;
                     
-                    // AJAX call to our php script to flag this Transaction as deleted
-                    $.ajax({
-                        url: '/system/modules/gai_invoices/assets/php/action.delete.transaction.php',
-                        type: 'POST',
-                        data: datastring,
-                        success:function(result){
-                            // redirect us to the success page
-                            window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/review.html");
-                        },
-                        error:function(result){
-                            $(".message").html("There was an error using the AJAX call for deleteTransaction");
-                        }
-                    }).delay(1000);
+                    }
+                    
                     
                 }
             },
@@ -636,8 +693,39 @@ function addMeeting(){
             type: 'POST',
             data: datastring,
             success:function(result){
+                
                 // redirect us to the success page
-                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/add-meetings/success.html");
+                if(result == "duplicate") {
+                    
+                    // re-enable our button so they can try submitting again
+                    $("a#process_work_assignment").on('click');
+                    $("a#process_work_assignment").removeClass("disabled");
+                    
+                    // Display our validation messages in a jQuery-confirm box
+                    $.confirm({
+                        title: 'Add Meeting - Duplicate Detected',
+                        content: "An idential Transaction already exists. Please re-check your entered information.<br><br>View your current Transactions on the <strong>Review and Submit Current Invoice</strong> page.",
+                        icon: 'fa fa-warning  fa-bounce',
+                        type: 'red',
+                        useBootstrap: false,
+                        draggable: false,
+                        theme: 'material',
+                        buttons: {
+                            confirm: {
+                                text: 'OK',
+                                btnClass: 'btn-red',
+                                action: function(){
+            
+                                }
+                            },
+                        }
+                    });
+                    
+                } else {
+                    // redirect us to the success page
+                    window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/add-meetings/success.html");
+                }
+            
             },
             error:function(result){
                 $(".message").html("There was an error using the AJAX call for addMeeting");
@@ -717,8 +805,41 @@ function addMiscBilling(){
             type: 'POST',
             data: datastring,
             success:function(result){
+                
                 // redirect us to the success page
-                window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/misc-billing/success.html");
+                if(result == "duplicate") {
+                    
+                    // re-enable our button so they can try submitting again
+                    $("a#process_work_assignment").on('click');
+                    $("a#process_work_assignment").removeClass("disabled");
+                    
+                    // Display our validation messages in a jQuery-confirm box
+                    $.confirm({
+                        title: 'Misc. Billing - Duplicate Detected',
+                        content: "An idential Transaction already exists. Please re-check your entered information.<br><br>View your current Transactions on the <strong>Review and Submit Current Invoice</strong> page.",
+                        icon: 'fa fa-warning  fa-bounce',
+                        type: 'red',
+                        useBootstrap: false,
+                        draggable: false,
+                        theme: 'material',
+                        buttons: {
+                            confirm: {
+                                text: 'OK',
+                                btnClass: 'btn-red',
+                                action: function(){
+            
+                                }
+                            },
+                        }
+                    });
+                    
+                } else {
+                    // redirect us to the success page
+                    window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/misc-billing/success.html");
+                }
+                
+                
+                
             },
             error:function(result){
                 $(".message").html("There was an error using the AJAX call for addMiscBilling()");
