@@ -8,7 +8,7 @@
     $vars = $_POST;
     
     // create a file with the name "psy_datetime.txt" to log our transaction data
-    $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../delete_transaction/'.$vars['psychologist']."_".date('m_d_Y_hia').".txt", "w") or die("Unable to open file!");
+    $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../delete_transaction/'.$vars['psychologist']."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
     // loop through our $vars and write the key => value to our created file
     foreach($vars as $key => $var) {
         fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
