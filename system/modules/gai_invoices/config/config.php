@@ -25,7 +25,7 @@ $GLOBALS['FE_MOD']['gai_invoices']['mod_send_invoice_emails'] 	    = 'Bcs\Module
 $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email'] = array
 (
     'recipients'           => array('recipient_email'),
-    'email_subject'        => array('recipient_name', 'invoice_number'),
+    'email_subject'        => array('recipient_name', 'invoice_number', 'billing_month'),
     'email_text'           => array('recipient_name', 'invoice_number', 'invoice_url', 'invoice_total'),
     'email_html'           => array('recipient_name', 'invoice_number', 'invoice_url'),
     'file_name'            => array('invoice_filename', 'invoice_url'),
