@@ -30,11 +30,10 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email
     'email_html'           => array('recipient_name', 'invoice_number', 'invoice_url'),
     'file_name'            => array('invoice_filename', 'invoice_url'),
     'file_content'         => array('invoice_url', 'invoice_file'),
-    'email_sender_name'    => array('gai_from_name'),
-    'email_sender_address' => array('gai_from_address'),
+    'email_sender_name'    => array('sender_name'),
+    'email_sender_address' => array('sender_address'),
     'email_recipient_cc'   => array('recipient_cc'),
-    'email_recipient_bcc'  => array('gai_bcc'),
-    'email_replyTo'        => array('gai_from_address'),
+    'email_replyTo'        => array('reply_to_address'),
     'attachment_tokens'    => array('invoice_token'),
     
 );
