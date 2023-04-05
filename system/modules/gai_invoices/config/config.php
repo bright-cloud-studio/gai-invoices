@@ -26,7 +26,7 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email
 (
     'recipients'           => array('recipient_email'),
     'email_subject'        => array('recipient_name', 'invoice_number', 'billing_month'),
-    'email_text'           => array('recipient_name', 'invoice_number', 'invoice_url', 'invoice_total'),
+    'email_text'           => array('recipient_name', 'invoice_number', 'invoice_url', 'invoice_total', 'billing_month'),
     'email_html'           => array('recipient_name', 'invoice_number', 'invoice_url'),
     'file_name'            => array('invoice_filename', 'invoice_url'),
     'file_content'         => array('invoice_url', 'invoice_file'),
