@@ -133,6 +133,9 @@ class ModSendInvoiceEmails extends \Contao\Module
         $response = $this->$service->spreadsheets_values->get(ModSendInvoiceEmails::$spreadsheetId, $range);
         $values = $response->getValues();
         
+        
+        $lastMonth = date('m', strtotime('-1 month'));
+        
         $entry_id = 1;
         $psy_total = 1;
         foreach($values as $entry) {
@@ -140,7 +143,8 @@ class ModSendInvoiceEmails extends \Contao\Module
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                //if($month == $entry[1]) {
+                if($entry[1] == $lastMonth) {
+
                     $arrData = array();
                     $arrData['row_id']          = $entry_id;
                     $arrData['id']              = $psy_total;
@@ -160,8 +164,8 @@ class ModSendInvoiceEmails extends \Contao\Module
                     $objListTemplate->setData($arrData);
                     $entryPsy[$entry_id] = $objListTemplate->parse();
                     $psy_total++;
-               // }
 
+                }
             }
             
             $entry_id++;
@@ -181,7 +185,7 @@ class ModSendInvoiceEmails extends \Contao\Module
             // if the id matches this entry, it is related to our user
             if($entry_id != 1) {
                 
-                //if($month == $entry[1]) {
+                if($entry[1] == $lastMonth) {
                     $arrData = array();
                     $arrData['row_id']          = $entry_id;
                     $arrData['id']              = $school_total;
@@ -203,7 +207,7 @@ class ModSendInvoiceEmails extends \Contao\Module
                     $objListTemplate->setData($arrData);
                     $entrySchool[$entry_id] = $objListTemplate->parse();
                     $school_total++;
-               // }
+                }
 
             }
             
