@@ -50,3 +50,7 @@ $GLOBALS['TL_MODELS']['tl_transactions'] = 'Bcs\Model\Transactions';
 
 /* Hooks */
 $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEmails', 'sendEmails');
+
+
+/* Cron Jobs */
+$GLOBALS['TL_CRON']['hourly'][] = [\Bcs\Backend\GAICron::class, 'onDaily'];
