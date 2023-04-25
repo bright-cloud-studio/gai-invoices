@@ -97,12 +97,19 @@ $( document ).ready(function() {
     
     
     // ADMIN REVIEW
-    // if a price value is changed, flag this row as updated
+    // if a price value is changed
     $( ".mod_admin_review .price" ).change(function() {
-        $(this).closest('tr').find(".update").val("Process to Save");
-        //$(this).closest('form').find(".btn").html("Process and Review Next Psychologist");
         
+        // find theh closest parent tr, find the nearest update field, add our copy
+        $(this).closest('tr').find(".update").val("Process to Save");
+        
+        // get the hidden row id field value
         var rowId = $(this).closest('tr').find(".row_id").val();
+        
+        // get the hidden psychologist name field value
+        var psyName = $(this).closest("tr").find(".psy_name").val();
+        // set our hidden update psy name field with the value
+        $(this).closest('form').find("#update_psy_name").val(psyName);
         
         if(!$(this).closest('form').find("#rows").val().includes(rowId)) {
             if($(this).closest('form').find("#rows").val() == '')
@@ -123,6 +130,11 @@ $( document ).ready(function() {
         //$(this).closest('form').find(".btn").html("Process and Review Next Psychologist");
         
         var rowId = $(this).closest('tr').find(".row_id").val();
+        
+        // get the hidden psychologist name field value
+        var psyName = $(this).closest("tr").find(".psy_name").val();
+        // set our hidden update psy name field with the value
+        $(this).closest('form').find("#update_psy_name").val(psyName);
         
         if(!$(this).closest('form').find("#rows").val().includes(rowId)) {
             if($(this).closest('form').find("#rows").val() == '')
@@ -145,6 +157,11 @@ $( document ).ready(function() {
         //$(this).closest('form').find(".btn").html("Process and Review Next Psychologist");
         
         var rowId = $(this).closest('tr').find(".row_id").val();
+        
+        // get the hidden psychologist name field value
+        var psyName = $(this).closest("tr").find(".psy_name").val();
+        // set our hidden update psy name field with the value
+        $(this).closest('form').find("#update_psy_name").val(psyName);
         
         if(!$(this).closest('form').find("#rows").val().includes(rowId)) {
             if($(this).closest('form').find("#rows").val() == '')
@@ -196,6 +213,9 @@ function selectWorkAssignment(id){
 // WORK ASSIGNMENTS
 // The main function to send entered data to Sheets
 function processWorkAssignment(id){
+
+    if($("#form_" + id + " a#process_work_assignment").hasClass("disabled"))
+        return;
 
     var validateFailed = [];
     var validateMessage = '';
@@ -266,9 +286,9 @@ function processWorkAssignment(id){
 
     // VALIDATION - SUCCESS
     if($.isEmptyObject(validateFailed)) {
-        // remove our onclick and add disabled class
-        $("a#process_work_assignment").off('click');
-        $("a#process_work_assignment").addClass("disabled");
+        
+        // add disabled class
+        $("#form_" + id + " a#process_work_assignment").addClass("disabled");
 
         // get every form field and add them to the ajax data line
         var datastring = $("#form_" + id).serialize();
@@ -285,8 +305,7 @@ function processWorkAssignment(id){
                 if(result == "duplicate") {
                     
                     // re-enable our button so they can try submitting again
-                    $("a#process_work_assignment").on('click');
-                    $("a#process_work_assignment").removeClass("disabled");
+                    $("#form_" + id + " a#process_work_assignment").removeClass("disabled");
                     
                     // Display our validation messages in a jQuery-confirm box
                     $.confirm({
@@ -400,7 +419,7 @@ function handoffWorkAssignment(id){
     
 // ADMIN REVIEW
 // Change to a specific Psychologist
-function jumpToPsy(id_next){
+function processReviewChanges(id_next){
     
     // get our current form id
     var id_current = $("input#current_psy").val();
@@ -453,7 +472,15 @@ function jumpToPsy(id_next){
                     $(this).val("");
                 });
                 // remove the "Update Row IDs" values from this form
-                $("form#psy_" + id_current +" input#rows").val("");
+                $("form#psy_" + id_current + " input#rows").val("");
+                
+                
+                // get our hidden psy name field
+                var psyName = $("form#psy_" + id_current + " input#update_psy_name").val();
+                // update that psy on the Navigation menu to mark changes have been made
+                $(".mod_admin_review_nav #" + psyName.replace(/ /g,"_")).addClass("updated");
+                // remove the "Psychologist Name" value
+                $("form#psy_" + id_current + " input#update_psy_name").val("");
                 
                 scrollToAnchor('anchor_nav');
                 
@@ -481,6 +508,7 @@ function jumpToPsy(id_next){
 
 // SEND INVOICE EMAILS
 // The main function to send out emails
+/*
 function sendInvoiceEmails(){
     
     var datastring = $("form#send_invoice_emails").serialize();
@@ -499,6 +527,7 @@ function sendInvoiceEmails(){
     });
 
 }
+*/
 
 
 
@@ -612,6 +641,9 @@ function deleteTransaction(transaction_id){
 
 // This generates Transactions manually for meetings without Work Assignments
 function addMeeting(){
+    
+    if($("a#process_work_assignment").hasClass("disabled"))
+        return;
 
     var validated = 0;
     var validateFailed = [];
@@ -684,6 +716,10 @@ function addMeeting(){
     
 
     if($.isEmptyObject(validateFailed)) {
+        
+        // add disabled class
+        $("a#process_work_assignment").addClass("disabled");
+        
         // get every form field and add them to the ajax data line
         var datastring = $("#form_add_meeting").serialize();
         
@@ -698,7 +734,6 @@ function addMeeting(){
                 if(result == "duplicate") {
                     
                     // re-enable our button so they can try submitting again
-                    $("a#process_work_assignment").on('click');
                     $("a#process_work_assignment").removeClass("disabled");
                     
                     // Display our validation messages in a jQuery-confirm box
