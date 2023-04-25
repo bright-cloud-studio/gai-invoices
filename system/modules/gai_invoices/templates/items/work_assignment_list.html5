@@ -7,7 +7,8 @@
 	$cleanSchool = str_replace('.', '', $this->school);
 	$cleanSchool = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanSchool));
 	$cleanStudent = preg_replace('~[^A-Z]~', '', $this->student_name);
-	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent;
+	
+	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent . "_" . $this->random_id;
 
     // Add our "shared" class if this user is a shared user and not the primary psychologist
 	$objUser = \FrontendUser::getInstance();
