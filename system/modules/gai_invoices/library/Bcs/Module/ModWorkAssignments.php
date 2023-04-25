@@ -73,6 +73,7 @@ class ModWorkAssignments extends \Contao\Module
  
         return parent::generate();
     }
+    
  
     /* Generate the module */
     protected function compile()
@@ -93,7 +94,7 @@ class ModWorkAssignments extends \Contao\Module
         //$range = 'Work Assignment';
         
         // LIVE
-        $range = 'Fall';
+        $range = '2022-2023';
         
         $response = $this->$service->spreadsheets_values->get(ModWorkAssignments::$spreadsheetId, $range);
         $values = $response->getValues();
@@ -116,6 +117,9 @@ class ModWorkAssignments extends \Contao\Module
         $filterStudents = array();
         
         $entryForm = array();
+        
+        // store our random IDs so we can generate a new one if it exists already
+        $randomIDs = array();
         
         $show = 0;
         $entry_id = 1;
@@ -201,6 +205,19 @@ class ModWorkAssignments extends \Contao\Module
                         $filterDistricts[$arrData['district']] = $arrData['district'];
                         $filterSchools[$arrData['school']] = $arrData['school'];
                         $filterStudents[$arrData['student_name']] = $arrData['student_name'];
+                        
+                        // First, generate a random 9 digit number (000000000-999999999)
+                		$generatedID = $this->randomNumber(9,$randomIDs);
+                		// if this ID has been generated previously and is stored in our array
+                		while(in_array($generatedID, $randomIDs)) {
+                		    // generate a number number again
+                		    $generatedID = $this->randomNumber(9,$randomIDs);
+                		}
+                		// We got out of the loop, we have a unique ID so store it in the array
+                		array_push($randomIDs, $generatedID);
+                		// Add this truly unique ID to our template
+                		$arrData['random_id'] = $generatedID;
+                        
                         
                         
                         // Generate as "List"
@@ -322,5 +339,21 @@ class ModWorkAssignments extends \Contao\Module
         $this->Template->workAssignmentFilterStudents = $filterStudents;
 
 	}
+	
+	/* Generates a random number of the specified $digits length */
+    public function randomNumber($digits, $randomIDs) {
+        
+        /* Store our numbers in an array */
+        $nums = array();
+        
+        /* loop $digits times */
+        for($x = 0; $x < $digits; $x++) {
+            /* Add to our array a random number between 0-9 */
+            array_push($nums, mt_rand(0,9));
+        }
+
+        /* return the array, as an int, padded out to 9 digits with zeroes if needed */
+        return str_pad((int)implode("",$nums), 9, '0', STR_PAD_LEFT);
+    }
 
 } 
