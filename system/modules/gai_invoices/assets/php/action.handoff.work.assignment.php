@@ -26,11 +26,11 @@
     $range = '';
     
     // Update the range to match which of the five Shared fields this will fit into
-    if($vars['shared_total'] == 0) { $range = 'Fall!AB' . $vars['sheet_row']; }
-    if($vars['shared_total'] == 1) { $range = 'Fall!AD' . $vars['sheet_row']; }
-    if($vars['shared_total'] == 2) { $range = 'Fall!AF' . $vars['sheet_row']; }
-    if($vars['shared_total'] == 3) { $range = 'Fall!AH' . $vars['sheet_row']; }
-    if($vars['shared_total'] == 4) { $range = 'Fall!AJ' . $vars['sheet_row']; }
+    if($vars['shared_total'] == 0) { $range = '2022-2023!AB' . $vars['sheet_row']; }
+    if($vars['shared_total'] == 1) { $range = '2022-2023!AD' . $vars['sheet_row']; }
+    if($vars['shared_total'] == 2) { $range = '2022-2023!AF' . $vars['sheet_row']; }
+    if($vars['shared_total'] == 3) { $range = '2022-2023!AH' . $vars['sheet_row']; }
+    if($vars['shared_total'] == 4) { $range = '2022-2023!AJ' . $vars['sheet_row']; }
     
     $options = ['valueInputOption' => 'USER_ENTERED'];
     $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
