@@ -56,6 +56,10 @@
     if($result) {
         while($row = $result->fetch_assoc()) {
             
+            // combine our lasid and said for both the vars and row
+            $lasidSasidVar = $vars['lasid'] . $vars['sasid'];
+            $lasidSasidRow = $row['lasid'] . $row['sasid'];
+
             // If Psychologists match
             if($vars['psychologist'] == $row['psychologist']) {
                 // If District matches
@@ -64,50 +68,52 @@
                     if($vars['school'] == $row['school']) {
                         // If Student matches
                         if($vars['student_name'] == $row['student_name']) {
-                            // If Service Provided
-                            if($service_provided == $row['service_provided']) {
-                                // If Price matches
-                                if($price == $row['price']) {
-                                    // If time-based
-                                    if($service_provided == 1 || $service_provided == 12 || $service_provided == 13 || $service_provided == 15) {
-                                        // If Meeting Date matches
-                                        if($vars['meeting_date'] == $row['meeting_date']) {
-                                            // If Meeting Start
-                                            if($vars['meeting_start'] == $row['meeting_start']) {
-                                                // If Meeting End
-                                                if($vars['meeting_end'] == $row['meeting_end']) {
-                                                    $duplicate = true;
-                                                    
-                                                    $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/work_assignment_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
-                                                    foreach($vars as $key => $var) {
-                                                        fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
+                            // If Lasid + sasid matches
+                            if($lasidSasidVar == $lasidSasidRow) {
+                                // If Service Provided
+                                if($service_provided == $row['service_provided']) {
+                                    // If Price matches
+                                    if($price == $row['price']) {
+                                        // If time-based
+                                        if($service_provided == 1 || $service_provided == 12 || $service_provided == 13 || $service_provided == 15) {
+                                            // If Meeting Date matches
+                                            if($vars['meeting_date'] == $row['meeting_date']) {
+                                                // If Meeting Start
+                                                if($vars['meeting_start'] == $row['meeting_start']) {
+                                                    // If Meeting End
+                                                    if($vars['meeting_end'] == $row['meeting_end']) {
+                                                        $duplicate = true;
+                                                        
+                                                        $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/work_assignment_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
+                                                        foreach($vars as $key => $var) {
+                                                            fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
+                                                        }
+                                                        fwrite($myfile, "\n\n");
+                                                        foreach($row as $key => $var) {
+                                                            fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
+                                                        }
+                                                        fclose($myfile);
+                                                        
                                                     }
-                                                    fwrite($myfile, "\n\n");
-                                                    foreach($row as $key => $var) {
-                                                        fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
-                                                    }
-                                                    fclose($myfile);
-                                                    
                                                 }
                                             }
+                                        } else {
+                                            // not time based
+                                            $duplicate = true;
+                                            
+                                            $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/work_assignment_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
+                                            foreach($vars as $key => $var) {
+                                                fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
+                                            }
+                                            fwrite($myfile, "\n\n");
+                                            foreach($row as $key => $var) {
+                                                fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
+                                            }
+                                            fclose($myfile);
+                                            
                                         }
-                                    } else {
-                                        // not time based
-                                        $duplicate = true;
-                                        
-                                        $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/work_assignment_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
-                                        foreach($vars as $key => $var) {
-                                            fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
-                                        }
-                                        fwrite($myfile, "\n\n");
-                                        foreach($row as $key => $var) {
-                                            fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
-                                        }
-                                        fclose($myfile);
-                                        
                                     }
                                 }
-                                
                             }
                         }
                     }
@@ -209,14 +215,14 @@
         $valueRange = new \Google_Service_Sheets_ValueRange();
         $valueRange->setValues($rows);
         
-        $range = 'Fall!AA' . $vars['sheet_row'];
+        $range = '2022-2023!AA' . $vars['sheet_row'];
         $spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
         
-        if($vars['psychologist'] == $vars['shared_1']) { $range = 'Fall!AC' . $vars['sheet_row']; }
-        if($vars['psychologist'] == $vars['shared_2']) { $range = 'Fall!AE' . $vars['sheet_row']; }
-        if($vars['psychologist'] == $vars['shared_3']) { $range = 'Fall!AG' . $vars['sheet_row']; }
-        if($vars['psychologist'] == $vars['shared_4']) { $range = 'Fall!AI' . $vars['sheet_row']; }
-        if($vars['psychologist'] == $vars['shared_5']) { $range = 'Fall!AK' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_1']) { $range = '2022-2023!AC' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_2']) { $range = '2022-2023!AE' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_3']) { $range = '2022-2023!AG' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_4']) { $range = '2022-2023!AI' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_5']) { $range = '2022-2023!AK' . $vars['sheet_row']; }
         
         $options = ['valueInputOption' => 'USER_ENTERED'];
         $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
