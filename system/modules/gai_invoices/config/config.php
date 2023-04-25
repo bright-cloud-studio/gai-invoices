@@ -53,4 +53,4 @@ $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEma
 
 
 /* Cron Jobs */
-$GLOBALS['TL_CRON']['hourly'][] = [\Bcs\Backend\GAICron::class, 'onDaily'];
+$GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'sendReminderEmail'];
