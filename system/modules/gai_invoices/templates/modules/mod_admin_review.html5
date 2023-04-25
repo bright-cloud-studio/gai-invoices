@@ -1,28 +1,29 @@
 <!-- Navigation Menu -->
 
-<div class="mod_admin_review_nav marbot60 size100 no-pad flex_wrapper">
-	<a name="anchor_nav"></a>
-	<h2 class="size100 no-pad">Navigation</h2>
-	<?php
-		$i = 1;
-		foreach($this->psychologists as $psy) { ?>
-			<div class="size33" onclick="jumpToPsy(<?= $i ?>)"><?= $psy ?></div>
-			<?php
-			$i++;
-		}
-	?>
-	
-</div>
-
-<div class="size100" style="display: none;">
-	<div class="widget widget-text size50">
-		<label for="current_psy" class="size50">
-			Current Psy ID
-		</label>
-		<input type="text" name="current_psy" id="current_psy" value="1" required="">
+<?php if (!empty($this->transactionReview)): ?>
+	<div class="mod_admin_review_nav marbot60 size100 no-pad flex_wrapper">
+		<a name="anchor_nav"></a>
+		<h2 class="size100 no-pad">Navigation</h2>
+		<?php
+			$i = 1;
+			foreach($this->psychologists as $psy) { ?>
+				<div class="size33" id="<?= str_replace(' ', '_', $psy); ?>" onclick="processReviewChanges(<?= $i ?>)"><?= $psy ?></div>
+				<?php
+				$i++;
+			}
+		?>
+		
 	</div>
-</div>
-
+	
+	<div class="size100" style="display: none;">
+		<div class="widget widget-text size50">
+			<label for="current_psy" class="size50">
+				Current Psy ID
+			</label>
+			<input type="text" name="current_psy" id="current_psy" value="1" required="">
+		</div>
+	</div>
+<?php endif; ?>
 
 <!-- Table to display our monthly transactions for this user -->
 <div class="mod_admin_review marbot60 size100 no-pad flex_wrapper">
@@ -51,6 +52,7 @@
 						<tr>
 							<th>Updated</th>
 							<th style="display: none;">Row ID</th>
+							<th style="display: none;" class="psy_name">Psychologist Name</th>
 							<th>DELETE</th>
 							<th>DISTRICT</th>
 							<th>SCHOOL</th>
@@ -70,15 +72,24 @@
 				</table>
 				
 				<div class="size50 center_element">
-					<a class="btn" onclick="jumpToPsy('<?= $psyCount ?>');">Process Changes</a>
+					<a class="btn" onclick="processReviewChanges('<?= $psyCount ?>');">Process Changes</a>
 				</div>
 				
-				<div class="size100" style="display: none;">
+				<div class="size100" style="">
 					<div class="widget widget-text size50">
 						<label for="rows" class="size50">
 							Updated Row IDs
 						</label>
 						<input type="text" name="rows" id="rows" value="" required="">
+					</div>
+				</div>
+				
+				<div class="size100" style="">
+					<div class="widget widget-text size50">
+						<label for="update_psy_name" class="size50">
+							Psychologist Name
+						</label>
+						<input type="text" name="update_psy_name" id="update_psy_name" value="" required="">
 					</div>
 				</div>
 				
