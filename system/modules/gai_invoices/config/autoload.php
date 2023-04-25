@@ -22,6 +22,7 @@ ClassLoader::addClasses(array
     'Bcs\Module\ModAdminReview'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAdminReview.php',
     'Bcs\Module\ModSendInvoiceEmails'           => 'system/modules/gai_invoices/library/Bcs/Module/ModSendInvoiceEmails.php',
     'Bcs\Backend\TransactionsBackend'           => 'system/modules/gai_invoices/library/Bcs/Backend/TransactionsBackend.php',
+    'Bcs\Backend\CronJobs'                      => 'system/modules/gai_invoices/library/Bcs/Backend/CronJobs.php',
     'Bcs\Model\Transactions'                    => 'system/modules/gai_invoices/library/Bcs/Model/Transactions.php',
     'Bcs\Frontend\SendInvoiceEmails'            => 'system/modules/gai_invoices/library/Bcs/Frontend/SendInvoiceEmails.php',
 ));
