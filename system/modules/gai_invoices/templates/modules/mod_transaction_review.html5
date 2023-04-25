@@ -3,7 +3,7 @@
 <div class="mod_transaction_review marbot60 size100 no-pad flex_wrapper">
 	
 	
-	<?php if (empty($this->transactionReview)): ?>
+	<?php if (empty($this->transactionReview) && (empty($this->transactionReviewMisc))): ?>
 	
 		<!-- Empty -->
 		<p class="empty">You have not submitted any transactions for the billing month of <?= date("F"); ?></p>
@@ -59,7 +59,7 @@
 
 </div>
 
-<?php if (!empty($this->transactionReview)): ?>
+<?php if (!empty($this->transactionReview) || (!empty($this->transactionReviewMisc))): ?>
 	
 	<div class="transaction_ids marbot60 size100 no-pad">
 	
