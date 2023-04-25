@@ -2,22 +2,40 @@
 <div class="mod_send_invoice_emails marbot60 size100 no-pad flex_wrapper">
 
 	<div class="psy size100 no-pad marbot30">
-		
-		<form id="send_invoice_emails">
+	
+		<form id="send_invoice_emails" action="/payments/dashboard/send-invoice-emails/send-invoice-emails-success.html" method="post">
 			
 			<h2>Psychologists</h2>
-			<table class="size100 no-pad marbot30">
+			<table class="size100 no-pad marbot90">
+				<thead>
+					<tr>
+						<th>YES/NO</th>
+						<th>SEND INVOICE NOTIFICATION EMAILS</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td><input type="checkbox" name="send_psy_emails" id="send_psy_emails" class="send_psy_emails" value="yes"></td>
+						<td>Check this box to send Notification Emails to the psychologists that have recently generated invoices</td>
+					</tr>
+					<tr>
+						
+					</tr>
+				</tbody>
+				
+			</table>
+			
+			<h2>Psychologists</h2>
+			<table class="size100 no-pad marbot90" style="display: none;">
 				<thead>
 					<tr>
 						<th style="display: none;">SHEET ID</th>
-						<th>SEND EMAIL</th>
 						<th>YEAR</th>
 						<th>MONTH</th>
 						<th style="display: none;">INVOICE NUMBER</th>
 						<th>NAME</th>
 						<th>EMAIL</th>
 						<th style="display: none;">LINK</th>
-						<th>SENT</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -25,10 +43,13 @@
 				</tbody>
 				
 			</table>
-			<input type="text" name="psy_total" value="<?= $this->psy_total ?>"/>
+			
+			<div style="display: none; ">
+				<input type="text" name="psy_total" value="<?= $this->psy_total ?>"/>
+			</div>
 			
 			<h2>Schools</h2>
-			<table class="size100 no-pad marbot30">
+			<table class="size100 no-pad marbot90">
 				<thead>
 					<tr>
 						<th style="display: none;">SHEET ID</th>
@@ -49,10 +70,13 @@
 				</tbody>
 				
 			</table>
-			<input type="text" name="school_total" value="<?= $this->school_total ?>"/>
+			
+			<div style="display: none; ">
+				<input type="text" name="school_total" value="<?= $this->school_total ?>"/>
+			</div>
 			
 			<div class="size50 center_element">
-				<a class="btn" onclick="sendInvoiceEmails();">Send Invoice Emails</a>
+				<input class="btn" type="submit" value="Send Invoice Emails">
 			</div>
 			
 		</form>
