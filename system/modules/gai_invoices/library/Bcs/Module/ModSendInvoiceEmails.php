@@ -156,6 +156,7 @@ class ModSendInvoiceEmails extends \Contao\Module
                     $arrData['date_due']        = $entry[5];
                     $arrData['invoice_link']    = $entry[6];
                     $arrData['email_sent']      = $entry[7];
+                    $arrData['invoice_total']   = $entry[8];
                     $arrData['email']           = $psys[$entry[3]];
                     
                     // Generate as "List"
@@ -198,6 +199,7 @@ class ModSendInvoiceEmails extends \Contao\Module
                     $arrData['date_due']        = $entry[6];
                     $arrData['invoice_link']    = $entry[7];
                     $arrData['email_sent']      = $entry[8];
+                    $arrData['invoice_total']   = $entry[9];
                     $arrData['email']           = $schools[$entry[3]][$entry[4]]['em'];
                     $arrData['cc']           = $schools[$entry[3]][$entry[4]]['cc'];
                     
