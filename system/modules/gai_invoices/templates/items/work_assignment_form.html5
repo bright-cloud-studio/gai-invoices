@@ -8,7 +8,10 @@
 	$cleanSchool = str_replace('.', '', $this->school);
 	$cleanSchool = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanSchool));
 	$cleanStudent = preg_replace('~[^A-Z]~', '', $this->student_name);
-	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent;
+	
+	
+	
+	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent . "_" . $this->random_id;
 ?>
 
 <!-- Work Assignment as a form -->
@@ -380,10 +383,12 @@
 		<div class="widget widget-checkbox size100 center_element size100 center_element">
 			<fieldset id="complete_work_assignment" class="checkbox_container size100 center_element">
 				
-				<span><input type="checkbox" name="complete_work_assignment" id="complete_work_assignment" class="checkbox" value="yes">
-				<label id="complete_work_assignment" for="complete_work_assignment">Finalize Work Assignment</label></span>
+				<span class="size100 center-element marbot30"><strong>OPTIONAL</strong></span>
 				
-				<span style=" margin-top: 15px; width: 100%; font-weight: 600; color: red;">NOTE: Finalizing a Work Assignment will remove it from your list. Only check this box when you are completely done with this student.</span>
+				<span><input type="checkbox" name="complete_work_assignment" id="complete_work_assignment" class="checkbox" value="yes">
+				<label id="complete_work_assignment" for="complete_work_assignment">Remove this Work Assignment from your list</label></span>
+				
+				<span style=" margin-top: 15px; width: 100%; font-weight: 600; color: red;">NOTE: Checking this box will remove this Work Assignment permanently from your list. This is an optional feature to cut down on clutter.</span>
 			</fieldset>
 			
 		</div>
