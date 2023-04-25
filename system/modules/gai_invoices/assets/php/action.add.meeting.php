@@ -45,6 +45,10 @@
     if($result) {
         while($row = $result->fetch_assoc()) {
             
+            // combine our lasid and said for both the vars and row
+            $lasidSasidVar = $vars['lasid'] . $vars['sasid'];
+            $lasidSasidRow = $row['lasid'] . $row['sasid'];
+            
             // If Psychologists match
             if($vars['psychologist'] == $row['psychologist']) {
                 // If District matches
@@ -53,10 +57,12 @@
                     if($vars['school'] == $row['school']) {
                         // If Student matches
                         if($vars['student_name'] == $row['student_name']) {
-                            // If Service Provided
-                            if($vars['service_provided'] == $row['service_provided']) {
-                                // If Price matches
-                                if($price == $row['price']) {
+                            // If Lasid + sasid matches
+                            if($lasidSasidVar == $lasidSasidRow) {
+                                // If Service Provided
+                                if($vars['service_provided'] == $row['service_provided']) {
+                                    // If Price matches
+                                    if($price == $row['price']) {
                                         // If Meeting Date matches
                                         if($vars['meeting_date'] == $row['meeting_date']) {
                                             // If Meeting Start
@@ -79,8 +85,8 @@
                                                 }
                                             }
                                         }
+                                    }
                                 }
-                                
                             }
                         }
                     }
