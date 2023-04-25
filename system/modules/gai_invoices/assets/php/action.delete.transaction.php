@@ -53,7 +53,7 @@
         $rows = [$updateRow];
         $valueRange = new \Google_Service_Sheets_ValueRange();
         $valueRange->setValues($rows);
-        $range = 'Fall!AA' . $vars['work_assignment_id'];
+        $range = '2022-2023!AA' . $vars['work_assignment_id'];
         $spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
         $options = ['valueInputOption' => 'USER_ENTERED'];
         $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
