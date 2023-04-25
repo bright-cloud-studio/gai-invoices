@@ -19,7 +19,7 @@
 	
 	<?php if($this->service == 'Misc. Billing' ) { ?>
 	
-		<td><a onClick='deleteTransaction("<?= $this->transaction_id ?>");'>DELETE</a></td>
+		<td><a class="delete" onClick='deleteTransaction("<?= $this->transaction_id ?>");'>DELETE</a></td>
 		<td><?= $reviewed ?></td>
 		<td>Misc. Billing: <?= $this->label ?></td>
 		<td></td>
