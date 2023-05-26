@@ -94,7 +94,7 @@ class ModWorkAssignments extends \Contao\Module
         //$range = 'Work Assignment';
         
         // LIVE
-        $range = '2022-2023';
+        $range = 'SY2022-2023';
         
         $response = $this->$service->spreadsheets_values->get(ModWorkAssignments::$spreadsheetId, $range);
         $values = $response->getValues();
