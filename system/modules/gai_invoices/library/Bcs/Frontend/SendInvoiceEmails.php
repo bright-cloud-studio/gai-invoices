@@ -162,22 +162,7 @@ class SendInvoiceEmails extends Contao_Frontend {
                     }
                     
                 }
-
             }
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
         }
-
-        
     }
-
 }
