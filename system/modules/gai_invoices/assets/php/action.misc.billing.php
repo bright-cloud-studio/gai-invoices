@@ -34,10 +34,14 @@
     foreach($vars as $key => $var) {
         fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
     }
+    
     // were done logging, close the file we just created
     fclose($myfile);
     
-    
+    // Make time from our passed in date field
+    $curTime = strtotime($vars['date']);
+    $curMonth = date("m",$curTime);
+    $curYear = date("Y",$curTime);
     
     
     // Check for duplicate
@@ -51,23 +55,37 @@
             // If Psychologists match
             if($vars['psychologist'] == $row['psychologist']) {
                 
-                if($vars['service_provided'] == 99) {
-                    if($price == $row['price']){
-                        if($vars['label'] == $row['misc_billing']) {
-                            $duplicate = true;
-                            
-                            $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/misc_billing_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
-                            foreach($vars as $key => $var) {
-                                fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
+                // make time from our database field
+                $dbTime = strtotime($row['date']);
+                $dbMonth = date("m",$dbTime);
+                $dbYear = date("Y",$dbTime);
+                
+                
+                // if our db date is from the current month and current year
+                if($curMonth == $dbMonth && $curYear == $dbYear) {
+                
+                    // if this service is a misc. billing entry
+                    if($vars['service_provided'] == 99) {
+                        if($price == $row['price']){
+                            if($vars['label'] == $row['misc_billing']) {
+                                $duplicate = true;
+                                
+                                $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/misc_billing_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
+                                foreach($vars as $key => $var) {
+                                    fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
+                                }
+                                fwrite($myfile, "\n\n");
+                                foreach($row as $key => $var) {
+                                    fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
+                                }
+                                fclose($myfile);
                             }
-                            fwrite($myfile, "\n\n");
-                            foreach($row as $key => $var) {
-                                fwrite($myfile, "Key: " . $key . "  | Value: " . $var . "\n");
-                            }
-                            fclose($myfile);
                         }
                     }
+                
                 }
+                
+                
             }
             
         }
