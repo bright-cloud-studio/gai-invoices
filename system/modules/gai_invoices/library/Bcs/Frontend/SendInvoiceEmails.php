@@ -73,9 +73,10 @@ class SendInvoiceEmails extends Contao_Frontend {
                         $arrTokens['recipient_name'] = $_POST['name_'.$i];
                         $sent_to_name = $arrTokens['recipient_name'];
                         
-                        //$arrTokens['recipient_email'] = $_POST['email_psy_'.$i];
-                        $arrTokens['recipient_email'] = 'mark@brightcloudstudio.com';
-                        $arrTokens['recipient_cc'] = 'ed@globalassessmentsinc.com';
+                        $arrTokens['recipient_email'] = $_POST['email_psy_'.$i];
+                        $arrTokens['recipient_cc'] = '';
+                        //$arrTokens['recipient_email'] = 'mark@brightcloudstudio.com';
+                        //$arrTokens['recipient_cc'] = 'ed@globalassessmentsinc.com';
     
                         $arrTokens['invoice_number'] = $_POST['invoice_number_'.$i];
                         $sent_to_inv_num = $arrTokens['invoice_number'];
@@ -88,42 +89,10 @@ class SendInvoiceEmails extends Contao_Frontend {
                         
                         // Send out the email using our tokens
                         $objNotification->send($arrTokens); // Language is optional
-                        
-                        // Update the Invoices - Psy sheet to mark this email as sent
-                        //$range = 'Invoices - Psy!H' . $_POST['row_id_psy_'.$i];
-                        //$service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
 
                     }
-                    
-                    // Send Ed his own notification
-                    /*
-                    $objNotification = \NotificationCenter\Model\Notification::findByPk($pk_notification);
-                    if (null !== $objNotification) {
-                        
-                        $arrTokens['sender_name'] = 'Global Assessments, Inc';
-                        $arrTokens['sender_address'] = 'billing@globalassessmentsinc.com';
-                        $arrTokens['reply_to_address'] = 'billing@globalassessmentsinc.com';
-                        
-                        $arrTokens['recipient_name'] = $sent_to_name;
-                        $arrTokens['recipient_email'] = 'ed@globalassessmentsinc.com';
-                        
-                        $arrTokens['recipient_cc'] = 'mark@brightcloudstudio.com';
-    
-                        $arrTokens['invoice_number'] = $sent_to_inv_num;
-                        $arrTokens['billing_month'] = $sent_to_billing_month;
-                        
-                        $objNotification->send($arrTokens); // Language is optional
-                    }
-                    */
                 }
             }
-            
-            
-            
-            
-            
-            
-            
             
             /* SEND SCHOOL EMAILS */
             for ($i = 1; $i <= $_POST['school_total']; $i++) {
