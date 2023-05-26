@@ -215,14 +215,14 @@
         $valueRange = new \Google_Service_Sheets_ValueRange();
         $valueRange->setValues($rows);
         
-        $range = '2022-2023!AA' . $vars['sheet_row'];
+        $range = 'SY2022-2023!AA' . $vars['sheet_row'];
         $spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
         
-        if($vars['psychologist'] == $vars['shared_1']) { $range = '2022-2023!AC' . $vars['sheet_row']; }
-        if($vars['psychologist'] == $vars['shared_2']) { $range = '2022-2023!AE' . $vars['sheet_row']; }
-        if($vars['psychologist'] == $vars['shared_3']) { $range = '2022-2023!AG' . $vars['sheet_row']; }
-        if($vars['psychologist'] == $vars['shared_4']) { $range = '2022-2023!AI' . $vars['sheet_row']; }
-        if($vars['psychologist'] == $vars['shared_5']) { $range = '2022-2023!AK' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_1']) { $range = 'SY2022-2023!AC' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_2']) { $range = 'SY2022-2023!AE' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_3']) { $range = 'SY2022-2023!AG' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_4']) { $range = 'SY2022-2023!AI' . $vars['sheet_row']; }
+        if($vars['psychologist'] == $vars['shared_5']) { $range = 'SY2022-2023!AK' . $vars['sheet_row']; }
         
         $options = ['valueInputOption' => 'USER_ENTERED'];
         $service->spreadsheets_values->update($spreadsheetId, $range, $valueRange, $options);
