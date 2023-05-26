@@ -38,6 +38,11 @@ $( document ).ready(function() {
                         if(ourString != "REMOVE") {
                             return false;
                         } else {
+                            
+                        
+                        // display our loading symbol
+                        
+                            
                         
                         // disable the other buttons
                         this.buttons.confirm.disable()
@@ -568,9 +573,10 @@ function reviewTransactions(id){
  // This will update the user's transactions as "Reviewed"
 function deleteTransaction(transaction_id){
     
-    var content_start = '<div class="size100 marbot60">Please confirm you would like to REMOVE this Transaction from your Invoice</div>';
+    var content_start = '<div id="del_text" class="size100 marbot60">Please confirm you would like to REMOVE this Transaction from your Invoice</div>';
+    content_start = content_start + '<div id="del_loading" class="size100 marbot60" style="display: none; text-align: center;">Loading...<br><br><i class="fa-duotone fa-spinner fa-spin-pulse"></i></div>';
     var content_form = '' +
-	'<form action="" class="formName">' +
+	'<form action="" id="del_form" class="formName">' +
 	    '<div class="form-group">' +
 	    	'<div class="size100 marbot15">Type the word "REMOVE" (All capitalized) to remove this transaction permanently from your Invoice</div>'+
 	    	'<div class="size100"><input type="text" name="del_string" id="del_string"/></div>' +
@@ -602,7 +608,19 @@ function deleteTransaction(transaction_id){
                         this.buttons.confirm.disable()
                         this.buttons.cancel.disable()
                         
+                        
+                        // hide our normal content
+                        $('#del_text').hide();
+                        $('#del_form').hide();
+                        
+                        $('#del_loading').show();
+                        // show our loading content
+                        
+                        
+                        
                         var datastring = $("#form_" + transaction_id).serialize();
+                        
+                         console.log("delete: starting ajax");
                         
                         // AJAX call to our php script to flag this Transaction as deleted
                         $.ajax({
@@ -610,10 +628,13 @@ function deleteTransaction(transaction_id){
                             type: 'POST',
                             data: datastring,
                             success:function(result){
+                                console.log("delete: success");
                                 // redirect us to the success page
                                 window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/review.html");
                             },
                             error:function(result){
+                                 console.log("delete: error");
+                                 console.log(result);
                                 $(".message").html("There was an error using the AJAX call for deleteTransaction");
                             }
                         });
@@ -822,11 +843,12 @@ function addMiscBilling(){
     }
     
     // Notes
+    /*
     var price = $(".mod_misc_billing #notes").val();
     if(price == '') {
         $(".message").append("Price cannot be empty<br>");
         validateFailed['price'] = 1;
-    }
+    }*/
 
     
     
