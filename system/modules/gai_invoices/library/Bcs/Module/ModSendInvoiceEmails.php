@@ -134,7 +134,7 @@ class ModSendInvoiceEmails extends \Contao\Module
         $values = $response->getValues();
         
         
-        $lastMonth = date('m', strtotime('-1 month'));
+        $lastMonth = date('m', strtotime('-2 month'));
         
         $entry_id = 1;
         $psy_total = 1;
