@@ -116,6 +116,9 @@ $( document ).ready(function() {
         // set our hidden update psy name field with the value
         $(this).closest('form').find("#update_psy_name").val(psyName);
         
+        // change the button text to show changes will be processed
+        $(this).closest('form').find(".process_review").text('Process Changes');
+        
         if(!$(this).closest('form').find("#rows").val().includes(rowId)) {
             if($(this).closest('form').find("#rows").val() == '')
                 $(this).closest('form').find("#rows").val(rowId);
@@ -274,20 +277,6 @@ function processWorkAssignment(id){
         
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 
     // VALIDATION - SUCCESS
     if($.isEmptyObject(validateFailed)) {
@@ -423,20 +412,42 @@ function handoffWorkAssignment(id){
     
     
 // ADMIN REVIEW
-// Change to a specific Psychologist
+function adminReviewChangeSelectedPsychologist(id_next){
+    
+    // ID of currently selected psychologist
+    var id_current = $("input#current_psy").val();
+        
+    // hide current form, show next form
+    $('div.psy_' + id_current).fadeOut();
+    $('div.psy_' + id_next).fadeIn();
+    
+    // update the current id to our new one
+    $("input#current_psy").val(id_next);
+
+}
+
+
+
+
+
+
+// Send edit requests to Sheets and change to another psychologist if requested
 function processReviewChanges(id_next){
     
-    // get our current form id
+    // ID of currently selected psychologist
     var id_current = $("input#current_psy").val();
+    // Keeps track of if updates have been made
     var hasUpdates = false;
     
+    // If the current psychologist form has "Updated Row IDs" listed, meaning there are edits being requested
     if($("form#psy_" + id_current +" input#rows").val() != '') {
         hasUpdates = true;
     }
     
+    // If updates are present
     if(hasUpdates) {
         
-        // open our Confirm box to block out the page
+        // Show our confirm box to let Ed know updates are being processed
         $.confirm({
             title: 'Admin Review',
             content: "Sending changes to Google Sheets...",
@@ -457,18 +468,22 @@ function processReviewChanges(id_next){
             }
         });
         
-        
+        // Serialize our entire form so we can send it to our php script
         var datastring = $("form#psy_" + id_current).serialize();
         
-        // trigger this function when our form runs
+        // Send serialized form data to our php script
         $.ajax({
             url: '/system/modules/gai_invoices/assets/php/action.admin.review.update.php',
             type: 'POST',
             data: datastring,
             success:function(result){
-                // hide current form, show next form
+                
+                
+                // hide current form and show the next
                 $('div.psy_' + id_current).fadeOut();
                 $('div.psy_' + id_next).fadeIn();
+                
+                
                 // update the current id to our new one
                 $("input#current_psy").val(id_next);
                 
@@ -480,12 +495,26 @@ function processReviewChanges(id_next){
                 $("form#psy_" + id_current + " input#rows").val("");
                 
                 
-                // get our hidden psy name field
+                
+                
+                
+                
+                // Get the name of the current psychologist, used to build id/class
                 var psyName = $("form#psy_" + id_current + " input#update_psy_name").val();
                 // update that psy on the Navigation menu to mark changes have been made
-                $(".mod_admin_review_nav #" + psyName.replace(/ /g,"_")).addClass("updated");
+                $(".mod_admin_review_nav #" + psyName).addClass("updated");
                 // remove the "Psychologist Name" value
                 $("form#psy_" + id_current + " input#update_psy_name").val("");
+                
+                // Change button text back to the default
+                $("form#psy_" + id_current + " a.process_review").text("Mark As Reviewed");
+                
+                
+                
+                
+                
+                
+                
                 
                 scrollToAnchor('anchor_nav');
                 
@@ -500,9 +529,15 @@ function processReviewChanges(id_next){
         
     } else {
         
+        // Get the psy name from the nav
+        var psyName = $('.mod_admin_review_nav div.psy_id_' + id_current).attr('id');
+        $(".mod_admin_review_nav #" + psyName).addClass("updated");
+        
+        
         // hide current form, show next form
         $('div.psy_' + id_current).fadeOut();
         $('div.psy_' + id_next).fadeIn();
+        
         // update the current id to our new one
         $("input#current_psy").val(id_next);
     }
@@ -510,29 +545,6 @@ function processReviewChanges(id_next){
 }
 
 
-
-// SEND INVOICE EMAILS
-// The main function to send out emails
-/*
-function sendInvoiceEmails(){
-    
-    var datastring = $("form#send_invoice_emails").serialize();
-        
-    // trigger this function when our form runs
-    $.ajax({
-        url: '/system/modules/gai_invoices/assets/php/action.send.invoice.emails.php',
-        type: 'POST',
-        data: datastring,
-        success:function(result){
-            window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/send-invoice-emails/send-invoice-emails-success.html");
-        },
-        error:function(result){
-            $(".message").html("There was an error using the AJAX call for sendInvoiceEmails");
-        }
-    });
-
-}
-*/
 
 
 
@@ -543,6 +555,27 @@ function sendInvoiceEmails(){
 
 // This will update the user's transactions as "Reviewed"
 function reviewTransactions(id){
+    
+    // Show our confirm box to let Ed know updates are being processed
+    $.confirm({
+        title: 'Review Monthly Submission',
+        content: "Processing your review...",
+        icon: 'fa fa-warning  fa-bounce',
+        type: 'red',
+        useBootstrap: false,
+        draggable: false,
+        theme: 'material',
+        buttons: {
+            confirm: {
+                text: 'OK',
+                isHidden: true,
+                btnClass: 'btn-red',
+                action: function(){
+
+                }
+            },
+        }
+    });
 
     // get every form field and add them to the ajax data line
     var datastring = $("#" + id).serialize();
@@ -558,6 +591,10 @@ function reviewTransactions(id){
         },
         error:function(result){
             $(".message").html("There was an error using the AJAX call for reviewTransactions");
+            
+            // If there was an error we wont be redirected so close the alert box
+            jconfirm.instances[0].close();
+            
         }
     });
 
