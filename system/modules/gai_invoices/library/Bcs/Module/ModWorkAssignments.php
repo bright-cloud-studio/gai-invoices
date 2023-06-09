@@ -200,6 +200,9 @@ class ModWorkAssignments extends \Contao\Module
                         if($arrData['shared_5'] != '') { $shared_total++; }
                         $arrData['shared_total'] = $shared_total;
                         
+                        // Price Tier
+                        $arrData['price_tier']         = "price_tier_1";
+                        
                         
                         // Filters
                         $filterDistricts[$arrData['district']] = $arrData['district'];
