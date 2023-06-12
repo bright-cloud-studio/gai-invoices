@@ -16,7 +16,7 @@ use Contao\DataContainer;
 use Bcs\Model\Psychologist;
 
 
-class PsycholigistsBackend extends \Backend
+class PsychologistsBackend extends \Backend
 {
   
 	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
