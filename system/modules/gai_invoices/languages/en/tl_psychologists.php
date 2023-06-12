@@ -24,6 +24,7 @@ $GLOBALS['TL_LANG']['tl_psychologists']['alias']                      = array('A
 $GLOBALS['TL_LANG']['tl_psychologists']['published']                  = array('Published', 'Show this record on the front end.');
 
 /* Fields */
+$GLOBALS['TL_LANG']['tl_psychologists']['psychologists_legend']       = 'Psychologist\'s Information Imported from Sheets';
 $GLOBALS['TL_LANG']['tl_psychologists']['invoices']                   = array('Invoices', 'Psychologist\'s last used Invoice Number');
 $GLOBALS['TL_LANG']['tl_psychologists']['name']                       = array('Name', 'Psychologist\'s Full Name');
 $GLOBALS['TL_LANG']['tl_psychologists']['address']                    = array('Address', 'Psychologist\'s Address Line One');
