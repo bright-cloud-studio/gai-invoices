@@ -3,7 +3,7 @@
 /**
  * Bright Cloud Studio's GAI Invoices
  *
- * Copyright (C) 2022-2023 Bright Cloud Studio
+ * Copyright (C) 2023 Bright Cloud Studio
  *
  * @package    bright-cloud-studio/gai-invoices
  * @link       https://www.brightcloudstudio.com/
@@ -12,6 +12,8 @@
 
 /* Back end modules */
 $GLOBALS['TL_LANG']['MOD']['transactions']                  = array('Transactions', 'Stored Transactions for the Duplicate Checker');
+$GLOBALS['TL_LANG']['MOD']['psychologists']                 = array('Psychologists', 'Psychologist data pulled from Sheets');
+$GLOBALS['TL_LANG']['MOD']['services']                      = array('Services', 'Services data pulled from Sheets');
 
 /* Front end modules */
 $GLOBALS['TL_LANG']['MOD']['gai_invoices']                  = array('GAI Invoices', 'Custom modules for the Dashboard');
