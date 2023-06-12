@@ -2,6 +2,7 @@
 
 namespace Bcs\Backend;
 
+use Google;
 use Contao\System;
 use Contao\MemberModel;
 
