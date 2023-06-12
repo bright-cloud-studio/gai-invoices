@@ -48,7 +48,7 @@ $GLOBALS['TL_DCA']['tl_services'] = array
         'label' => array
         (
             'fields'                  => array('name', 'service_code'),
-            'format'                  => '%s <span class="label-info">[%s]</span>'
+            'format'                  => '<strong>Name: </strong>%s <span class="label-info"><strong>Service Code: </strong>[%s]</span>'
         ),
         'global_operations' => array
         (
