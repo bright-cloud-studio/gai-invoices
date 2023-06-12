@@ -12,7 +12,7 @@
 
 
 /* Fields */
-$GLOBALS['TL_LANG']['tl_member']['meeting_options']          = array('Meeting Options', 'Select which meeting options are available to this Member');
+$GLOBALS['TL_LANG']['tl_member']['meeting_options']         = array('Meeting Options', 'Select which meeting options are available to this Member');
 
 /* Legends */
-$GLOBALS['TL_LANG']['tl_member']['meetings_legend'] = 'Dashboard - Meeting Options';
+$GLOBALS['TL_LANG']['tl_member']['meetings_legend']         = 'Dashboard - Meeting Options';
