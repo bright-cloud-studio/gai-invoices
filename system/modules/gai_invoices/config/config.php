@@ -40,19 +40,13 @@ $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email
 
 /* Back end modules */
 $GLOBALS['BE_MOD']['content']['transactions'] = array(
-	'tables' => array('tl_transactions'),
-	'icon'   => 'system/modules/gai_invoices/assets/icons/location.png',
-	'exportLocations' => array('Bcs\Backend\TransactionsBackend', 'exportListings')
+	'tables' => array('tl_transactions')
 );
 $GLOBALS['BE_MOD']['content']['psychologists'] = array(
-	'tables' => array('tl_psychologists'),
-	'icon'   => 'system/modules/gai_invoices/assets/icons/location.png',
-	'exportPsycholigists' => array('Bcs\Backend\PsychologistsBackend', 'exportPsycholigists')
+	'tables' => array('tl_psychologists')
 );
 $GLOBALS['BE_MOD']['content']['services'] = array(
-	'tables' => array('tl_services'),
-	'icon'   => 'system/modules/gai_invoices/assets/icons/location.png',
-	'exportServices' => array('Bcs\Backend\ServicesBackend', 'exportServices')
+	'tables' => array('tl_services')
 );
 
 /* Models */
@@ -62,7 +56,6 @@ $GLOBALS['TL_MODELS']['tl_services']        = 'Bcs\Model\Services';
 
 /* Hooks */
 $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEmails', 'sendEmails');
-
 
 /* Cron Jobs */
 $GLOBALS['TL_CRON']['daily'][] = ['Bcs\Backend\CronJobs', 'sendReminderEmails'];
