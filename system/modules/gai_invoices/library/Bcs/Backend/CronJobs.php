@@ -7,7 +7,7 @@ use Contao\MemberModel;
 
 class CronJobs extends System
 {
-    public function sendReminderEmails(): void
+    public function importFromSheets(): void
     {
        
         // Add a log entry so we know things are going as expected
