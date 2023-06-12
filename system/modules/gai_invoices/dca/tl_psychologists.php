@@ -79,13 +79,6 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
                 'icon'                => 'delete.svg',
                 'attributes'          => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\'))return false;Backend.getScrollOffset()"'
             ),
-            'toggle' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_psychologists']['toggle'],
-				'icon'                => 'visible.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-				'button_callback'     => array('Bcs\Backend\PsychologistsBackend', 'toggleIcon')
-			),
             'show' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_psychologists']['show'],
@@ -98,7 +91,7 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                       => '{psychologists_legend},invoices,name,address,address_2,city,state,zip,email,last_month_processed,price_tier;{publish_legend},published;'
+        'default'                       => '{psychologists_legend},invoices,name,address,address_2,city,state,zip,email,last_month_processed,price_tier;'
     ),
  
     // Fields
@@ -219,14 +212,6 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
             'search'                  => true,
             'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'published' => array
-        (
-            'exclude'                 => true,
-            'label'                   => &$GLOBALS['TL_LANG']['tl_psychologists']['published'],
-            'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true),
-            'sql'                     => "char(1) NOT NULL default ''"
-        )		
+        )	
     )
 );
