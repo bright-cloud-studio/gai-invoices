@@ -66,7 +66,7 @@ class CronJobs extends System
         
         // Get "Psychologists" data from Sheets
         $range = 'Psychologists';
-        $response = $this->$service->spreadsheets_values->get(ModAdminReview::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
         
         // Loop through our Psychologists
