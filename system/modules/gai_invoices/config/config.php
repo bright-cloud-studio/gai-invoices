@@ -44,9 +44,21 @@ $GLOBALS['BE_MOD']['content']['transactions'] = array(
 	'icon'   => 'system/modules/gai_invoices/assets/icons/location.png',
 	'exportLocations' => array('Bcs\Backend\TransactionsBackend', 'exportListings')
 );
+$GLOBALS['BE_MOD']['content']['psychologists'] = array(
+	'tables' => array('tl_psychologists'),
+	'icon'   => 'system/modules/gai_invoices/assets/icons/location.png',
+	'exportPsycholigists' => array('Bcs\Backend\PsychologistsBackend', 'exportPsycholigists')
+);
+$GLOBALS['BE_MOD']['content']['services'] = array(
+	'tables' => array('tl_services'),
+	'icon'   => 'system/modules/gai_invoices/assets/icons/location.png',
+	'exportServices' => array('Bcs\Backend\ServicesBackend', 'exportServices')
+);
 
 /* Models */
-$GLOBALS['TL_MODELS']['tl_transactions'] = 'Bcs\Model\Transactions';
+$GLOBALS['TL_MODELS']['tl_transactions']    = 'Bcs\Model\Transactions';
+$GLOBALS['TL_MODELS']['tl_psychologists']   = 'Bcs\Model\Psychologists';
+$GLOBALS['TL_MODELS']['tl_services']        = 'Bcs\Model\Services';
 
 /* Hooks */
 $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEmails', 'sendEmails');
