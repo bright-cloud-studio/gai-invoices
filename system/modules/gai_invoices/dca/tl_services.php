@@ -98,7 +98,7 @@ $GLOBALS['TL_DCA']['tl_services'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                     => '{services_legend},service_code,name,psychologist_tier_1,psychologist_tier_2,psychologist_tier_3,school_tier_1,school_tier_2,school_tier_3;{publish_legend},published;'
+        'default'                       => '{services_legend},service_code,name,psychologist_tier_1,psychologist_tier_2,psychologist_tier_3,school_tier_1,school_tier_2,school_tier_3;{publish_legend},published;'
     ),
  
     // Fields
@@ -106,11 +106,11 @@ $GLOBALS['TL_DCA']['tl_services'] = array
     (
         'id' => array
         (
-		        'sql'                     	=> "int(10) unsigned NOT NULL auto_increment"
+		        'sql'                   => "int(10) unsigned NOT NULL auto_increment"
         ),
         'tstamp' => array
         (
-		        'sql'                     	=> "int(10) unsigned NOT NULL default '0'"
+		        'sql'                   => "int(10) unsigned NOT NULL default '0'"
         ),
         'sorting' => array
         (
