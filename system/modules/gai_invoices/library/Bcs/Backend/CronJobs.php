@@ -7,7 +7,7 @@ use Contao\MemberModel;
 
 class CronJobs extends System
 {
-    public function importFromSheets(): void
+    public function importPsychologistsAndServices(): void
     {
        
         // Add a log entry so we know things are going as expected
