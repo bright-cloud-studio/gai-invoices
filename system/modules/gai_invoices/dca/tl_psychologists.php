@@ -10,7 +10,7 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
-use Contao\DC
+use Contao\DC;
 use Contao\DataContainer;
  
 /* Table tl_price_chart */
