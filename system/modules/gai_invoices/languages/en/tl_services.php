@@ -25,12 +25,12 @@ $GLOBALS['TL_LANG']['tl_psychologists']['alias']                      = array('A
 $GLOBALS['TL_LANG']['tl_psychologists']['published']                  = array('Published', 'Show this record on the front end.');
 
 /* Fields */
-$GLOBALS['TL_LANG']['tl_psychologists']['services']                   = 'Services Information';
-$GLOBALS['TL_LANG']['tl_psychologists']['service_code']               = array('Service Code', 'Psychologist\'s Name');
-$GLOBALS['TL_LANG']['tl_psychologists']['name']                       = array('Name', 'Psychologist\'s Name');
-$GLOBALS['TL_LANG']['tl_psychologists']['psychologist_tier_1']        = array('Psychologist Tier 1', 'Psychologist\'s Address');
-$GLOBALS['TL_LANG']['tl_psychologists']['psychologist_tier_2']        = array('Psychologist Tier 2', 'Psychologist\'s Address 2');
-$GLOBALS['TL_LANG']['tl_psychologists']['psychologist_tier_3']        = array('Psychologist Tier 3', 'Psychologist\'s City');
-$GLOBALS['TL_LANG']['tl_psychologists']['school_tier_1']              = array('School Tier 1', 'Psychologist\'s State');
-$GLOBALS['TL_LANG']['tl_psychologists']['school_tier_2']              = array('School Tier 2', 'Psychologist\'s ZIP');
-$GLOBALS['TL_LANG']['tl_psychologists']['school_tier_3']              = array('SChool Tier 3', 'Psychologist\'s Email');
+$GLOBALS['TL_LANG']['tl_psychologists']['services']                   = 'Service\'s Information Imported from Sheets';
+$GLOBALS['TL_LANG']['tl_psychologists']['service_code']               = array('Service Code', 'The Service Code assigned to this Service');
+$GLOBALS['TL_LANG']['tl_psychologists']['name']                       = array('Name', 'The Name of this Service');
+$GLOBALS['TL_LANG']['tl_psychologists']['psychologist_tier_1']        = array('Psychologist Tier 1', 'This Service\'s price for Psychologist Tier 1');
+$GLOBALS['TL_LANG']['tl_psychologists']['psychologist_tier_2']        = array('Psychologist Tier 2', 'This Service\'s price for Psychologist Tier 2');
+$GLOBALS['TL_LANG']['tl_psychologists']['psychologist_tier_3']        = array('Psychologist Tier 3', 'This Service\'s price for Psychologist Tier 3');
+$GLOBALS['TL_LANG']['tl_psychologists']['school_tier_1']              = array('School Tier 1', 'This Service\'s price for School Tier 1');
+$GLOBALS['TL_LANG']['tl_psychologists']['school_tier_2']              = array('School Tier 2', 'This Service\'s price for School Tier 2');
+$GLOBALS['TL_LANG']['tl_psychologists']['school_tier_3']              = array('SChool Tier 3', 'This Service\'s price for School Tier 3');
