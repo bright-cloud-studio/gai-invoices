@@ -18,11 +18,6 @@ use Bcs\Model\Service;
 
 class ServicesBackend extends \Backend
 {
-  
-    public function compile()
-    {
-        $GLOBALS['TL_CSS'][]					= 'system/modules/gai_invoices/assets/css/tl_services.css';
-    }
     
 	public function toggleIcon($row, $href, $label, $title, $icon, $attributes)
 	{
