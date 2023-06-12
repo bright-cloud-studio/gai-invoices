@@ -10,6 +10,8 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
+use Contao\DC
+use Contao\DataContainer;
  
 /* Table tl_price_chart */
 $GLOBALS['TL_DCA']['tl_psychologists'] = array
@@ -18,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
     // Config
     'config' => array
     (
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'sql' => array
         (
@@ -37,10 +39,11 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
         (
             // Mode 2 - Records are sotrted by a switchable field
             // Flag 12 - Sort descending
-            'mode'                    => 2,
-            'flag'                    => 11,
+            'mode'                    => DataContainer::MODE_SORTED,
             'fields'                  => array('name'),
-            'panelLayout'             => 'sort,filter;search,limit'
+            'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
+            'panelLayout'             => 'filter;search,limit',
+            'defaultSearchField'      => 'name'
         ),
         'label' => array
         (
@@ -51,7 +54,6 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
         (
             'all' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
                 'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
