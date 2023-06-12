@@ -61,7 +61,9 @@ $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEma
 $GLOBALS['TL_CRON']['daily'][] = ['Bcs\Backend\CronJobs', 'sendReminderEmails'];
 $GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'getTiersAndPrices'];
 
+
+/* When in the Backend, add our custom style sheet */
 if (TL_MODE == 'BE')
 {
-    $GLOBALS['TL_CSS'][]					= 'system/modules/gai_invoices/assets/css/tl_services.css';
+    $GLOBALS['TL_CSS'][]					= 'system/modules/gai_invoices/assets/css/gai_backend.css';
 }
