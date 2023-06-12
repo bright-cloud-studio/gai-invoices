@@ -10,6 +10,8 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
+use Contao\DataContainer;
+use Contao\DC_Table;
  
 /* Table tl_services */
 $GLOBALS['TL_DCA']['tl_services'] = array
@@ -18,7 +20,7 @@ $GLOBALS['TL_DCA']['tl_services'] = array
     // Config
     'config' => array
     (
-        'dataContainer'               => 'Table',
+        'dataContainer'               => DC_Table::class,
         'enableVersioning'            => true,
         'sql' => array
         (
@@ -37,21 +39,21 @@ $GLOBALS['TL_DCA']['tl_services'] = array
         (
             // Mode 2 - Records are sotrted by a switchable field
             // Flag 12 - Sort descending
-            'mode'                    => 2,
-            'flag'                    => 11,
+            'mode'                    => DataContainer::MODE_SORTED,
             'fields'                  => array('name'),
-            'panelLayout'             => 'sort,filter;search,limit'
+            'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
+            'panelLayout'             => 'filter;search,limit',
+            'defaultSearchField'      => 'name'
         ),
         'label' => array
         (
-            'fields'                  => array('name'),
-            'format'                  => '%s'
+            'fields'                  => array('name', 'service_code'),
+            'format'                  => '%s <span class="label-info">[%s]</span>'
         ),
         'global_operations' => array
         (
             'all' => array
             (
-                'label'               => &$GLOBALS['TL_LANG']['MSC']['all'],
                 'href'                => 'act=select',
                 'class'               => 'header_edit_all',
                 'attributes'          => 'onclick="Backend.getScrollOffset()" accesskey="e"'
@@ -79,13 +81,6 @@ $GLOBALS['TL_DCA']['tl_services'] = array
                 'icon'                => 'delete.svg',
                 'attributes'          => 'onclick="if(!confirm(\'' . ($GLOBALS['TL_LANG']['MSC']['deleteConfirm'] ?? null) . '\'))return false;Backend.getScrollOffset()"'
             ),
-            'toggle' => array
-			(
-				'label'               => &$GLOBALS['TL_LANG']['tl_services']['toggle'],
-				'icon'                => 'visible.gif',
-				'attributes'          => 'onclick="Backend.getScrollOffset();return AjaxRequest.toggleVisibility(this,%s)"',
-				'button_callback'     => array('Bcs\Backend\ServicesBackend', 'toggleIcon')
-			),
             'show' => array
             (
                 'label'               => &$GLOBALS['TL_LANG']['tl_services']['show'],
@@ -98,7 +93,7 @@ $GLOBALS['TL_DCA']['tl_services'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                       => '{services_legend},service_code,name,psychologist_tier_1,psychologist_tier_2,psychologist_tier_3,school_tier_1,school_tier_2,school_tier_3;{publish_legend},published;'
+        'default'                       => '{services_legend},service_code,name,psychologist_tier_1,psychologist_tier_2,psychologist_tier_3,school_tier_1,school_tier_2,school_tier_3;'
     ),
  
     // Fields
@@ -201,14 +196,6 @@ $GLOBALS['TL_DCA']['tl_services'] = array
             'search'                  => true,
             'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
-        ),
-        'published' => array
-        (
-            'exclude'                 => true,
-            'label'                   => &$GLOBALS['TL_LANG']['tl_services']['published'],
-            'inputType'               => 'checkbox',
-            'eval'                    => array('submitOnChange'=>true, 'doNotCopy'=>true),
-            'sql'                     => "char(1) NOT NULL default ''"
-        )		
+        )
     )
 );
