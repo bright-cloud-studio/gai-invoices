@@ -98,7 +98,7 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
     // Palettes
     'palettes' => array
     (
-        'default'                     => '{psychologists_legend},invoices,name,address,address_2,city,state,zip,email,last_month_processed,price_tier;{publish_legend},published;'
+        'default'                       => '{psychologists_legend},invoices,name,address,address_2,city,state,zip,email,last_month_processed,price_tier;{publish_legend},published;'
     ),
  
     // Fields
@@ -106,11 +106,11 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
     (
         'id' => array
         (
-		        'sql'                     	=> "int(10) unsigned NOT NULL auto_increment"
+		        'sql'                   => "int(10) unsigned NOT NULL auto_increment"
         ),
         'tstamp' => array
         (
-		        'sql'                     	=> "int(10) unsigned NOT NULL default '0'"
+		        'sql'                   => "int(10) unsigned NOT NULL default '0'"
         ),
         'sorting' => array
         (
