@@ -10,7 +10,6 @@
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
 
-
 /* System Buttons */
 $GLOBALS['TL_LANG']['tl_psychologists']['new']                        = array('New record', 'Add a new record');
 $GLOBALS['TL_LANG']['tl_psychologists']['show']                       = array('Record details', 'Show the details of record ID %s');
