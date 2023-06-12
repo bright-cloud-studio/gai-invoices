@@ -25,13 +25,13 @@ $GLOBALS['TL_LANG']['tl_psychologists']['alias']                      = array('A
 $GLOBALS['TL_LANG']['tl_psychologists']['published']                  = array('Published', 'Show this record on the front end.');
 
 /* Fields */
-$GLOBALS['TL_LANG']['tl_psychologists']['invoices']                   = 'Psychologist Information';
-$GLOBALS['TL_LANG']['tl_psychologists']['name']                       = array('Name', 'Psychologist\'s Name');
-$GLOBALS['TL_LANG']['tl_psychologists']['address']                    = array('Address', 'Psychologist\'s Address');
-$GLOBALS['TL_LANG']['tl_psychologists']['address_2']                  = array('Address 2', 'Psychologist\'s Address 2');
+$GLOBALS['TL_LANG']['tl_psychologists']['invoices']                   = array('Invoices', 'Psychologist\'s last used Invoice Number');
+$GLOBALS['TL_LANG']['tl_psychologists']['name']                       = array('Name', 'Psychologist\'s Full Name');
+$GLOBALS['TL_LANG']['tl_psychologists']['address']                    = array('Address', 'Psychologist\'s Address Line One');
+$GLOBALS['TL_LANG']['tl_psychologists']['address_2']                  = array('Address 2', 'Psychologist\'s Address Line Two');
 $GLOBALS['TL_LANG']['tl_psychologists']['city']                       = array('City', 'Psychologist\'s City');
 $GLOBALS['TL_LANG']['tl_psychologists']['state']                      = array('State', 'Psychologist\'s State');
 $GLOBALS['TL_LANG']['tl_psychologists']['zip']                        = array('ZIP', 'Psychologist\'s ZIP');
 $GLOBALS['TL_LANG']['tl_psychologists']['email']                      = array('Email', 'Psychologist\'s Email');
-$GLOBALS['TL_LANG']['tl_psychologists']['last_month_processed']       = array('Last Month Processed', 'Psychologist\'s Last Month Processed');
-$GLOBALS['TL_LANG']['tl_psychologists']['price_tier']                 = array('Price Tier', 'Psychologist\'s Price Tier');
+$GLOBALS['TL_LANG']['tl_psychologists']['last_month_processed']       = array('Last Month Processed', 'The last month an invoice was generated for this psychologist');
+$GLOBALS['TL_LANG']['tl_psychologists']['price_tier']                 = array('Price Tier', 'The Price Tier this psychologist is assigned to');
