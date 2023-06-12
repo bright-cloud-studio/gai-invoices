@@ -60,3 +60,8 @@ $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEma
 /* Cron Jobs */
 $GLOBALS['TL_CRON']['daily'][] = ['Bcs\Backend\CronJobs', 'sendReminderEmails'];
 $GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'getTiersAndPrices'];
+
+if (TL_MODE == 'BE')
+{
+    $GLOBALS['TL_CSS'][]					= 'system/modules/gai_invoices/assets/css/tl_services.css';
+}
