@@ -13,7 +13,7 @@
 /* Register the classes */
 ClassLoader::addClasses(array
 (
-    // this is the hooks class
+    // Our Frontend Modules
     'Bcs\Module\ModWorkAssignments'             => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignments.php',
     'Bcs\Module\ModAddMeetings'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAddMeetings.php',
     'Bcs\Module\ModMiscBilling'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModMiscBilling.php',
@@ -21,10 +21,19 @@ ClassLoader::addClasses(array
     'Bcs\Module\ModTransactionReview'           => 'system/modules/gai_invoices/library/Bcs/Module/ModTransactionReview.php',
     'Bcs\Module\ModAdminReview'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAdminReview.php',
     'Bcs\Module\ModSendInvoiceEmails'           => 'system/modules/gai_invoices/library/Bcs/Module/ModSendInvoiceEmails.php',
-    'Bcs\Backend\TransactionsBackend'           => 'system/modules/gai_invoices/library/Bcs/Backend/TransactionsBackend.php',
-    'Bcs\Backend\CronJobs'                      => 'system/modules/gai_invoices/library/Bcs/Backend/CronJobs.php',
-    'Bcs\Model\Transactions'                    => 'system/modules/gai_invoices/library/Bcs/Model/Transactions.php',
     'Bcs\Frontend\SendInvoiceEmails'            => 'system/modules/gai_invoices/library/Bcs/Frontend/SendInvoiceEmails.php',
+    // Our Cron Jobs
+    'Bcs\Backend\CronJobs'                      => 'system/modules/gai_invoices/library/Bcs/Backend/CronJobs.php',
+    // Our Transactions
+    'Bcs\Backend\TransactionsBackend'           => 'system/modules/gai_invoices/library/Bcs/Backend/TransactionsBackend.php',
+    'Bcs\Model\Transactions'                    => 'system/modules/gai_invoices/library/Bcs/Model/Transactions.php',
+    // Our Psychologists
+    'Bcs\Backend\PsychologistsBackend'          => 'system/modules/gai_invoices/library/Bcs/Backend/PsychologistsBackend.php',
+    'Bcs\Model\Psychologists'                   => 'system/modules/gai_invoices/library/Bcs/Model/Psychologists.php',
+    // Our Services
+    'Bcs\Backend\ServicesBackend'           => 'system/modules/gai_invoices/library/Bcs/Backend/ServicesBackend.php',
+    'Bcs\Model\Services'                    => 'system/modules/gai_invoices/library/Bcs/Model/Services.php'
+    
 ));
 
 /* Register the templates */
