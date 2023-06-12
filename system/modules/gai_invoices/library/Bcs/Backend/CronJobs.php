@@ -70,6 +70,7 @@ class CronJobs extends System
         $values = $response->getValues();
         
         // Loop through our Psychologists
+        $counter = 0;
         foreach($values as $entry) {
             
             // Connect to Contao's database
@@ -83,7 +84,11 @@ class CronJobs extends System
                       VALUES ('".time()."', '".$entry[0]."', '".$entry[1]."', '".$entry[2]."', '".$entry[3]."', '".$entry[4]."', '".$entry[5]."', '".$entry[6]."', '".$entry[7]."', '".$entry[8]."', '".$entry[9]."' )";
             $result = $dbh->query($query);
             
+            $counter++;
+            
         }
+        
+        \Controller::log('GAI: Imported ('.$counter.') Psychologists', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         
         
