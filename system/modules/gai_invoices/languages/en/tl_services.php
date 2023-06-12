@@ -22,7 +22,7 @@ $GLOBALS['TL_LANG']['tl_services']['delete']                     = array('Delete
 $GLOBALS['TL_LANG']['tl_services']['alias']                      = array('Alias', 'Auto-generated alias.');
 
 /* Fields */
-$GLOBALS['TL_LANG']['tl_services']['services']                   = 'Service\'s Information Imported from Sheets';
+$GLOBALS['TL_LANG']['tl_services']['services_legend']                   = 'Service\'s Information Imported from Sheets';
 $GLOBALS['TL_LANG']['tl_services']['service_code']               = array('Service Code', 'The Service Code assigned to this Service');
 $GLOBALS['TL_LANG']['tl_services']['name']                       = array('Name', 'The Name of this Service');
 $GLOBALS['TL_LANG']['tl_services']['psychologist_tier_1']        = array('Psychologist Tier 1', 'This Service\'s price for Psychologist Tier 1');
