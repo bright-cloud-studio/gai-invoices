@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Bright Cloud Studio's Add User Fields
+ * Bright Cloud Studio's GAI Invoices
  *
- * Copyright (C) 2021 Bright Cloud Studio
+ * Copyright (C) 2023 Bright Cloud Studio
  *
- * @package    bright-cloud-studio/add-user-fields
+ * @package    bright-cloud-studio/gai-invoices
  * @link       https://www.brightcloudstudio.com/
  * @license    http://opensource.org/licenses/lgpl-3.0.html
 **/
