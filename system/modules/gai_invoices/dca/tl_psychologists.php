@@ -26,7 +26,8 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
         (
             'keys' => array
             (
-                'name' =>  'primary'
+                'id' 	=> 	'primary',
+                'name' =>  'index'
             )
         )
     ),
@@ -98,6 +99,10 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
     // Fields
     'fields' => array
     (
+        'id' => array
+        (
+		        'sql'                   => "int(10) unsigned NOT NULL auto_increment"
+        ),
         'tstamp' => array
         (
 		        'sql'                   => "int(10) unsigned NOT NULL default '0'"
