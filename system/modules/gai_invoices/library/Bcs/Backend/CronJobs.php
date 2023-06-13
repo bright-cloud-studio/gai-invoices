@@ -57,7 +57,7 @@ class CronJobs extends System
     {
         
         // Log entry to confirm this is working
-        //\Controller::log('GAI IMPORT: Importing from Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        \Controller::log('GAI: Syncing data with Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         // Create a client connection to Google
         $client = new Google\Client();
@@ -66,47 +66,61 @@ class CronJobs extends System
         $service = new \Google_Service_Sheets($client);
         $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
         
-        // Mark this Work Assignment as Processed
-        $updateRow = [
-           "Yes",
-        ];
-        $rows = [$updateRow];
-        $valueRange = new \Google_Service_Sheets_ValueRange();
-        $valueRange->setValues($rows);
-        
         $range = 'Psychologists';
         $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
         
-        
+        // Connect to Contao's database
+        $dbh = new \mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
+        if ($dbh->connect_error) {
+            die("Connection failed: " . $dbh->connect_error);
+        }
         
         // Loop through our Psychologists
         $counter = 0;
         foreach($values as $entry) {
             
-            // Connect to Contao's database
-            
-            $dbh = new \mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
-            if ($dbh->connect_error) {
-                die("Connection failed: " . $dbh->connect_error);
+            // first entry is always the table headers
+            if($counter >= 1) {
+                
+                // Try getting an entry with this psychologist's name
+                $query = "SELECT * FROM tl_psychologists WHERE name='".$entry[1]."'";
+                $result = $dbh->query($query);
+                $rowcount=mysqli_num_rows($result);
+                
+                if($rowcount > 0) {
+                    
+                    // we got a result, let check for changes
+                    $has_changes = false;
+                    while($row = $result->fetch_assoc()) {
+                        if($row['invoices'] != $entry[0]) { $has_changes = true; }
+                        if($row['address'] != $entry[2]) { $has_changes = true; }
+                        if($row['address_2'] != $entry[3]) { $has_changes = true; }
+                        if($row['city'] != $entry[4]) { $has_changes = true; }
+                        if($row['state'] != $entry[5]) { $has_changes = true; }
+                        if($row['zip'] != $entry[6]) { $has_changes = true; }
+                        if($row['email'] != $entry[7]) { $has_changes = true; }
+                        if($row['last_month_processed'] != $entry[8]) { $has_changes = true; }
+                        if($row['price_tier'] != $entry[9]) { $has_changes = true; }
+                    }
+                    
+                    // if there is changes detected, update the existing psychologist
+                    if($has_changes) {
+                        \Controller::log('GAI: Updating existing psychologist ("'.$entry[1].'")', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+                        $query = "UPDATE tl_psychologists SET tstamp='".time()."', invoices='".$entry[0]."', name='".$entry[1]."', address='".$entry[2]."', address_2='".$entry[3]."', city='".$entry[4]."', state='".$entry[5]."', zip='".$entry[6]."', email='".$entry[7]."', last_month_processed='".$entry[8]."', price_tier='".$entry[9]."' WHERE name='".$entry[1]."'";
+                        $result = $dbh->query($query);
+                    }
+                    
+                } else {
+                    
+                    // no psychologist was found, lets create a new one
+                    \Controller::log('GAI: Adding new psychologist ("'.$entry[1].'")', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+                    $query = "INSERT INTO tl_psychologists (tstamp, invoices, name, address, address_2, city, state, zip, email, last_month_processed, price_tier)
+                              VALUES ('".time()."', '".$entry[0]."', '".$entry[1]."', '".$entry[2]."', '".$entry[3]."', '".$entry[4]."', '".$entry[5]."', '".$entry[6]."', '".$entry[7]."', '".$entry[8]."', '".$entry[9]."' )";
+                    $result = $dbh->query($query);
+                }
             }
-            
-            // Insert our Psychologist information into the DBH
-            $query = "INSERT INTO tl_psychologists (tstamp, invoices, name, address, address_2, city, state, zip, email, last_month_processed, price_tier)
-                      VALUES ('".time()."', '".$entry[0]."', '".$entry[1]."', '".$entry[2]."', '".$entry[3]."', '".$entry[4]."', '".$entry[5]."', '".$entry[6]."', '".$entry[7]."', '".$entry[8]."', '".$entry[9]."' )";
-           // $result = $dbh->query($query);
-            
-            
             $counter++;
-            
         }
-        
-       // \Controller::log('GAI: Imported ('.$counter.') Psychologists', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
-        
-        
-        
-        
-        
-
     }
 }
