@@ -53,11 +53,11 @@ class CronJobs extends System
         }
     }
     
-    public function importPsychologistsAndServices(): void
+    public function importPsychologists(): void
     {
         
         // Log entry to confirm this is working
-        \Controller::log('GAI: Syncing data with Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        \Controller::log('GAI: Syncing Psychologists data with Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         // Create a client connection to Google
         $client = new Google\Client();
@@ -123,4 +123,74 @@ class CronJobs extends System
             $counter++;
         }
     }
+    
+    public function importServices(): void
+    {
+        
+        // Log entry to confirm this is working
+        \Controller::log('GAI: Syncing Services data with Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        
+        // Create a client connection to Google
+        $client = new Google\Client();
+        $client->setAuthConfig($_SERVER['DOCUMENT_ROOT'] . '/key.json');
+        $client->addScope(Google\Service\Sheets::SPREADSHEETS);
+        $service = new \Google_Service_Sheets($client);
+        $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
+        
+        $range = 'Services';
+        $response = $service->spreadsheets_values->get($spreadsheetId, $range);
+        $values = $response->getValues();
+        
+        // Connect to Contao's database
+        $dbh = new \mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
+        if ($dbh->connect_error) {
+            die("Connection failed: " . $dbh->connect_error);
+        }
+        
+        // Loop through our Psychologists
+        $counter = 0;
+        foreach($values as $entry) {
+            
+            // first entry is always the table headers
+            if($counter >= 1) {
+                
+                // Try getting an entry with this psychologist's name
+                $query = "SELECT * FROM tl_services WHERE name='".$entry[1]."'";
+                $result = $dbh->query($query);
+                $rowcount=mysqli_num_rows($result);
+                
+                if($rowcount > 0) {
+                    
+                    // we got a result, let check for changes
+                    $has_changes = false;
+                    while($row = $result->fetch_assoc()) {
+                        if($row['service_code'] != $entry[0]) { $has_changes = true; }
+                        if($row['psychologist_tier_1'] != $entry[2]) { $has_changes = true; }
+                        if($row['psychologist_tier_2'] != $entry[3]) { $has_changes = true; }
+                        if($row['psychologist_tier_3'] != $entry[4]) { $has_changes = true; }
+                        if($row['school_tier_1'] != $entry[5]) { $has_changes = true; }
+                        if($row['school_tier_2'] != $entry[6]) { $has_changes = true; }
+                        if($row['school_tier_3'] != $entry[7]) { $has_changes = true; }
+                    }
+                    
+                    // if there is changes detected, update the existing psychologist
+                    if($has_changes) {
+                        \Controller::log('GAI: Updating existing service ("'.$entry[1].'")', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+                        $query = "UPDATE tl_services SET tstamp='".time()."', service_code='".$entry[0]."', name='".$entry[1]."', psychologist_tier_1='".$entry[2]."', psychologist_tier_2='".$entry[3]."', psychologist_tier_3='".$entry[4]."', school_tier_1='".$entry[5]."', school_tier_2='".$entry[6]."', school_tier_3='".$entry[7]."' WHERE name='".$entry[1]."'";
+                        $result = $dbh->query($query);
+                    }
+                    
+                } else {
+                    
+                    // no psychologist was found, lets create a new one
+                    \Controller::log('GAI: Adding new service ("'.$entry[1].'")', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+                    $query = "INSERT INTO tl_services (tstamp, service_code, name, psychologist_tier_1, psychologist_tier_2, psychologist_tier_3, school_tier_1, school_tier_2, school_tier_3)
+                              VALUES ('".time()."', '".$entry[0]."', '".$entry[1]."', '".$entry[2]."', '".$entry[3]."', '".$entry[4]."', '".$entry[5]."', '".$entry[6]."', '".$entry[7]."' )";
+                    $result = $dbh->query($query);
+                }
+            }
+            $counter++;
+        }
+    }
+
 }
