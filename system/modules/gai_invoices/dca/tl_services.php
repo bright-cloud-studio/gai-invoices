@@ -27,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_services'] = array
             'keys' => array
             (
                 'id' 	=> 	'primary',
-                'alias' =>  'index'
+                'name' =>  'index'
             )
         )
     ),
@@ -37,8 +37,6 @@ $GLOBALS['TL_DCA']['tl_services'] = array
     (
         'sorting' => array
         (
-            // Mode 2 - Records are sotrted by a switchable field
-            // Flag 12 - Sort descending
             'mode'                    => DataContainer::MODE_SORTED,
             'fields'                  => array('name'),
             'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
@@ -110,20 +108,6 @@ $GLOBALS['TL_DCA']['tl_services'] = array
         'sorting' => array
         (
             'sql'                    	=> "int(10) unsigned NOT NULL default '0'"
-        ),
-        'alias' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_services']['alias'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'search'                  => true,
-            'eval'                    => array('unique'=>true, 'rgxp'=>'alias', 'doNotCopy'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
-            'save_callback' => array
-            (
-                array('Bcs\Backend\ServicesBackend', 'generateAlias')
-            ),
-            'sql'                     => "varchar(128) COLLATE utf8mb3_bin NOT NULL default ''"
-
         ),
         'service_code' => array
         (
