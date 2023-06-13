@@ -6,6 +6,7 @@ use Google;
 use Contao\System;
 use Contao\MemberModel;
 
+
 class CronJobs extends System
 {
     
@@ -54,42 +55,55 @@ class CronJobs extends System
     
     public function importPsychologistsAndServices(): void
     {
-       
-        // Log entry to confirm this is working
-        \Controller::log('GAI IMPORT: Importing from Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
-        // Establish connection to Sheets
+        // Log entry to confirm this is working
+        //\Controller::log('GAI IMPORT: Importing from Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        
+        // Create a client connection to Google
         $client = new Google\Client();
         $client->setAuthConfig($_SERVER['DOCUMENT_ROOT'] . '/key.json');
         $client->addScope(Google\Service\Sheets::SPREADSHEETS);
         $service = new \Google_Service_Sheets($client);
         $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
         
-        // Get "Psychologists" data from Sheets
+        // Mark this Work Assignment as Processed
+        $updateRow = [
+           "Yes",
+        ];
+        $rows = [$updateRow];
+        $valueRange = new \Google_Service_Sheets_ValueRange();
+        $valueRange->setValues($rows);
+        
         $range = 'Psychologists';
-        $response = $this->$service->spreadsheets_values->get($spreadsheetId, $range);
+        $response = $service->spreadsheets_values->get($spreadsheetId, $range);
         $values = $response->getValues();
+        
+        
         
         // Loop through our Psychologists
         $counter = 0;
         foreach($values as $entry) {
             
             // Connect to Contao's database
-            $dbh = new mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
+            
+            $dbh = new \mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
             if ($dbh->connect_error) {
                 die("Connection failed: " . $dbh->connect_error);
             }
             
             // Insert our Psychologist information into the DBH
-            $query = "INSERT INTO tl_transactions (tstamp, invoices, name, address, address_2, city, state, zip, email, last_month_processed, price_tier)
+            $query = "INSERT INTO tl_psychologists (tstamp, invoices, name, address, address_2, city, state, zip, email, last_month_processed, price_tier)
                       VALUES ('".time()."', '".$entry[0]."', '".$entry[1]."', '".$entry[2]."', '".$entry[3]."', '".$entry[4]."', '".$entry[5]."', '".$entry[6]."', '".$entry[7]."', '".$entry[8]."', '".$entry[9]."' )";
-            $result = $dbh->query($query);
+           // $result = $dbh->query($query);
+            
             
             $counter++;
             
         }
         
-        \Controller::log('GAI: Imported ('.$counter.') Psychologists', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+       // \Controller::log('GAI: Imported ('.$counter.') Psychologists', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        
+        
         
         
         
