@@ -30,7 +30,6 @@ ClassLoader::addClasses(array
     // Our Psychologists
     'Bcs\Model\Psychologists'                   => 'system/modules/gai_invoices/library/Bcs/Model/Psychologists.php',
     // Our Services
-    'Bcs\Backend\ServicesBackend'           => 'system/modules/gai_invoices/library/Bcs/Backend/ServicesBackend.php',
     'Bcs\Model\Services'                    => 'system/modules/gai_invoices/library/Bcs/Model/Services.php'
     
 ));
