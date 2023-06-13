@@ -59,7 +59,8 @@ $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEma
 
 /* Cron Jobs */
 $GLOBALS['TL_CRON']['daily'][] = ['Bcs\Backend\CronJobs', 'sendReminderEmails'];
-$GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'importPsychologistsAndServices'];
+$GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'importPsychologists'];
+$GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'importServices'];
 
 
 /* When in the Backend, add our custom style sheet */
