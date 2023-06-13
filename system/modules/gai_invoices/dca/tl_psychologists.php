@@ -38,9 +38,9 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
         (
             // Mode 2 - Records are sotrted by a switchable field
             // Flag 12 - Sort descending
-            'mode'                    => DataContainer::MODE_SORTED,
+            'mode'                    => 2,
             'fields'                  => array('name'),
-            'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
+            'flag'                    => 12,
             'panelLayout'             => 'filter;search,limit',
             'defaultSearchField'      => 'name'
         ),
@@ -105,20 +105,6 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
         'sorting' => array
         (
             'sql'                    	=> "int(10) unsigned NOT NULL default '0'"
-        ),
-        'alias' => array
-        (
-            'label'                   => &$GLOBALS['TL_LANG']['tl_psychologists']['alias'],
-            'exclude'                 => true,
-            'inputType'               => 'text',
-            'search'                  => true,
-            'eval'                    => array('unique'=>true, 'rgxp'=>'alias', 'doNotCopy'=>true, 'maxlength'=>128, 'tl_class'=>'w50'),
-            'save_callback' => array
-            (
-                array('Bcs\Backend\PsychologistsBackend', 'generateAlias')
-            ),
-            'sql'                     => "varchar(128) COLLATE utf8mb3_bin NOT NULL default ''"
-
         ),
         'invoices' => array
         (
