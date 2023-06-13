@@ -26,8 +26,8 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
         (
             'keys' => array
             (
-                'id' 	=> 	'primary',
-                'alias' =>  'index'
+                'id' 	=> 	'index',
+                'name' =>  'primary'
             )
         )
     ),
