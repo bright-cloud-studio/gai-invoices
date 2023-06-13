@@ -39,9 +39,9 @@ $GLOBALS['TL_DCA']['tl_psychologists'] = array
         (
             // Mode 2 - Records are sotrted by a switchable field
             // Flag 12 - Sort descending
-            'mode'                    => 2,
+            'mode'                    => DataContainer::MODE_SORTED,
             'fields'                  => array('name'),
-            'flag'                    => 12,
+            'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
             'panelLayout'             => 'filter;search,limit',
             'defaultSearchField'      => 'name'
         ),
