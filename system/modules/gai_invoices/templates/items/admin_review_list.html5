@@ -1,11 +1,18 @@
 <tr>
 	
+	<?php
+		// first, replace all spaces with underscores
+		$psy_nm = str_replace(' ', '_', $this->psychologist);
+		// next, strip out everything but letters and numbers
+		$psy_nm = preg_replace('/[^ \w]+/', '', $psy_nm);
+	?>
+	
 	<?php if($this->service == 'Misc. Billing' ) { ?>
 		
 		<td><input type="text" name="update update_<?= $this->row_id ?>" id="update update_<?= $this->row_id ?>" class="update update_<?= $this->row_id ?>" value="" required=""></td>
 		<td style="display: none;"><input type="text" name="row_id>" id="row_id" class="row_id" value="<?= $this->row_id ?>" required=""></td>
 		
-		<td style="display: none;"><input type="text" name="psy_name>" id="psy_name" class="psy_name" value="<?= $this->psychologist ?>" required=""></td>
+		<td style="display: none;"><input type="text" name="psy_name>" id="psy_name" class="psy_name" value="<?= $psy_nm ?>" required=""></td>
 		
 		
 		<td><input type="checkbox" name="delete_<?= $this->row_id ?>" id="delete delete_<?= $this->row_id ?>" class="delete delete_<?= $this->row_id ?>" value="yes"></td>
@@ -22,7 +29,7 @@
 		<td><input type="text" name="update update_<?= $this->row_id ?>" id="update update_<?= $this->row_id ?>" class="update update_<?= $this->row_id ?>" value="" required=""></td>
 		<td style="display: none;"><input type="text" name="row_id>" id="row_id" class="row_id" value="<?= $this->row_id ?>" required=""></td>
 		
-		<td style="display: none;"><input type="text" name="psy_name>" id="psy_name" class="psy_name" value="<?= $this->psychologist ?>" required=""></td>
+		<td style="display: none;"><input type="text" name="psy_name>" id="psy_name" class="psy_name" value="<?= $psy_nm ?>" required=""></td>
 		
 		
 		<td><input type="checkbox" name="delete_<?= $this->row_id ?>" id="delete delete_<?= $this->row_id ?>" class="delete delete_<?= $this->row_id ?>" value="yes"></td>
