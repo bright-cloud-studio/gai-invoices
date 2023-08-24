@@ -6,8 +6,13 @@
 		<h2 class="size100 no-pad">Navigation</h2>
 		<?php
 			$i = 1;
-			foreach($this->psychologists as $psy) { ?>
-				<div class="size33" id="<?= str_replace(' ', '_', $psy); ?>" onclick="processReviewChanges(<?= $i ?>)"><?= $psy ?></div>
+			foreach($this->psychologists as $psy) {
+				// first, replace all spaces with underscores
+				$psy_nm = str_replace(' ', '_', $psy);
+				// next, strip out everything but letters and numbers
+				$psy_nm = preg_replace('/[^ \w]+/', '', $psy_nm);
+			?>
+				<div class="size33 psy_id_<?= $i ?>" id="<?= $psy_nm ?>" onclick="adminReviewChangeSelectedPsychologist(<?= $i ?>)"><?= $psy ?></div>
 				<?php
 				$i++;
 			}
@@ -72,10 +77,10 @@
 				</table>
 				
 				<div class="size50 center_element">
-					<a class="btn" onclick="processReviewChanges('<?= $psyCount ?>');">Process Changes</a>
+					<a class="btn process_review" id="process_review" onclick="processReviewChanges('<?= $psyCount ?>');">Mark as Reviewed</a>
 				</div>
 				
-				<div class="size100" style="">
+				<div class="size100" style="display: none;">
 					<div class="widget widget-text size50">
 						<label for="rows" class="size50">
 							Updated Row IDs
@@ -84,7 +89,7 @@
 					</div>
 				</div>
 				
-				<div class="size100" style="">
+				<div class="size100" style="display: none;">
 					<div class="widget widget-text size50">
 						<label for="update_psy_name" class="size50">
 							Psychologist Name
