@@ -26,9 +26,8 @@ class CronJobs extends System
             // add Log that it is the right day!
             \Controller::log('GAI: Today is the Reminder day!', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
             
-            // Get all of the Members that are currently published
-            // $members = MemberModel::findAll();
-            $members = MemberModel::findBy('published', '1');
+            // get all of the Members
+            $members = MemberModel::findAll();
             
             foreach($members as $member) {
 
