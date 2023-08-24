@@ -125,6 +125,14 @@
 				</label>
 				<input type="text" name="shared_5" class="shared_5" value="<?= $this->shared_5 ?>">
 			</div>
+			
+			<!-- Price Tier -->	
+			<div class="widget widget-text size50">
+				<label for="price_tier" class="size50">
+					Price Tier
+				</label>
+				<input type="text" name="price_tier" class="price_tier" value="<?= $this->price_tier ?>">
+			</div>
 	
 			
 		</fieldset>
