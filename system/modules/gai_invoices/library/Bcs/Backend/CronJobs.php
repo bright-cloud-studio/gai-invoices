@@ -171,15 +171,20 @@ class CronJobs extends System
                         if($row['psychologist_tier_1'] != $entry[2]) { $has_changes = true; }
                         if($row['psychologist_tier_2'] != $entry[3]) { $has_changes = true; }
                         if($row['psychologist_tier_3'] != $entry[4]) { $has_changes = true; }
-                        if($row['school_tier_1'] != $entry[5]) { $has_changes = true; }
-                        if($row['school_tier_2'] != $entry[6]) { $has_changes = true; }
-                        if($row['school_tier_3'] != $entry[7]) { $has_changes = true; }
+                        if($row['psychologist_tier_4'] != $entry[5]) { $has_changes = true; }
+                        if($row['psychologist_tier_5'] != $entry[6]) { $has_changes = true; }
+                        if($row['psychologist_tier_6'] != $entry[7]) { $has_changes = true; }
+                        if($row['psychologist_tier_7'] != $entry[8]) { $has_changes = true; }
+                        if($row['psychologist_tier_8'] != $entry[9]) { $has_changes = true; }
+                        if($row['school_tier_1'] != $entry[10]) { $has_changes = true; }
+                        if($row['school_tier_2'] != $entry[11]) { $has_changes = true; }
+                        if($row['school_tier_3'] != $entry[12]) { $has_changes = true; }
                     }
                     
                     // if there is changes detected, update the existing psychologist
                     if($has_changes) {
                         \Controller::log('GAI: Updating existing service ("'.$entry[1].'")', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
-                        $query = "UPDATE tl_services SET tstamp='".time()."', service_code='".$entry[0]."', name='".$entry[1]."', psychologist_tier_1='".$entry[2]."', psychologist_tier_2='".$entry[3]."', psychologist_tier_3='".$entry[4]."', school_tier_1='".$entry[5]."', school_tier_2='".$entry[6]."', school_tier_3='".$entry[7]."' WHERE name='".$entry[1]."'";
+                        $query = "UPDATE tl_services SET tstamp='".time()."', service_code='".$entry[0]."', name='".$entry[1]."', psychologist_tier_1='".$entry[2]."', psychologist_tier_2='".$entry[3]."', psychologist_tier_3='".$entry[4]."', psychologist_tier_4='".$entry[5]."', psychologist_tier_5='".$entry[6]."', psychologist_tier_6='".$entry[7]."', psychologist_tier_7='".$entry[8]."', psychologist_tier_8='".$entry[9]."', school_tier_1='".$entry[5]."', school_tier_2='".$entry[6]."', school_tier_3='".$entry[7]."' WHERE name='".$entry[1]."'";
                         $result = $dbh->query($query);
                     }
                     
