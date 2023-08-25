@@ -154,6 +154,51 @@ $GLOBALS['TL_DCA']['tl_services'] = array
             'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
             'sql'                     => "varchar(255) NOT NULL default ''"
         ),
+        'psychologist_tier_4' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_services']['psychologist_tier_4'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'search'                  => true,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+        'psychologist_tier_5' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_services']['psychologist_tier_5'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'search'                  => true,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+        'psychologist_tier_6' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_services']['psychologist_tier_6'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'search'                  => true,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+        'psychologist_tier_7' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_services']['psychologist_tier_7'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'search'                  => true,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
+        'psychologist_tier_8' => array
+        (
+            'label'                   => &$GLOBALS['TL_LANG']['tl_services']['psychologist_tier_8'],
+            'inputType'               => 'text',
+            'default'                 => '',
+            'search'                  => true,
+            'eval'                    => array('mandatory'=>true, 'tl_class'=>'w50'),
+            'sql'                     => "varchar(255) NOT NULL default ''"
+        ),
         'school_tier_1' => array
         (
             'label'                   => &$GLOBALS['TL_LANG']['tl_services']['school_tier_1'],
