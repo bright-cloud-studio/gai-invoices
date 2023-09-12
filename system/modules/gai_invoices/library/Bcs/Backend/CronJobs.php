@@ -60,7 +60,7 @@ class CronJobs extends System
     {
         
         // Log entry to confirm this is working
-        \Controller::log('GAI: Syncing Psychologists data with Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        //\Controller::log('GAI: Syncing Psychologists data with Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         // Create a client connection to Google
         $client = new Google\Client();
@@ -131,7 +131,7 @@ class CronJobs extends System
     {
         
         // Log entry to confirm this is working
-        \Controller::log('GAI: Syncing Services data with Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        //\Controller::log('GAI: Syncing Services data with Sheets', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         // Create a client connection to Google
         $client = new Google\Client();
