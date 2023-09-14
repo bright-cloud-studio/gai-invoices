@@ -38,15 +38,15 @@ $GLOBALS['TL_DCA']['tl_services'] = array
         'sorting' => array
         (
             'mode'                    => DataContainer::MODE_SORTED,
-            'fields'                  => array('name'),
+            'fields'                  => array('service_code'),
             'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
             'panelLayout'             => 'filter;search,limit',
             'defaultSearchField'      => 'name'
         ),
         'label' => array
         (
-            'fields'                  => array('name', 'service_code'),
-            'format'                  => 'Name: %s <span class="label-info">Service Code: [%s]</span>'
+            'fields'                  => array('service_code', 'name'),
+            'format'                  => '<span class="label-info">Service Code: [%s]</span> Name: %s'
         ),
         'global_operations' => array
         (
