@@ -81,8 +81,49 @@ class ModAddMeetings extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
+        // Import the Database stuffs so we can make queries
+        $this->import('Database');
+        
         // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
         $GLOBALS['TL_BODY']['add_meeting'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+        
+        // get the user and build their name
+        $objUser = \FrontendUser::getInstance();
+        $user = $objUser->firstname . " " . $objUser->lastname;
+        
+        $result = $this->Database->prepare("SELECT * FROM tl_psychologists WHERE name=?")->execute($user);
+        while($result->next()) {
+            
+            $clean_string = strtolower($result->price_tier);
+            $clean_string = str_replace(' ', '_', $clean_string);
+
+            $this->Template->price_tier = $clean_string;
+            
+        }
+        
+        // Load all of services and their prices and add it to the module
+        $arrData = array();
+        $result = $this->Database->prepare("SELECT * FROM tl_services")->execute();
+        while($result->next()) {
+            
+            $arrData[$result->service_code]['service_code'] = $result->service_code;
+            $arrData[$result->service_code]['name'] = $result->name;
+            $arrData[$result->service_code]['psychologist_tier_1'] = $result->psychologist_tier_1;
+            $arrData[$result->service_code]['psychologist_tier_2'] = $result->psychologist_tier_2;
+            $arrData[$result->service_code]['psychologist_tier_3'] = $result->psychologist_tier_3;
+            $arrData[$result->service_code]['psychologist_tier_4'] = $result->psychologist_tier_4;
+            $arrData[$result->service_code]['psychologist_tier_5'] = $result->psychologist_tier_5;
+            $arrData[$result->service_code]['psychologist_tier_6'] = $result->psychologist_tier_6;
+            $arrData[$result->service_code]['psychologist_tier_7'] = $result->psychologist_tier_7;
+            $arrData[$result->service_code]['psychologist_tier_8'] = $result->psychologist_tier_8;
+            $arrData[$result->service_code]['psychologist_tier_9'] = $result->psychologist_tier_9;
+            $arrData[$result->service_code]['school_tier_1'] = $result->school_tier_1;
+            $arrData[$result->service_code]['school_tier_2'] = $result->school_tier_2;
+            $arrData[$result->service_code]['school_tier_3'] = $result->school_tier_3;
+            
+        }
+        $this->Template->services = $arrData;
+        
 	}
 } 
