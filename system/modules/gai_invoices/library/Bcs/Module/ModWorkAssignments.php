@@ -327,6 +327,32 @@ class ModWorkAssignments extends \Contao\Module
         $this->Template->workAssignmentList = $entryList;
         $this->Template->workAssignmentForm = $entryForm;
         
+        
+        // Load all of services and their prices and add it to the module
+        $arrData = array();
+        $this->import('Database');
+        $result = $this->Database->prepare("SELECT * FROM tl_services")->execute();
+        while($result->next()) {
+            
+            $arrData[$result->service_code]['service_code'] = $result->service_code;
+            $arrData[$result->service_code]['name'] = $result->name;
+            $arrData[$result->service_code]['psychologist_tier_1'] = $result->psychologist_tier_1;
+            $arrData[$result->service_code]['psychologist_tier_2'] = $result->psychologist_tier_2;
+            $arrData[$result->service_code]['psychologist_tier_3'] = $result->psychologist_tier_3;
+            $arrData[$result->service_code]['psychologist_tier_4'] = $result->psychologist_tier_4;
+            $arrData[$result->service_code]['psychologist_tier_5'] = $result->psychologist_tier_5;
+            $arrData[$result->service_code]['psychologist_tier_6'] = $result->psychologist_tier_6;
+            $arrData[$result->service_code]['psychologist_tier_7'] = $result->psychologist_tier_7;
+            $arrData[$result->service_code]['psychologist_tier_8'] = $result->psychologist_tier_8;
+            $arrData[$result->service_code]['psychologist_tier_9'] = $result->psychologist_tier_9;
+            $arrData[$result->service_code]['school_tier_1'] = $result->school_tier_1;
+            $arrData[$result->service_code]['school_tier_2'] = $result->school_tier_2;
+            $arrData[$result->service_code]['school_tier_3'] = $result->school_tier_3;
+            
+        }
+        $this->Template->services = $arrData;
+        
+        
         // SORTING
         $this->Template->workAssignmentListNew = $listNew;
         $this->Template->workAssignmentListNonNew = $listNonNew;
