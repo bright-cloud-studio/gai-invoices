@@ -78,6 +78,9 @@ class ModWorkAssignments extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
+        // Import the Database stuffs so we can make queries
+        $this->import('Database');
+        
         // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
         $GLOBALS['TL_BODY']['work_assignments'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
@@ -200,8 +203,17 @@ class ModWorkAssignments extends \Contao\Module
                         if($arrData['shared_5'] != '') { $shared_total++; }
                         $arrData['shared_total'] = $shared_total;
                         
+                        
                         // Price Tier
-                        $arrData['price_tier']         = "price_tier_1";
+                        $result = $this->Database->prepare("SELECT * FROM tl_psychologists WHERE name=?")->execute($user);
+                        while($result->next()) {
+                            
+                            $dirty_string = strtolower($result->price_tier);
+                            $dirty_string = str_replace(' ', '_', $dirty_string);
+                            
+                            $arrData['price_tier'] = $dirty_string;
+                            
+                        }
                         
                         
                         // Filters
@@ -220,7 +232,6 @@ class ModWorkAssignments extends \Contao\Module
                 		array_push($randomIDs, $generatedID);
                 		// Add this truly unique ID to our template
                 		$arrData['random_id'] = $generatedID;
-                        
                         
                         
                         // Generate as "List"
@@ -330,7 +341,6 @@ class ModWorkAssignments extends \Contao\Module
         
         // Load all of services and their prices and add it to the module
         $arrData = array();
-        $this->import('Database');
         $result = $this->Database->prepare("SELECT * FROM tl_services")->execute();
         while($result->next()) {
             
