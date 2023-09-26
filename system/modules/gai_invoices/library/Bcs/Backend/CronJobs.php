@@ -30,7 +30,7 @@ class CronJobs extends System
             $options = [
                 'order' => 'id ASC'
             ];
-            $members = MemberModel::findBy('published', '1', $options);
+            $members = MemberModel::findBy('disable', '', $options);
             
             foreach($members as $member) {
 
