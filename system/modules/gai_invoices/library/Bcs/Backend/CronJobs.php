@@ -18,7 +18,7 @@ class CronJobs extends System
         \Controller::log('GAI: Sending Reminder Emails', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         // if our date is X days before end of month
-        $days_before = 7;
+        $days_before = 4;
         $how_many_days = date('t') - date('j');
         
         if($days_before == $how_many_days) {
