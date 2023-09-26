@@ -13,13 +13,12 @@ class CronJobs extends System
     // If there are X $days_before the end of the month then send reminder emails to all psychologists
     public function sendReminderEmails(): void
     {
-       
-        // Add a log entry so we know things are going as expected
-        \Controller::log('GAI: Sending Reminder Emails', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
-        
         // if our date is X days before end of month
         $days_before = 4;
         $how_many_days = date('t') - date('j');
+
+        // Add a log entry so we know things are going as expected
+        \Controller::log('GAI: ' . $how_many_days . ' days until Reminder emails go out!', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         if($days_before == $how_many_days) {
             
