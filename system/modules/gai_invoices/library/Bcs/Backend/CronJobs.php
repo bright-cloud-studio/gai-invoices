@@ -50,6 +50,8 @@ class CronJobs extends System
 
                     // Send out the email using our tokens
                     $objNotification->send($arrTokens);
+
+                     \Controller::log('GAI: Sent email to' . $member->firstname . " " . $member->lastname, __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
                     
                 }
             }
