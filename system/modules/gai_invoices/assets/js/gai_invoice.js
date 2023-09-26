@@ -879,16 +879,7 @@ function addMiscBilling(){
         validateFailed['price'] = 1;
     }
     
-    // Notes
-    /*
-    var price = $(".mod_misc_billing #notes").val();
-    if(price == '') {
-        $(".message").append("Price cannot be empty<br>");
-        validateFailed['price'] = 1;
-    }*/
-
-    
-    
+    // If Validation failed
     if($.isEmptyObject(validateFailed)) {
         // get every form field and add them to the ajax data line
         var datastring = $("#form_misc_billing").serialize();
@@ -931,9 +922,7 @@ function addMiscBilling(){
                     // redirect us to the success page
                     window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/misc-billing/success.html");
                 }
-                
-                
-                
+
             },
             error:function(result){
                 $(".message").html("There was an error using the AJAX call for addMiscBilling()");
@@ -942,12 +931,6 @@ function addMiscBilling(){
     }
 
 }
-
-
-
-
-
-
 
 
 function scrollToAnchor(aid){
