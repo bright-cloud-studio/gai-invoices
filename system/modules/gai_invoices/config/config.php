@@ -58,7 +58,7 @@ $GLOBALS['TL_MODELS']['tl_services']        = 'Bcs\Model\Services';
 $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEmails', 'sendEmails');
 
 /* Cron Jobs */
-$GLOBALS['TL_CRON']['hourly'][] = ['Bcs\Backend\CronJobs', 'sendReminderEmails'];
+$GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'sendReminderEmails'];
 $GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'importPsychologists'];
 $GLOBALS['TL_CRON']['minutely'][] = ['Bcs\Backend\CronJobs', 'importServices'];
 
