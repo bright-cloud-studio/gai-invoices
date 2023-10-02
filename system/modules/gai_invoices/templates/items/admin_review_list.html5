@@ -67,15 +67,24 @@
 				<?php if($this->service == 'Test Late Cancel'){ echo '<option value="13" selected>Test Late Cancel</option>'; } else { echo '<option value="13">Test Late Cancel</option>'; }; ?>
 				<?php if($this->service == 'Parking'){ echo '<option value="14" selected>Parking</option>'; } else { echo '<option value="14">Parking</option>'; }; ?>
 				<?php if($this->service == 'Review District Report'){ echo '<option value="15" selected>Review District Report</option>'; } else { echo '<option value="15">Review District Report</option>'; }; ?>
-				<?php if($this->service == 'Obs'){ echo '<option value="16" selected>Obs</option>'; } else { echo '<option value="16">Obs</option>'; }; ?>
+				<?php if($this->service == 'Obs - Stand Alone'){ echo '<option value="16" selected>Obs - Stand Alone</option>'; } else { echo '<option value="16">Obs - Stand Alone</option>'; }; ?>
 				<?php if($this->service == 'Record Review'){ echo '<option value="17" selected>Record Review</option>'; } else { echo '<option value="17">Record Review</option>'; }; ?>
 				<?php if($this->service == 'Misc. Travel Expenses'){ echo '<option value="18" selected>Misc. Travel Expenses</option>'; } else { echo '<option value="18">Misc. Travel Expenses</option>'; }; ?>
 				<?php if($this->service == 'Editing Services'){ echo '<option value="19" selected>Editing Services</option>'; } else { echo '<option value="19">Editing Services</option>'; }; ?>
+				
 				<?php if($this->service == 'Meeting Coverage Coordinator'){ echo '<option value="20" selected>Meeting Coverage Coordinator</option>'; } else { echo '<option value="20">Meeting Coverage Coordinator</option>'; }; ?>
 				<?php if($this->service == 'Psych/Achvmt/Additional/Obs'){ echo '<option value="21" selected>Psych/Achvmt/Additional/Obs</option>'; } else { echo '<option value="21">Psych/Achvmt/Additional/Obs</option>'; }; ?>
 				<?php if($this->service == 'Psych/Achvmt/Additionalx2/Obs'){ echo '<option value="22" selected>Psych/Achvmt/Additionalx2/Obs</option>'; } else { echo '<option value="22">Psych/Achvmt/Additionalx2/Obs</option>'; }; ?>
-				<?php if($this->service == 'Psych/Achvmt Law'){ echo '<option value="97" selected>Psych/Achvmt Law</option>'; } else { echo '<option value="97">Psych/Achvmt Law</option>'; }; ?>
-				<?php if($this->service == 'Psych Law'){ echo '<option value="98" selected>Psych Law</option>'; } else { echo '<option value="98">Psych Law</option>'; }; ?>
+				
+				<?php if($this->service == 'Psych/Achvmt/Additionalx2'){ echo '<option value="23" selected>Psych/Achvmt/Additionalx2</option>'; } else { echo '<option value="23">Psych/Achvmt/Additionalx2</option>'; }; ?>
+				<?php if($this->service == 'Psych/Additional x 2'){ echo '<option value="24" selected>Psych/Additional x 2</option>'; } else { echo '<option value="24">Psych/Additional x 2</option>'; }; ?>
+				<?php if($this->service == 'Achvmt/Additionalx2'){ echo '<option value="25" selected>Achvmt/Additionalx2</option>'; } else { echo '<option value="25">Achvmt/Additionalx2</option>'; }; ?>
+				<?php if($this->service == 'Psych/Achvmt Law'){ echo '<option value="26" selected>Psych/Achvmt Law</option>'; } else { echo '<option value="26">Psych/Achvmt Law</option>'; }; ?>
+				<?php if($this->service == 'Psych Law'){ echo '<option value="27" selected>Psych Law</option>'; } else { echo '<option value="27">Psych Law</option>'; }; ?>
+				<?php if($this->service == 'In Person Mtg Attendance 1/2 Day'){ echo '<option value="28" selected>In Person Mtg Attendance 1/2 Day</option>'; } else { echo '<option value="28">In Person Mtg Attendance 1/2 Day</option>'; }; ?>
+				<?php if($this->service == 'In Person Mtg Attendance Full Day'){ echo '<option value="29" selected>In Person Mtg Attendance Full Day</option>'; } else { echo '<option value="29">In Person Mtg Attendance Full Day</option>'; }; ?>
+				
+
 				<?php if($this->service == 'Misc. Billing'){ echo '<option value="99" selected>Misc. Billing</option>'; } else { echo '<option value="99">Misc. Billing</option>'; }; ?>
 				
 			</select>
