@@ -1,3 +1,4 @@
+
 <!-- This is the module that lists a psychologists entries in the Work Assignment sheet, then allows them to submit Transactions for it -->
 
 <div class="mod_work_assignments marbot90">
@@ -8,8 +9,6 @@
 	<div class="work_assignments_filter marbot60">
 		
 		<form class="flex_wrapper" id="form_<?= $unique_id ?>">
-			
-			
 
 			<fieldset class="size100">
 				
@@ -106,11 +105,62 @@
 	
 	
 	<div class="messages marbot60 center_element">
-		
 		<span class="message"></span>
-		
 	</div>
 	
+	
+	<div class="additional_services hidden" id="{{user::company}}">
+		<h2>Additional Services</h2>
+		
+		<?php
+			$objUser = \FrontendUser::getInstance();
+			foreach($objUser->meeting_options as $option) {
+				?><?php
+				if($option == "parking") {
+					echo '<span data-service-code="14">Parking</span>';
+				}
+				if($option == "misc_travel_expenses") {
+					echo '<span data-service-code="18">Misc. Travel Expenses</span>';
+				}
+				if($option == "editing_services") {
+					echo '<span data-service-code="19">Editing Services</span>';
+				}
+				if($option == "meeting_coverage_coordinator") {
+					echo '<span data-service-code="20">Meeting Coverage Coordinator</span>';
+				}
+				?><?php
+			}
+		?>
+	</div>
+
+	
+	<div class="services hidden" id="{{user::company}}">
+		<?php
+			foreach($this->services as $service) {
+				?>
+				
+				<div class="service service_<?= $service['service_code'] ?>">
+					<h2><?= $service['service_code'] ?> "<?= $service['name'] ?>"</h2>
+					<span class="service_code"><?= $service['service_code'] ?></span><br />
+					<span class="name"><?= $service['name'] ?></span><br />
+					<span class="psychologist_tier_1"><?= $service['psychologist_tier_1'] ?></span><br />
+					<span class="psychologist_tier_2"><?= $service['psychologist_tier_2'] ?></span><br />
+					<span class="psychologist_tier_3"><?= $service['psychologist_tier_3'] ?></span><br />
+					<span class="psychologist_tier_4"><?= $service['psychologist_tier_4'] ?></span><br />
+					<span class="psychologist_tier_5"><?= $service['psychologist_tier_5'] ?></span><br />
+					<span class="psychologist_tier_6"><?= $service['psychologist_tier_6'] ?></span><br />
+					<span class="psychologist_tier_7"><?= $service['psychologist_tier_7'] ?></span><br />
+					<span class="psychologist_tier_8"><?= $service['psychologist_tier_8'] ?></span><br />
+					<span class="psychologist_tier_9"><?= $service['psychologist_tier_9'] ?></span><br />
+					<span class="school_tier_1"><?= $service['school_tier_1'] ?></span><br />
+					<span class="school_tier_2"><?= $service['school_tier_2'] ?></span><br />
+					<span class="school_tier_3"><?= $service['school_tier_3'] ?></span><br />
+				</div>
+				
+				<?php
+			}
+		?>
+	</div>
 	
 
 </div>
