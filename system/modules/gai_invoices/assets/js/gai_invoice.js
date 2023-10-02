@@ -750,25 +750,29 @@ function addMeeting(){
         validateFailed['price'] = 1;
     }
     
-    // Meeting Start
-    var meeting_start = $(".mod_add_meetings #meeting_start").val();
-    if(meeting_start == '') {
-        validateMessage += "Meeting Start MUST NOT be empty<br>";
-        validateFailed['meeting_start'] = 1;
-    }
     
-    // Meeting End
-    var meeting_end = $(".mod_add_meetings #meeting_end").val();
-    if(meeting_end == '') {
-        validateMessage += "Meeting End MUST NOT be empty<br>";
-        validateFailed['meeting_end'] = 1;
-    }
-    
-    // Meeting Date
-    var meeting_date = $(".mod_add_meetings input#meeting_date").val();
-    if(meeting_date == '') {
-        validateMessage += "Meeting Date MUST NOT be empty<br>";
-        validateFailed['meeting_date'] = 1;
+    var service_id = $(".mod_add_meetings #service_provided").find(":selected").val();
+    if(service_id == '1' || service_id == '12' || service_id == '13' || service_id == '15') {
+        // Meeting Start
+        var meeting_start = $(".mod_add_meetings input#meeting_start").val();
+        if(meeting_start == '') {
+            validateMessage += "Meeting Start MUST NOT be empty<br>";
+            validateFailed['meeting_start'] = 1;
+        }
+        
+        // Meeting End
+        var meeting_end = $(".mod_add_meetings input#meeting_end").val();
+        if(meeting_end == '') {
+            validateMessage += "Meeting End MUST NOT be empty<br>";
+            validateFailed['meeting_end'] = 1;
+        }
+        
+        // Meeting Date
+        var meeting_date = $(".mod_add_meetings input#meeting_date").val();
+        if(meeting_date == '') {
+            validateMessage += "Meeting Date MUST NOT be empty<br>";
+            validateFailed['meeting_date'] = 1;
+        }
     }
     
     
@@ -860,9 +864,7 @@ function addMiscBilling(){
 
     $(".message").empty();
     
-    
     var validated = 0;
-    
     var validateFailed = [];
     
     // Label
