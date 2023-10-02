@@ -1,11 +1,32 @@
 <div class="mod_add_meetings marbot90">
 	
 	<form class="flex_wrapper" id="form_add_meeting">
-		
+
 		<!-- Hidden Fields -->
-		<div style="display: none;">
-			<input type="text" name="psychologist" class="psychologist" value="{{user::firstname}} {{user::lastname}}">
-		</div>
+		<fieldset class="size100 hidden">
+			
+			<h4 class="size100 marbot15">Hidden Values</h4>
+			
+			<!-- Psychologist -->	
+			<div class="widget widget-text size50">
+				<label for="psychologist" class="size50">
+					Psychologist
+				</label>
+				<input type="text" name="psychologist" class="psychologist" value="{{user::firstname}} {{user::lastname}}">
+			</div>
+		
+			<!-- Price Tier -->	
+			<div class="widget widget-text size50">
+				<label for="price_tier" class="size50">
+					Price Tier
+				</label>
+				<input type="text" name="price_tier" class="price_tier" value="<?= $this->price_tier ?>">
+			</div>
+	
+		</fieldset>
+
+
+
 
 		<fieldset class="size100">
 			<!-- Date -->	
@@ -113,7 +134,7 @@
 				</div>
 				
 				<!-- Meeting Start -->	
-				<div class="widget widget-text size50">
+				<div class="widget widget-text size50" id="meeting_start">
 					<label for="meeting_start" class="size50">
 						Start Time
 					</label>
@@ -121,7 +142,7 @@
 				</div>
 				
 				<!-- Meeting End -->	
-				<div class="widget widget-text size50">
+				<div class="widget widget-text size50" id="meeting_end">
 					<label for="meeting_end" class="size50">
 						End Time
 					</label>
@@ -160,6 +181,34 @@
 		
 		<span class="message"></span>
 		
+	</div>
+	
+	<div class="services hidden">
+		<?php
+			foreach($this->services as $service) {
+				?>
+				
+				<div class="service service_<?= $service['service_code'] ?>">
+					<h2><?= $service['service_code'] ?> "<?= $service['name'] ?>"</h2>
+					<span class="service_code"><?= $service['service_code'] ?></span><br />
+					<span class="name"><?= $service['name'] ?></span><br />
+					<span class="psychologist_tier_1"><?= $service['psychologist_tier_1'] ?></span><br />
+					<span class="psychologist_tier_2"><?= $service['psychologist_tier_2'] ?></span><br />
+					<span class="psychologist_tier_3"><?= $service['psychologist_tier_3'] ?></span><br />
+					<span class="psychologist_tier_4"><?= $service['psychologist_tier_4'] ?></span><br />
+					<span class="psychologist_tier_5"><?= $service['psychologist_tier_5'] ?></span><br />
+					<span class="psychologist_tier_6"><?= $service['psychologist_tier_6'] ?></span><br />
+					<span class="psychologist_tier_7"><?= $service['psychologist_tier_7'] ?></span><br />
+					<span class="psychologist_tier_8"><?= $service['psychologist_tier_8'] ?></span><br />
+					<span class="psychologist_tier_9"><?= $service['psychologist_tier_9'] ?></span><br />
+					<span class="school_tier_1"><?= $service['school_tier_1'] ?></span><br />
+					<span class="school_tier_2"><?= $service['school_tier_2'] ?></span><br />
+					<span class="school_tier_3"><?= $service['school_tier_3'] ?></span><br />
+				</div>
+				
+				<?php
+			}
+		?>
 	</div>
 
   
