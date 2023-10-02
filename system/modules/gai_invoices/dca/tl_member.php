@@ -18,9 +18,9 @@ foreach ($GLOBALS['TL_DCA']['tl_member']['palettes'] as $k => $v) {
 $GLOBALS['TL_DCA']['tl_member']['fields']['meeting_options'] = array
 (
     'sql'                     => "varchar(255) NOT NULL default ''",
-    'label'                   => &$GLOBALS['TL_LANG']['tl_member']['meeting_options'],
+    'label'                   => &$GLOBALS['TL_LANG']['tl_member']['meeting_options'],3
     'inputType'               => 'checkbox',
-    'options'                 => array('misc_travel_expenses' => 'Misc. Travel Expenses', 'editing_services' => 'Editing Services', 'meeting_coverage_coordinator' => 'Meeting Coverage Coordinator', 'parking' => 'Parking'),								
+    'options'                 => array('misc_travel_expenses' => 'Misc. Travel Expenses', 'editing_services' => 'Editing Services', 'manager' => 'Manager', 'parking' => 'Parking'),								
     'eval'                    => array('multiple'=>true, 'mandatory'=>false,'tl_class'=>'clr') 
 );
 $GLOBALS['TL_DCA']['tl_member']['fields']['price_tier'] = array
