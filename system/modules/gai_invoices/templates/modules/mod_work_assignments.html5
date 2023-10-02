@@ -125,8 +125,8 @@
 				if($option == "editing_services") {
 					echo '<span data-service-code="19">Editing Services</span>';
 				}
-				if($option == "meeting_coverage_coordinator") {
-					echo '<span data-service-code="20">Meeting Coverage Coordinator</span>';
+				if($option == "manager") {
+					echo '<span data-service-code="20">Manager</span>';
 				}
 				?><?php
 			}
