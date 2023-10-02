@@ -18,7 +18,7 @@ class CronJobs extends System
         $how_many_days = date('t') - date('j');
 
         // Add a log entry so we know things are going as expected
-        \Controller::log('GAI: ' . ($how_many_days - $days_before) . ' days until Reminder emails go out!', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        \Controller::log('GAI: ' . $how_many_days . ' days until Reminder emails go out!', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         if($days_before == $how_many_days) {
             
@@ -50,7 +50,7 @@ class CronJobs extends System
                     // Send out the email using our tokens
                     $objNotification->send($arrTokens);
 
-                     \Controller::log('GAI: Sent email to ' . $member->firstname . " " . $member->lastname, __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+                     \Controller::log('GAI: Sent email to' . $member->firstname . " " . $member->lastname, __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
                     
                 }
             }
