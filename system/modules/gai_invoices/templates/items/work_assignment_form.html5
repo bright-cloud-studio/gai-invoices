@@ -30,7 +30,7 @@
 		
 		
 		<!-- Hidden Fields -->
-		<fieldset class="size100 hidden">
+		<fieldset class="size100 hidden" id="{{user::company}}">
 			
 			<h4 class="size100 marbot15">Hidden Values</h4>
 			
