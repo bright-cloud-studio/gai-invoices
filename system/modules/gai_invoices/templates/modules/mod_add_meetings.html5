@@ -114,8 +114,8 @@
 								if($option == "editing_services") {
 									echo '<option value="19">Editing Services</option>';
 								}
-								if($option == "meeting_coverage_coordinator") {
-									echo '<option value="20">Meeting Coverage Coordinator</option>';
+								if($option == "manager") {
+									echo '<option value="20">Manager</option>';
 								}
 								if($option == "parking") {
 									echo '<option value="14">Parking</option>';
