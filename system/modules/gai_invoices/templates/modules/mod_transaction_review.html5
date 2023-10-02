@@ -90,7 +90,7 @@
 				
 				<!-- Submit -->
 				<div class="widget widget-submit center_element size50" style="display: none;">
-					<a id="handoff_work_assignment" class="btn handoff_work_assignment" onClick="reviewTransactions('form_transaction_row_ids')">Confirm Review</a>
+					<a id="handoff_work_assignment" class="btn handoff_work_assignment" onClick="reviewTransactions('form_transaction_row_ids')">Submit Reviewed Invoice</a>
 				</div>
 				
 			</fieldset>
