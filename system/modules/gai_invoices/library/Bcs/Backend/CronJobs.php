@@ -14,7 +14,7 @@ class CronJobs extends System
     public function sendReminderEmails(): void
     {
         // if our date is X days before end of month
-        $days_before = 4;
+        $days_before = 7;
         $how_many_days = date('t') - date('j');
 
         // Add a log entry so we know things are going as expected
@@ -51,7 +51,6 @@ class CronJobs extends System
                     $objNotification->send($arrTokens);
 
                      \Controller::log('GAI: Sent email to' . $member->firstname . " " . $member->lastname, __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
-                    
                 }
             }
         }
