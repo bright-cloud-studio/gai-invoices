@@ -36,6 +36,7 @@
     // were done logging, close the file we just created
     fclose($myfile);
     
+    
     // Check for duplicate
     $duplicate = false;
     
