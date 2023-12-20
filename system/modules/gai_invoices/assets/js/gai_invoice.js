@@ -423,6 +423,9 @@ function adminReviewChangeSelectedPsychologist(id_next){
     
     // update the current id to our new one
     $("input#current_psy").val(id_next);
+    
+    // scroll the page back to the top
+    scrollToAnchor('anchor_nav');
 
 }
 
@@ -509,15 +512,6 @@ function processReviewChanges(id_next){
                 // Change button text back to the default
                 $("form#psy_" + id_current + " a.process_review").text("Mark As Reviewed");
                 
-                
-                
-                
-                
-                
-                
-                
-                scrollToAnchor('anchor_nav');
-                
                 // Close our Confirm box
                 jconfirm.instances[0].close();
                 
@@ -541,6 +535,9 @@ function processReviewChanges(id_next){
         // update the current id to our new one
         $("input#current_psy").val(id_next);
     }
+    
+    // Scroll to top of page
+    scrollToAnchor('anchor_nav');
 
 }
 
