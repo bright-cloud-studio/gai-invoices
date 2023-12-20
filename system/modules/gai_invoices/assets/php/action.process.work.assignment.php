@@ -41,9 +41,9 @@
     }
     
     // Manually enter a full timestamp to trace the issue we are having
-    fwrite($myfile, "\n\n");
-    fwrite($myfile, "DEBUG Timezone: " . date_default_timezone_get() . "\n");
-    fwrite($myfile, "DEBUG Timestamp: " . date('m/d/Y h:i:s a') . "\n");
+    //fwrite($myfile, "\n\n");
+    //fwrite($myfile, "DEBUG Timezone: " . date_default_timezone_get() . "\n");
+    //fwrite($myfile, "DEBUG Timestamp: " . date('m/d/Y h:i:s a') . "\n");
     
     // were done logging, close the file we just created
     fclose($myfile);
