@@ -82,18 +82,15 @@ class ModAdminReview extends \Contao\Module
         $rand_ver = rand(1,9999);
         $GLOBALS['TL_BODY']['admin_review'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
         
-        
         // get all of our services and store them in an array
         $services = array();
         $range_serv = 'Services';
         $response_serv = $this->$service->spreadsheets_values->get(ModAdminReview::$spreadsheetId, $range_serv);
         $values_serv = $response_serv->getValues();
         
-
         foreach($values_serv as $entry_serv) {
             $services[$entry_serv[0]] = $entry_serv[1];
         }
-        
         
         // Get this user's unprocessed listings from Sheets
         $spreadsheet = $this->$service->spreadsheets->get(ModAdminReview::$spreadsheetId);
@@ -102,7 +99,6 @@ class ModAdminReview extends \Contao\Module
         $range = 'Transactions';
         $response = $this->$service->spreadsheets_values->get(ModAdminReview::$spreadsheetId, $range);
         $values = $response->getValues();
-        
         
         // an array to store this users entries
         $entryHistory = array();
@@ -114,9 +110,9 @@ class ModAdminReview extends \Contao\Module
         $today = date('F');
         
         // NORMAL USE
-        $month = date("F", strtotime ( '-1 month' , strtotime ( $today ) )) ;
+        //$month = date("F", strtotime ( '-1 month' , strtotime ( $today ) )) ;
         // DEV USE - so we can see the current transactions for development purposes
-        //$month = date("F", strtotime ( '-0 month' , strtotime ( $today ) )) ;
+        $month = date("F", strtotime ( '-0 month' , strtotime ( $today ) )) ;
         
         $entry_id = 1;
         $transaction_id = 1;
