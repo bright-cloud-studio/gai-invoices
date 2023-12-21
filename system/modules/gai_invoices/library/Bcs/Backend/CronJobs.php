@@ -15,15 +15,16 @@ class CronJobs extends System
     {
         // if our date is X days before end of month
         $days_before = 7;
+        // The number of days left in the month
         $how_many_days = date('t') - date('j');
 
         // Add a log entry so we know things are going as expected
-        \Controller::log('GAI: ' . $how_many_days . ' days until Reminder emails go out!', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+        \Controller::log('GAI: (' . $how_many_days . ') days remaining until the end of the month', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
         
         if($days_before == $how_many_days) {
             
             // add Log that it is the right day!
-            \Controller::log('GAI: Today is the Reminder day!', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+            \Controller::log('GAI: Weekly Reminder email will go out today!', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
             
             // get all of the Members
             $options = [
