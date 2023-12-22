@@ -16,6 +16,7 @@
 $GLOBALS['FE_MOD']['gai_invoices']['mod_work_assignments']          = 'Bcs\Module\ModWorkAssignments';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_add_meetings']              = 'Bcs\Module\ModAddMeetings';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_misc_billing']              = 'Bcs\Module\ModMiscBilling';
+$GLOBALS['FE_MOD']['gai_invoices']['mod_misc_travel_expenses']      = 'Bcs\Module\ModMiscTravelExpenses';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_invoice_history'] 	        = 'Bcs\Module\ModInvoiceHistory';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_transaction_review'] 	    = 'Bcs\Module\ModTransactionReview';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_admin_review'] 	            = 'Bcs\Module\ModAdminReview';
