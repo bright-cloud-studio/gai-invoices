@@ -20,6 +20,7 @@ $GLOBALS['TL_LANG']['MOD']['gai_invoices']                  = array('GAI Invoice
 $GLOBALS['TL_LANG']['FMD']['mod_work_assignments']          = array('Work Assignments', 'Displays Work Assignments and allows creation of transactions for them');
 $GLOBALS['TL_LANG']['FMD']['mod_add_meetings']              = array('Add Meetings', 'Manually add meeting transactions without a Work Assignment');
 $GLOBALS['TL_LANG']['FMD']['mod_misc_billing']              = array('Miscellaneous Billing', 'Manually add miscellaneous billing');
+$GLOBALS['TL_LANG']['FMD']['mod_misc_travel_expenses']      = array('Miscellaneous Travel Expenses', 'Manually add Miscellaneous Travel Expenses');
 $GLOBALS['TL_LANG']['FMD']['mod_invoice_history'] 	        = array('Invoice History', 'Displays all previous invoices and a preview of the next upcoming one');
 $GLOBALS['TL_LANG']['FMD']['mod_transaction_review']        = array('Transaction Review', 'List and review transactions submitted in the last month');
 $GLOBALS['TL_LANG']['FMD']['mod_admin_review']              = array('Admin Review', 'Review and edit all transactions for the last billing month');
