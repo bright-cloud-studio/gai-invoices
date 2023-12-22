@@ -16,13 +16,20 @@ ClassLoader::addClasses(array
     // Our Frontend Modules
     'Bcs\Module\ModWorkAssignments'             => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignments.php',
     'Bcs\Module\ModAddMeetings'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAddMeetings.php',
+
+    // Manually approved services
     'Bcs\Module\ModMiscBilling'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModMiscBilling.php',
     'Bcs\Module\ModMiscTravelExpenses'          => 'system/modules/gai_invoices/library/Bcs/Module/ModMiscTravelExpenses.php',
+    'Bcs\Module\Parking'                        => 'system/modules/gai_invoices/library/Bcs/Module/ModParking.php',
+    
+    
     'Bcs\Module\ModInvoiceHistory'              => 'system/modules/gai_invoices/library/Bcs/Module/ModInvoiceHistory.php',
     'Bcs\Module\ModTransactionReview'           => 'system/modules/gai_invoices/library/Bcs/Module/ModTransactionReview.php',
     'Bcs\Module\ModAdminReview'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAdminReview.php',
     'Bcs\Module\ModSendInvoiceEmails'           => 'system/modules/gai_invoices/library/Bcs/Module/ModSendInvoiceEmails.php',
     'Bcs\Frontend\SendInvoiceEmails'            => 'system/modules/gai_invoices/library/Bcs/Frontend/SendInvoiceEmails.php',
+
+    
     // Our Cron Jobs
     'Bcs\Backend\CronJobs'                      => 'system/modules/gai_invoices/library/Bcs/Backend/CronJobs.php',
     // Our Transactions
@@ -43,8 +50,12 @@ TemplateLoader::addFiles(array
     'work_assignment_form'          => 'system/modules/gai_invoices/templates/items',
     
     'mod_add_meetings'              => 'system/modules/gai_invoices/templates/modules',
+    
+    // Manually approved services
     'mod_misc_billing'              => 'system/modules/gai_invoices/templates/modules',
     'mod_misc_travel_expenses'      => 'system/modules/gai_invoices/templates/modules',
+    'mod_parking'                   => 'system/modules/gai_invoices/templates/modules',
+
     
 	'mod_invoice_history'           => 'system/modules/gai_invoices/templates/modules',
 	'invoice_history_list'          => 'system/modules/gai_invoices/templates/items',
