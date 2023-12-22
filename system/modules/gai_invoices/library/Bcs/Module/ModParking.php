@@ -18,28 +18,27 @@ use Google;
 class ModParking extends \Contao\Module
 {
 
-  /**
-  * Template
-  * @var string
-  */
-  protected $strTemplate = 'mod_parking';
-  
-  // our google api stuffs
-  protected $client;
-  protected $service;
-  public static $spreadsheetId;
-  
-  protected $arrStates = array();
-  
-  /**
-  * Initialize the object
-  *
-  * @param \ModuleModel $objModule
-  * @param string       $strColumn
-  */
-  public function __construct($objModule, $strColumn='main')
-  {
-    
+/**
+* Template
+* @var string
+*/
+protected $strTemplate = 'mod_parking';
+
+// our google api stuffs
+protected $client;
+protected $service;
+public static $spreadsheetId;
+
+protected $arrStates = array();
+
+/**
+* Initialize the object
+*
+* @param \ModuleModel $objModule
+* @param string       $strColumn
+*/
+public function __construct($objModule, $strColumn='main')
+{
     parent::__construct($objModule, $strColumn);
     
     // Create a client connection to Google
@@ -52,37 +51,37 @@ class ModParking extends \Contao\Module
     $this->$service = new \Google_Service_Sheets($this->$client);
     // Set the ID for our specific spreadsheet
     ModAddMeetings::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
-  
-  }
-  
-  /**
-  * Display a wildcard in the back end
-  * @return string
-  */
-  public function generate()
-  {
-    if (TL_MODE == 'BE')
-    {
-      $objTemplate = new \BackendTemplate('be_wildcard');
-      
-      $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['parking'][0]) . ' ###';
-      $objTemplate->title = $this->headline;
-      $objTemplate->id = $this->id;
-      $objTemplate->link = $this->name;
-      $objTemplate->href = 'contao/main.php?do=themes&table=tl_module&act=edit&id=' . $this->id;
-      
-      return $objTemplate->parse();
+    
     }
     
-    return parent::generate();
-  }
-  
-  /* Generate the module */
-  protected function compile()
-  {
-    // Include our JS with a unique code to prefent caching
-    $rand_ver = rand(1,9999);
-    $GLOBALS['TL_BODY']['parking'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
-  
-  }
+    /**
+    * Display a wildcard in the back end
+    * @return string
+    */
+    public function generate()
+    {
+        if (TL_MODE == 'BE')
+        {
+            $objTemplate = new \BackendTemplate('be_wildcard');
+            
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['parking'][0]) . ' ###';
+            $objTemplate->title = $this->headline;
+            $objTemplate->id = $this->id;
+            $objTemplate->link = $this->name;
+            $objTemplate->href = 'contao/main.php?do=themes&table=tl_module&act=edit&id=' . $this->id;
+            
+            return $objTemplate->parse();
+        }
+        
+        return parent::generate();
+    }
+    
+    /* Generate the module */
+    protected function compile()
+    {
+        // Include our JS with a unique code to prefent caching
+        $rand_ver = rand(1,9999);
+        $GLOBALS['TL_BODY']['parking'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
+        
+    }
 } 
