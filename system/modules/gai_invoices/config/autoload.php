@@ -17,6 +17,7 @@ ClassLoader::addClasses(array
     'Bcs\Module\ModWorkAssignments'             => 'system/modules/gai_invoices/library/Bcs/Module/ModWorkAssignments.php',
     'Bcs\Module\ModAddMeetings'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAddMeetings.php',
     'Bcs\Module\ModMiscBilling'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModMiscBilling.php',
+    'Bcs\Module\ModMiscTravelExpenses'          => 'system/modules/gai_invoices/library/Bcs/Module/ModMiscTravelExpenses.php',
     'Bcs\Module\ModInvoiceHistory'              => 'system/modules/gai_invoices/library/Bcs/Module/ModInvoiceHistory.php',
     'Bcs\Module\ModTransactionReview'           => 'system/modules/gai_invoices/library/Bcs/Module/ModTransactionReview.php',
     'Bcs\Module\ModAdminReview'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModAdminReview.php',
@@ -43,6 +44,7 @@ TemplateLoader::addFiles(array
     
     'mod_add_meetings'              => 'system/modules/gai_invoices/templates/modules',
     'mod_misc_billing'              => 'system/modules/gai_invoices/templates/modules',
+    'mod_misc_travel_expenses'      => 'system/modules/gai_invoices/templates/modules',
     
 	'mod_invoice_history'           => 'system/modules/gai_invoices/templates/modules',
 	'invoice_history_list'          => 'system/modules/gai_invoices/templates/items',
