@@ -63,7 +63,7 @@
           // if this service is a misc. billing entry
           if($vars['service_provided'] == 14) {
             if($price == $row['price']){
-              if($vars['label'] == $row['parking']) {
+              if($vars['label'] == $row['misc_billing']) {
                 $duplicate = true;
                 
                 $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/parking_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
