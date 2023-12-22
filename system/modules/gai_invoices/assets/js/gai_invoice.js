@@ -1009,6 +1009,92 @@ function addMiscTravelExpenses(){
 
 }
 
+
+
+
+
+
+// This is for misc. billing
+function addParking(){
+
+    $(".message").empty();
+    
+    var validated = 0;
+    var validateFailed = [];
+    
+    // Label
+    var label = $(".mod_parking #label").val();
+    if(label == '') {
+        $(".message").append("Label cannot be empty<br>");
+        validateFailed['label'] = 1;
+    }
+
+    // Price
+    var price = $(".mod_parking #price").val();
+    if(price == '') {
+        $(".message").append("Price cannot be empty<br>");
+        validateFailed['price'] = 1;
+    }
+    
+    // If Validation failed
+    if($.isEmptyObject(validateFailed)) {
+        // get every form field and add them to the ajax data line
+        var datastring = $("#form_parking").serialize();
+        
+        // trigger this function when our form runs
+        $.ajax({
+            url: '/system/modules/gai_invoices/assets/php/action.parking.php',
+            type: 'POST',
+            data: datastring,
+            success:function(result){
+                
+                // redirect us to the success page
+                if(result == "duplicate") {
+                    
+                    // re-enable our button so they can try submitting again
+                    $("a#process_work_assignment").on('click');
+                    $("a#process_work_assignment").removeClass("disabled");
+                    
+                    // Display our validation messages in a jQuery-confirm box
+                    $.confirm({
+                        title: 'Parking - Duplicate Detected',
+                        content: "An idential Transaction already exists. Please re-check your entered information.<br><br>View your current Transactions on the <strong>Review and Submit Current Invoice</strong> page.",
+                        icon: 'fa fa-warning  fa-bounce',
+                        type: 'red',
+                        useBootstrap: false,
+                        draggable: false,
+                        theme: 'material',
+                        buttons: {
+                            confirm: {
+                                text: 'OK',
+                                btnClass: 'btn-red',
+                                action: function(){
+            
+                                }
+                            },
+                        }
+                    });
+                    
+                } else {
+                    // redirect us to the success page
+                    window.location.replace("https://www.globalassessmentsinc.com/payments/dashboard/parking/success.html");
+                }
+
+            },
+            error:function(result){
+                $(".message").html("There was an error using the AJAX call for addParking()");
+            }
+        });
+    }
+
+}
+
+
+
+
+
+
+
 function scrollToAnchor(aid){
     var aTag = $("a[name='"+ aid +"']");
     $('html,body').animate({scrollTop: aTag.offset().top-200},'slow');
