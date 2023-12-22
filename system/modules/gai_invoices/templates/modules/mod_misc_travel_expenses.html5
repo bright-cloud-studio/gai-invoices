@@ -65,7 +65,7 @@
 
 		<!-- Submit Button -->
 		<div class="widget widget-submit center_element size100">
-			<a id="add_misc_travel_expenses" class="btn add_misc_travel_expenses" onClick="addMiscTravelExpenses()">Add Misc. Travel Expenses</a>
+			<a id="add_misc_travel_expenses" class="btn add_misc_travel_expenses" onClick="addMiscTravelExpenses()">Add Misc. Travel Expense</a>
 		</div>
 	
 	</form>
