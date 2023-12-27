@@ -55,7 +55,7 @@
 
 
 
-				<div class="meeting_details">
+				<div class="meeting_details flex_wrapper">
 					<!-- Meeting Start -->	
 					<div class="widget widget-text size50" id="meeting_start">
 						<label for="meeting_start" class="size50">
