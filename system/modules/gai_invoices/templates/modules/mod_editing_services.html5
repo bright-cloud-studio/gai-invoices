@@ -50,6 +50,35 @@
 					<input type="text" name="price" id="price" value="" required="">
 				</div>
 
+				<!-- Meeting Start -->	
+				<div class="widget widget-text size50" id="meeting_start">
+					<label for="meeting_start" class="size50">
+						Start Time
+					</label>
+					<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off" readonly="readonly">
+				</div>
+				
+				<!-- Meeting End -->	
+				<div class="widget widget-text size50" id="meeting_end">
+					<label for="meeting_end" class="size50">
+						End Time
+					</label>
+					<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off" readonly="readonly">
+				</div>
+				
+				<!-- Meeting Date -->	
+				<div class="widget widget-text size50" id="meeting_date">
+					<label for="meeting_date" class="size50">
+						Meeting Date
+					</label>
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off" readonly="readonly">
+				</div>
+
+
+
+
+
+
 				<!-- Notes -->
 				<div class="widget widget-textarea size100">
 					<label for="notes" class="size100">
