@@ -21,6 +21,8 @@ ClassLoader::addClasses(array
     'Bcs\Module\ModMiscBilling'                 => 'system/modules/gai_invoices/library/Bcs/Module/ModMiscBilling.php',
     'Bcs\Module\ModMiscTravelExpenses'          => 'system/modules/gai_invoices/library/Bcs/Module/ModMiscTravelExpenses.php',
     'Bcs\Module\Parking'                        => 'system/modules/gai_invoices/library/Bcs/Module/ModParking.php',
+    'Bcs\Module\Manager'                        => 'system/modules/gai_invoices/library/Bcs/Module/ModManager.php',
+    
     
     
     'Bcs\Module\ModInvoiceHistory'              => 'system/modules/gai_invoices/library/Bcs/Module/ModInvoiceHistory.php',
@@ -55,6 +57,7 @@ TemplateLoader::addFiles(array
     'mod_misc_billing'              => 'system/modules/gai_invoices/templates/modules',
     'mod_misc_travel_expenses'      => 'system/modules/gai_invoices/templates/modules',
     'mod_parking'                   => 'system/modules/gai_invoices/templates/modules',
+    'mod_manager'                   => 'system/modules/gai_invoices/templates/modules',
 
     
 	'mod_invoice_history'           => 'system/modules/gai_invoices/templates/modules',
