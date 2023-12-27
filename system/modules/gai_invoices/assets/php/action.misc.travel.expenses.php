@@ -142,7 +142,7 @@
         
             // insert into the tl_transactions table
         $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, service_provided, price, notes, misc_billing, published)
-                                    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '99', '".$price."', '".$vars['notes']."', '".$vars['label']."',  '1')";
+                                    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '18', '".$price."', '".$vars['notes']."', '".$vars['label']."',  '1')";
         $result = $dbh->query($query);
      
         // display some text to return back to the ajax call
