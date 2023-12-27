@@ -20,7 +20,7 @@ $GLOBALS['FE_MOD']['gai_invoices']['mod_add_meetings']              = 'Bcs\Modul
 $GLOBALS['FE_MOD']['gai_invoices']['mod_misc_billing']              = 'Bcs\Module\ModMiscBilling';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_misc_travel_expenses']      = 'Bcs\Module\ModMiscTravelExpenses';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_parking']                   = 'Bcs\Module\ModParking';
-
+$GLOBALS['FE_MOD']['gai_invoices']['mod_manager']                   = 'Bcs\Module\ModManager';
 
 $GLOBALS['FE_MOD']['gai_invoices']['mod_invoice_history'] 	        = 'Bcs\Module\ModInvoiceHistory';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_transaction_review'] 	    = 'Bcs\Module\ModTransactionReview';
