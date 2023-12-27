@@ -1201,6 +1201,29 @@ function addEditingServices(){
         $(".message").append("Price cannot be empty<br>");
         validateFailed['price'] = 1;
     }
+
+    // Meeting Start
+    var meeting_start = $(".mod_editing_services input#meeting_start").val();
+    if(meeting_start == '') {
+        $(".message").append("Meeting Start cannot be empty<br>");
+        validateFailed['meeting_start'] = 1;
+    }
+    
+    // Meeting End
+    var meeting_end = $(".mod_editing_services input#meeting_end").val();
+    if(meeting_end == '') {
+        $(".message").append("Meeting End cannot be empty<br>");
+        validateFailed['meeting_end'] = 1;
+    }
+    
+    // Meeting Date
+    var meeting_date = $(".mod_editing_services input#meeting_date").val();
+    if(meeting_date == '') {
+        $(".message").append("Meeting Date cannot be empty<br>");
+        validateFailed['meeting_date'] = 1;
+    }
+
+    
     
     // If Validation failed
     if($.isEmptyObject(validateFailed)) {
