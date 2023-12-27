@@ -24,6 +24,7 @@ $GLOBALS['TL_LANG']['FMD']['mod_add_meetings']              = array('Add Meeting
 $GLOBALS['TL_LANG']['FMD']['mod_misc_billing']              = array('Miscellaneous Billing', 'Manually add miscellaneous billing');
 $GLOBALS['TL_LANG']['FMD']['mod_misc_travel_expenses']      = array('Miscellaneous Travel Expenses', 'Manually add Miscellaneous Travel Expenses');
 $GLOBALS['TL_LANG']['FMD']['mod_parking']                   = array('Parking', 'Manually add Parking transactions');
+$GLOBALS['TL_LANG']['FMD']['mod_manager']                   = array('Manager', 'Manually add Manager transactions');
 
 
 $GLOBALS['TL_LANG']['FMD']['mod_invoice_history'] 	        = array('Invoice History', 'Displays all previous invoices and a preview of the next upcoming one');
