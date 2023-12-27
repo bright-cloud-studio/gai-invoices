@@ -61,7 +61,7 @@
         if($curMonth == $dbMonth && $curYear == $dbYear) {
           
           // if this service is a misc. billing entry
-          if($vars['service_provided'] == 14) {
+          if($vars['service_provided'] == 20) {
             if($price == $row['price']){
               if($vars['label'] == $row['misc_billing']) {
                 $duplicate = true;
