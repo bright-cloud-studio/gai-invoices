@@ -131,8 +131,8 @@
     $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
         
     // insert into the tl_transactions table
-    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, service_provided, price, notes, misc_billing, published)
-    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '19', '".$price."', '".$vars['notes']."', '".$vars['label']."',  '1')";
+    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, service_provided, price, meeting_date, meeting_start, meeting_end, notes, misc_billing, published)
+    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '19', '".$price."', '".$vars['meeting_date']."', '".$vars['meeting_start']."', '".$vars['meeting_end']."', '".$vars['notes']."', '".$vars['label']."',  '1')";
     $result = $dbh->query($query);
     
     // display some text to return back to the ajax call
