@@ -1,0 +1,80 @@
+<div class="mod_editing_services marbot90">
+	
+	<form class="flex_wrapper" id="form_editing_services">
+		
+		<!-- Hidden Fields -->
+		<div style="display: none;">
+			<input type="text" name="psychologist" class="psychologist" value="{{user::firstname}} {{user::lastname}}">
+		</div>
+
+		<fieldset class="size100">
+			<!-- Date -->	
+			<div class="widget widget-text size50">
+				<label for="date" class="size50">
+					Date
+				</label>
+				<input type="text" name="date" id="date" value="<?= date('m/d/Y') ?>" required="">
+			</div>
+		</fieldset>
+		
+
+		<!-- The section of the form with the meeting details -->
+		<div class="misc_details">
+			
+			<!-- Duplicate for "Add Another Transaction" -->
+			<fieldset class="transaction size100">
+				
+				<!-- Service Provided -->	
+				<div class="widget widget-select size50" style="display: none;">
+					<label for="service_provided" class="size50">
+						Service Provided
+					</label>
+					<select name="service_provided" id="service_provided">
+						<option value="19" selected>Editing Services</option>
+					</select>
+				</div>
+	
+				<!-- Label -->	
+				<div class="widget widget-text size50">
+					<label for="label" class="size50">
+						Label
+					</label>
+					<input type="text" name="label" id="label" value="" required="">
+				</div>
+	
+				<!-- Price -->	
+				<div class="widget widget-text size50">
+					<label for="price" class="size50">
+						Price
+					</label>
+					<input type="text" name="price" id="price" value="" required="">
+				</div>
+
+				<!-- Notes -->
+				<div class="widget widget-textarea size100">
+					<label for="notes" class="size100">
+						Notes
+					</label>
+					<textarea name="notes" id="notes" rows="4" cols="40" maxlength="500"></textarea>
+				</div>
+				
+			</fieldset>
+
+		</div>
+
+		<!-- Submit Button -->
+		<div class="widget widget-submit center_element size100">
+			<a id="add_editing_services" class="btn add_editing_services" onClick="addEditingServices()">Add Editing Services</a>
+		</div>
+	
+	</form>
+	
+	
+	<div class="messages marbot60 center_element">
+		
+		<span class="message"></span>
+		
+	</div>
+
+  
+</div>
