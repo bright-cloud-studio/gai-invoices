@@ -62,6 +62,8 @@ TemplateLoader::addFiles(array
     'mod_parking'                   => 'system/modules/gai_invoices/templates/modules',
     'mod_manager'                   => 'system/modules/gai_invoices/templates/modules',
     'mod_editing_services'          => 'system/modules/gai_invoices/templates/modules',
+    'mod_test_late_cancel_first'    => 'system/modules/gai_invoices/templates/modules',
+    'mod_test_late_cancel_additional' => 'system/modules/gai_invoices/templates/modules',
 
     
 	'mod_invoice_history'           => 'system/modules/gai_invoices/templates/modules',
