@@ -23,6 +23,9 @@ $GLOBALS['FE_MOD']['gai_invoices']['mod_parking']                   = 'Bcs\Modul
 $GLOBALS['FE_MOD']['gai_invoices']['mod_manager']                   = 'Bcs\Module\ModManager';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_editing_services']          = 'Bcs\Module\ModEditingServices';
 
+$GLOBALS['FE_MOD']['gai_invoices']['mod_test_late_cancel_first']    = 'Bcs\Module\ModTestLateCancelFirst';
+$GLOBALS['FE_MOD']['gai_invoices']['mod_test_late_cancel_additional']    = 'Bcs\Module\ModTestLateCancelAdditional';
+
 $GLOBALS['FE_MOD']['gai_invoices']['mod_invoice_history'] 	        = 'Bcs\Module\ModInvoiceHistory';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_transaction_review'] 	    = 'Bcs\Module\ModTransactionReview';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_admin_review'] 	            = 'Bcs\Module\ModAdminReview';
