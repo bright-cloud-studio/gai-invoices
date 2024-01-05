@@ -15,14 +15,14 @@ namespace Bcs\Module;
 
 use Google;
 
-class ModFirstTestLateCancel extends \Contao\Module
+class ModTestLateCancelFirst extends \Contao\Module
 {
 
 /**
 * Template
 * @var string
 */
-protected $strTemplate = 'mod_first_test_late_cancel';
+protected $strTemplate = 'mod_test_late_cancel_first';
 
 // our google api stuffs
 protected $client;
@@ -64,7 +64,7 @@ public function __construct($objModule, $strColumn='main')
         {
             $objTemplate = new \BackendTemplate('be_wildcard');
             
-            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['first_test_late_cancel'][0]) . ' ###';
+            $objTemplate->wildcard = '### ' . utf8_strtoupper($GLOBALS['TL_LANG']['FMD']['test_late_cancel_first'][0]) . ' ###';
             $objTemplate->title = $this->headline;
             $objTemplate->id = $this->id;
             $objTemplate->link = $this->name;
