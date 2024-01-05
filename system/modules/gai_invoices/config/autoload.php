@@ -23,6 +23,8 @@ ClassLoader::addClasses(array
     'Bcs\Module\Parking'                        => 'system/modules/gai_invoices/library/Bcs/Module/ModParking.php',
     'Bcs\Module\Manager'                        => 'system/modules/gai_invoices/library/Bcs/Module/ModManager.php',
     'Bcs\Module\EditingServices'                => 'system/modules/gai_invoices/library/Bcs/Module/ModEditingServices.php',
+    'Bcs\Module\TestLateCancelFirst'            => 'system/modules/gai_invoices/library/Bcs/Module/ModTestLateCancelFirst.php',
+    'Bcs\Module\TestLateCancelAdditional'       => 'system/modules/gai_invoices/library/Bcs/Module/ModTestLateCancelAdditional.php',
     
     
     
