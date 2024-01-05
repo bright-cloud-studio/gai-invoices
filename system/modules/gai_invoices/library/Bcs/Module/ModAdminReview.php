@@ -110,9 +110,9 @@ class ModAdminReview extends \Contao\Module
         $today = date('F');
         
         // NORMAL USE
-        //$month = date("F", strtotime ( '-1 month' , strtotime ( $today ) )) ;
+        $month = date("F", strtotime ( '-1 month' , strtotime ( $today ) )) ;
         // DEV USE - so we can see the current transactions for development purposes
-        $month = date("F", strtotime ( '-0 month' , strtotime ( $today ) )) ;
+        //$month = date("F", strtotime ( '-0 month' , strtotime ( $today ) )) ;
         
         $entry_id = 1;
         $transaction_id = 1;
