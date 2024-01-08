@@ -63,7 +63,7 @@
           // if this service is a misc. billing entry
           if($vars['service_provided'] == 19) {
             if($price == $row['price']){
-              if($vars['label'] == $row['misc_billing']) {
+              if($vars['total_minutes'] == $row['meeting_duration']) {
                 $duplicate = true;
                 
                 $myfile = fopen($_SERVER['DOCUMENT_ROOT'] . '/../duplicate_checks/editing_services_'.$cleanName."_".strtolower(date('l_F_d_Y_H:m:s')).".txt", "w") or die("Unable to open file!");
@@ -116,11 +116,11 @@
     '',
     '',
     '',
-    '',
+    $vars['total_minutes'],
     $vars['notes'],
     '',
     '',
-    $vars['label']
+    'Editing Services'
     ];
     
     $rows = [$newRow];
@@ -131,8 +131,8 @@
     $service->spreadsheets_values->append($spreadsheetId, $range, $valueRange, $options);
         
     // insert into the tl_transactions table
-    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, service_provided, price, meeting_date, meeting_start, meeting_end, notes, misc_billing, published)
-    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '19', '".$price."', '".$vars['meeting_date']."', '".$vars['meeting_start']."', '".$vars['meeting_end']."', '".$vars['notes']."', '".$vars['label']."',  '1')";
+    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, service_provided, price, meeting_duration, notes, misc_billing, published)
+    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '19', '".$price."', '".$vars['total_minutes']."', '".$vars['notes']."', 'Editing Services',  '1')";
     $result = $dbh->query($query);
     
     // display some text to return back to the ajax call
