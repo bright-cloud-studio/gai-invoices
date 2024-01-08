@@ -63,6 +63,7 @@ $GLOBALS['BE_MOD']['content']['services'] = array(
 $GLOBALS['TL_MODELS']['tl_transactions']    = 'Bcs\Model\Transactions';
 $GLOBALS['TL_MODELS']['tl_psychologists']   = 'Bcs\Model\Psychologists';
 $GLOBALS['TL_MODELS']['tl_services']        = 'Bcs\Model\Services';
+$GLOBALS['TL_MODELS']['tl_cron_tracker']    = 'Bcs\Model\CronTracker';
 
 /* Hooks */
 $GLOBALS['TL_HOOKS']['initializeSystem'][] 	= array('Bcs\Frontend\SendInvoiceEmails', 'sendEmails');
