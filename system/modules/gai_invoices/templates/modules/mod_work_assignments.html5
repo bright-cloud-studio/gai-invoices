@@ -108,7 +108,7 @@
 		<span class="message"></span>
 	</div>
 	
-	
+	<!--
 	<div class="additional_services hidden" id="{{user::company}}">
 		<h2>Additional Services</h2>
 		
@@ -132,6 +132,7 @@
 			}
 		?>
 	</div>
+	-->
 
 	
 	<div class="services hidden" id="{{user::company}}">
