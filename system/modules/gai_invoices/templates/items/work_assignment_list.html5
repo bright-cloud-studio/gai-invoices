@@ -2,6 +2,7 @@
 	$cleanDate = str_replace(' ', '_', $this->date);
 	$cleanDate = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanDate));
 	$cleanDistrict = str_replace(' ', '_', $this->district);
+	$cleanDistrict = str_replace('.', '', $this->district);
 	$cleanDistrict = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanDistrict));
 	$cleanSchool = str_replace(' ', '_', $this->school);
 	$cleanSchool = str_replace('.', '', $this->school);
