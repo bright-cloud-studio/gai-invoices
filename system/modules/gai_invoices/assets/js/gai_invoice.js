@@ -1188,11 +1188,11 @@ function addEditingServices(){
     var validated = 0;
     var validateFailed = [];
     
-    // Label
-    var label = $(".mod_editing_services #label").val();
-    if(label == '') {
-        $(".message").append("Label cannot be empty<br>");
-        validateFailed['label'] = 1;
+    // Total Minutes
+    var total_minutes = $(".mod_editing_services #total_minutes").val();
+    if(total_minutes == '') {
+        $(".message").append("Total Minutes cannot be empty<br>");
+        validateFailed['total_minutes'] = 1;
     }
 
     // Price
@@ -1201,28 +1201,6 @@ function addEditingServices(){
         $(".message").append("Price cannot be empty<br>");
         validateFailed['price'] = 1;
     }
-
-    // Meeting Start
-    var meeting_start = $(".mod_editing_services input#meeting_start").val();
-    if(meeting_start == '') {
-        $(".message").append("Meeting Start cannot be empty<br>");
-        validateFailed['meeting_start'] = 1;
-    }
-    
-    // Meeting End
-    var meeting_end = $(".mod_editing_services input#meeting_end").val();
-    if(meeting_end == '') {
-        $(".message").append("Meeting End cannot be empty<br>");
-        validateFailed['meeting_end'] = 1;
-    }
-    
-    // Meeting Date
-    var meeting_date = $(".mod_editing_services input#meeting_date").val();
-    if(meeting_date == '') {
-        $(".message").append("Meeting Date cannot be empty<br>");
-        validateFailed['meeting_date'] = 1;
-    }
-
     
     
     // If Validation failed
