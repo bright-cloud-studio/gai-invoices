@@ -27,7 +27,7 @@ $GLOBALS['TL_DCA']['tl_cron_tracker'] = array
             'keys' => array
             (
                 'id' 	=> 	'primary',
-                'name' =>  'index'
+                'cron_task' =>  'index'
             )
         )
     ),
