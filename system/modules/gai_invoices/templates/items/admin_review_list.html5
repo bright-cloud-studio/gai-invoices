@@ -72,7 +72,7 @@
 				<?php if($this->service == 'Misc. Travel Expenses'){ echo '<option value="18" selected>Misc. Travel Expenses</option>'; } else { echo '<option value="18">Misc. Travel Expenses</option>'; }; ?>
 				<?php if($this->service == 'Editing Services'){ echo '<option value="19" selected>Editing Services</option>'; } else { echo '<option value="19">Editing Services</option>'; }; ?>
 				
-				<?php if($this->service == 'Meeting Coverage Coordinator'){ echo '<option value="20" selected>Meeting Coverage Coordinator</option>'; } else { echo '<option value="20">Meeting Coverage Coordinator</option>'; }; ?>
+				<?php if($this->service == 'Manager'){ echo '<option value="20" selected>Manager</option>'; } else { echo '<option value="20">Manager</option>'; }; ?>
 				<?php if($this->service == 'Psych/Achvmt/Additional/Obs'){ echo '<option value="21" selected>Psych/Achvmt/Additional/Obs</option>'; } else { echo '<option value="21">Psych/Achvmt/Additional/Obs</option>'; }; ?>
 				<?php if($this->service == 'Psych/Achvmt/Additionalx2/Obs'){ echo '<option value="22" selected>Psych/Achvmt/Additionalx2/Obs</option>'; } else { echo '<option value="22">Psych/Achvmt/Additionalx2/Obs</option>'; }; ?>
 				
@@ -83,6 +83,7 @@
 				<?php if($this->service == 'Psych Law'){ echo '<option value="27" selected>Psych Law</option>'; } else { echo '<option value="27">Psych Law</option>'; }; ?>
 				<?php if($this->service == 'In Person Mtg Attendance 1/2 Day'){ echo '<option value="28" selected>In Person Mtg Attendance 1/2 Day</option>'; } else { echo '<option value="28">In Person Mtg Attendance 1/2 Day</option>'; }; ?>
 				<?php if($this->service == 'In Person Mtg Attendance Full Day'){ echo '<option value="29" selected>In Person Mtg Attendance Full Day</option>'; } else { echo '<option value="29">In Person Mtg Attendance Full Day</option>'; }; ?>
+				<?php if($this->service == 'Psych/Dev Hist'){ echo '<option value="30" selected>Psych/Dev Hist</option>'; } else { echo '<option value="30">Psych/Dev Hist</option>'; }; ?>
 				
 
 				<?php if($this->service == 'Misc. Billing'){ echo '<option value="99" selected>Misc. Billing</option>'; } else { echo '<option value="99">Misc. Billing</option>'; }; ?>
@@ -90,6 +91,8 @@
 			</select>
 			
 		</td>
+		
+		<td><?= $this->notes ?></td>
 		
 		
 		<td><input type="text" name="price_<?= $this->row_id ?>" id="price price_<?= $this->row_id ?>" class="price price_<?= $this->row_id ?>" value="<?= $this->price ?>" required=""></td>
