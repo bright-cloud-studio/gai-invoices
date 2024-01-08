@@ -36,10 +36,10 @@
 	
 				<!-- Label -->	
 				<div class="widget widget-text size50">
-					<label for="label" class="size50">
-						Label
+					<label for="total_minutes" class="size50">
+						Total Minutes
 					</label>
-					<input type="text" name="label" id="label" value="" required="">
+					<input type="text" name="total_minutes" id="total_minutes" value="" required="">
 				</div>
 	
 				<!-- Price -->	
@@ -49,42 +49,6 @@
 					</label>
 					<input type="text" name="price" id="price" value="" required="">
 				</div>
-
-
-
-
-
-
-				<div class="meeting_details flex_wrapper">
-					<!-- Meeting Start -->	
-					<div class="widget widget-text size50" id="meeting_start">
-						<label for="meeting_start" class="size50">
-							Start Time
-						</label>
-						<input type="text" name="meeting_start" id="meeting_start" value="" required="" autocomplete="off" readonly="readonly">
-					</div>
-					
-					<!-- Meeting End -->	
-					<div class="widget widget-text size50" id="meeting_end">
-						<label for="meeting_end" class="size50">
-							End Time
-						</label>
-						<input type="text" name="meeting_end" id="meeting_end" value="" required="" autocomplete="off" readonly="readonly">
-					</div>
-					
-					<!-- Meeting Date -->	
-					<div class="widget widget-text size50" id="meeting_date">
-						<label for="meeting_date" class="size50">
-							Meeting Date
-						</label>
-						<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off" readonly="readonly">
-					</div>
-				</div>
-
-
-
-
-
 
 				<!-- Notes -->
 				<div class="widget widget-textarea size100">
