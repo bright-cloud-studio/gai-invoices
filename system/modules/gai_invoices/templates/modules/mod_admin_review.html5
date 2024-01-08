@@ -64,6 +64,7 @@
 							<th>STUDENT NAME</th>
 							<th>STUDENT NUMBER</th>
 							<th>SERVICE</th>
+							<th>NOTES</th>
 							<th>HOURLY RATE</th>
 						</tr>
 					</thead>
