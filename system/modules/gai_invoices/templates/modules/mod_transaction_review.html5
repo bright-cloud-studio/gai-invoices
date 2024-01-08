@@ -2,7 +2,6 @@
 <!-- Table to display our monthly transactions for this user -->
 <div class="mod_transaction_review marbot60 size100 no-pad flex_wrapper">
 	
-	
 	<?php if (empty($this->transactionReview) && (empty($this->transactionReviewMisc))): ?>
 	
 		<!-- Empty -->
@@ -55,8 +54,6 @@
 		
 	<?php endif; ?>
 	
-	
-
 </div>
 
 <?php if (!empty($this->transactionReview) || (!empty($this->transactionReviewMisc))): ?>
