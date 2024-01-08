@@ -3,13 +3,12 @@
 	$cleanDate = str_replace(' ', '_', $this->date);
 	$cleanDate = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanDate));
 	$cleanDistrict = str_replace(' ', '_', $this->district);
+	$cleanDistrict = str_replace('.', '', $this->district);
 	$cleanDistrict = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanDistrict));
 	$cleanSchool = str_replace(' ', '_', $this->school);
 	$cleanSchool = str_replace('.', '', $this->school);
 	$cleanSchool = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanSchool));
 	$cleanStudent = preg_replace('~[^A-Z]~', '', $this->student_name);
-	
-	
 	
 	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent . "_" . $this->random_id;
 ?>
@@ -33,6 +32,18 @@
 		<fieldset class="size100 hidden" id="{{user::company}}">
 			
 			<h4 class="size100 marbot15">Hidden Values</h4>
+			
+			
+			
+			
+			<?php $cur_date = new DateTime('now', new DateTimeZone('America/New_York')); ?>
+			<div class="widget widget-text size50">
+				<label for="time_stamp" class="size50">
+					Time Stamp
+				</label>
+				<input type="text" name="time_stamp" class="time_stamp" value="<?= $cur_date->format('m/d/Y h:i:s a') ?>">
+			</div>
+			
 			
 			<!-- Sheet Row -->	
 			<div class="widget widget-text size50">
@@ -171,7 +182,7 @@
 					<div class="size50 no-pad">
 					
 						<div class="widget widget-text size100">
-							<label for="date" class="size100">
+							<label for="handoff" class="size100">
 								Psychologist's Full Name
 							</label>
 							<input type="text" name="handoff" id="handoff" class="handoff_<?= $this->id ?>" value="" required="">
@@ -239,12 +250,13 @@
 			
 			<h4 class="size100 marbot15">Work Assignment Details</h4>
 			
-			<!-- Date -->	
+			<!-- Date -->
+			<?php $cur_date = new DateTime('now', new DateTimeZone('America/New_York')); ?>
 			<div class="widget widget-text size50">
 				<label for="date" class="size50">
 					Today's Date
 				</label>
-				<input type="text" name="date" id="date" value="<?= date("m/d/Y") ?>" required="">
+				<input type="text" name="date" id="date" value="<?= $cur_date->format("m/d/Y") ?>" required="">
 			</div>
 			
 			<!-- Empty block beside Today's Date -->
