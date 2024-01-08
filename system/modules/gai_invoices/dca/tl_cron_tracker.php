@@ -41,7 +41,7 @@ $GLOBALS['TL_DCA']['tl_cron_tracker'] = array
             'fields'                  => array('cron_task'),
             'flag'                    => DataContainer::SORT_INITIAL_LETTER_ASC,
             'panelLayout'             => 'filter;search,limit',
-            'defaultSearchField'      => 'name'
+            'defaultSearchField'      => 'cron_task'
         ),
         'label' => array
         (
