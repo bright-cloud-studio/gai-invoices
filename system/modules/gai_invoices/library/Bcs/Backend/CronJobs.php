@@ -5,7 +5,6 @@ namespace Bcs\Backend;
 use Google;
 use Contao\System;
 use Contao\MemberModel;
-use Bcs\Model\CronTracker;
 
 
 class CronJobs extends System
@@ -19,7 +18,10 @@ class CronJobs extends System
         // The number of days left in the month
         $how_many_days = date('t') - date('j');
 
-        // WEEKLY REMINDER
+        // Add a log entry so we know things are going as expected
+        \Controller::log('GAI: (' . $how_many_days . ') days remaining until the end of the month', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
+
+        // If today is Weekly Reminder Day!
         if($days_before == $how_many_days) {
             
             // add Log that it is the right day!
@@ -55,33 +57,8 @@ class CronJobs extends System
             }
         }
 
-        // LAST DAY REMINDER
+        // If today is Last Day Reminder Day!
         if($how_many_days == 0) {
-
-
-            // Get this tasks timestamp from the cron tracker
-            $cur_month = 0;
-            $cur_hour = 0;
-            
-            // Connect to Contao's database
-            $dbh = new \mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
-            if ($dbh->connect_error) {
-                die("Connection failed: " . $dbh->connect_error);
-            }
-            
-            $query = "SELECT * FROM tl_cron_tracker WHERE cron_task='Last Day Reminder'";
-            $result = $dbh->query($query);
-
-            while($row = $result->fetch_assoc()) {
-                $timestamp = $row['last_trigger'];
-            }
-
-
-            // if it hasnt run this month
-
-
-            // if it is noon or later
-            
             
             // add Log that it is the right day!
             \Controller::log('GAI: Last Day Reminder email will go out today!', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
@@ -117,23 +94,6 @@ class CronJobs extends System
         }
         
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
     
     public function importPsychologists(): void
     {
