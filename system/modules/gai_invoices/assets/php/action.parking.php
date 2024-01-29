@@ -106,7 +106,7 @@
     date('F'),
     $vars['date'],
     $vars['psychologist'],
-    '',
+    $vars['district_fixed'],
     '',
     '',
     $vars['service_provided'],
@@ -132,8 +132,8 @@
     
     
     // insert into the tl_transactions table
-    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, service_provided, price, notes, misc_billing, published)
-    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '14', '".$price."', '".$vars['notes']."', '".$vars['label']."',  '1')";
+    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, district, service_provided, price, notes, misc_billing, published)
+    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '".$vars['district_fixed']."', '14', '".$price."', '".preg_replace('/[^A-Za-z0-9\-]/', '', $vars['notes'])."', '".$vars['label']."',  '1')";
     $result = $dbh->query($query);
     
     
