@@ -88,12 +88,12 @@ class ModJobCosting extends \Contao\Module
         $user = $objUser->firstname . " " . $objUser->lastname;
         
         // Get this user's unprocessed listings from Sheets
-        $spreadsheet = $this->$service->spreadsheets->get(ModWorkAssignments::$spreadsheetId);
+        $spreadsheet = $this->$service->spreadsheets->get(ModJobCosting::$spreadsheetId);
         
         // LIVE
         $range = 'SY2022-2023';
         
-        $response = $this->$service->spreadsheets_values->get(ModWorkAssignments::$spreadsheetId, $range);
+        $response = $this->$service->spreadsheets_values->get(ModJobCosting::$spreadsheetId, $range);
         $values = $response->getValues();
 	}
 
