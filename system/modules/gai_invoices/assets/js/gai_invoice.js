@@ -1283,6 +1283,38 @@ function addTestLateCancelFirst(){
         validateFailed['price'] = 1;
     }
     
+    
+    
+    
+    // Student Name
+    var student_name = $(".mod_test_late_cancel_first #student_name").val();
+    if(student_name == '') {
+        $(".message").append("Student Name MUST NOT be empty<br>");
+        validateFailed['student_name'] = 1;
+    }
+    
+    // Both LASID and SASID being empty
+    var las = $(".mod_test_late_cancel_first #sasid").val();
+    var sas = $(".mod_test_late_cancel_first #lasid").val();
+    if(las == '' && sas == '') {
+        $(".message").append("Both LASID and SASID MUST NOT be empty<br>");
+        validateFailed['las_sas'] = 1;
+    }
+    
+    // Meeting Date
+    var meeting_date = $(".mod_test_late_cancel_first input#meeting_date").val();
+    if(meeting_date == '') {
+        $(".message").append("Meeting Date MUST NOT be empty<br>");
+        validateFailed['meeting_date'] = 1;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     // If Validation failed
     if($.isEmptyObject(validateFailed)) {
         // get every form field and add them to the ajax data line
@@ -1360,6 +1392,28 @@ function addTestLateCancelAdditional(){
     if(price == '') {
         $(".message").append("Price cannot be empty<br>");
         validateFailed['price'] = 1;
+    }
+    
+    // Student Name
+    var student_name = $(".mod_test_late_cancel_additional #student_name").val();
+    if(student_name == '') {
+        $(".message").append("Student Name MUST NOT be empty<br>");
+        validateFailed['student_name'] = 1;
+    }
+    
+    // Both LASID and SASID being empty
+    var las = $(".mod_test_late_cancel_additional #sasid").val();
+    var sas = $(".mod_test_late_cancel_additional #lasid").val();
+    if(las == '' && sas == '') {
+        $(".message").append("Both LASID and SASID MUST NOT be empty<br>");
+        validateFailed['las_sas'] = 1;
+    }
+    
+    // Meeting Date
+    var meeting_date = $(".mod_test_late_cancel_additional input#meeting_date").val();
+    if(meeting_date == '') {
+        $(".message").append("Meeting Date MUST NOT be empty<br>");
+        validateFailed['meeting_date'] = 1;
     }
     
     // If Validation failed
