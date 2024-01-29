@@ -31,6 +31,10 @@ $GLOBALS['FE_MOD']['gai_invoices']['mod_transaction_review'] 	    = 'Bcs\Module\
 $GLOBALS['FE_MOD']['gai_invoices']['mod_admin_review'] 	            = 'Bcs\Module\ModAdminReview';
 $GLOBALS['FE_MOD']['gai_invoices']['mod_send_invoice_emails'] 	    = 'Bcs\Module\ModSendInvoiceEmails';
 
+
+$GLOBALS['FE_MOD']['gai_invoices']['mod_job_costing']          = 'Bcs\Module\ModJobCosting';
+
+
 /** Add new notification type */
 $GLOBALS['NOTIFICATION_CENTER']['NOTIFICATION_TYPE']['gai_invoices']['send_email'] = array
 (
