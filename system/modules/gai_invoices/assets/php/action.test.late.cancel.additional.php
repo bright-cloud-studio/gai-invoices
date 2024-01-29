@@ -99,28 +99,31 @@
     $service = new \Google_Service_Sheets($client);
     $spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
     
+    // remove periods and spaces from the student initials in the event they were fancy and added them.
+    $studentName = str_replace( array('.', ' '), '', $vars['student_name']);
+    
     
     // store our newly created Transaction with the filled in data.
     // transactions have more fields than we need so fill in the blanks with ''
     $newRow = [
-    date('F'),
-    $vars['date'],
-    $vars['psychologist'],
-    '',
-    '',
-    '',
-    $vars['service_provided'],
-    $price,
-    '',
-    '',
-    '',
-    '',
-    '',
-    '',
-    $vars['notes'],
-    '',
-    '',
-    $vars['label']
+        date('F'),
+        $vars['date'],
+        $vars['psychologist'],
+        $vars['district_fixed'],
+        $vars['school_fixed'],
+        $studentName,
+        $vars['service_provided'],
+        $price,
+        $vars['lasid'],
+        $vars['sasid'],
+        $vars['meeting_date'],
+        '',
+        '',
+        '',
+        $vars['notes'],
+        '',
+        '',
+        $vars['label']
     ];
     
     $rows = [$newRow];
@@ -132,8 +135,8 @@
     
     
     // insert into the tl_transactions table
-    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, service_provided, price, notes, misc_billing, published)
-    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '14', '".$price."', '".$vars['notes']."', '".$vars['label']."',  '1')";
+    $query = "INSERT INTO tl_transactions (tstamp, date, psychologist, district, school, student_name, service_provided, price, lasid, sasid, meeting_date, notes, misc_billing, published)
+    VALUES ('".time()."', '".$vars['date']."', '".$vars['psychologist']."', '".$vars['district_fixed']."', '".$vars['school_fixed']."', '".$vars['student_name']."', '".$vars['service_provided']."', '".$price."', '".$vars['lasid']."', '".$vars['sasid']."', '".$vars['meeting_date']."', '".$vars['notes']."', '".$vars['label']."',  '1')";
     $result = $dbh->query($query);
     
     
