@@ -34,6 +34,9 @@ ClassLoader::addClasses(array
     'Bcs\Module\ModSendInvoiceEmails'           => 'system/modules/gai_invoices/library/Bcs/Module/ModSendInvoiceEmails.php',
     'Bcs\Frontend\SendInvoiceEmails'            => 'system/modules/gai_invoices/library/Bcs/Frontend/SendInvoiceEmails.php',
 
+
+    'Bcs\Module\ModJobCosting'             => 'system/modules/gai_invoices/library/Bcs/Module/ModJobCosting.php',
+
     
     // Our Cron Jobs
     'Bcs\Backend\CronJobs'                      => 'system/modules/gai_invoices/library/Bcs/Backend/CronJobs.php',
@@ -79,4 +82,7 @@ TemplateLoader::addFiles(array
     
     'mod_send_invoice_emails'        => 'system/modules/gai_invoices/templates/modules',
     'send_invoice_emails_list'       => 'system/modules/gai_invoices/templates/items',
+
+    'mod_job_costing'          => 'system/modules/gai_invoices/templates/modules',
+    
 ));
