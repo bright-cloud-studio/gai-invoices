@@ -154,9 +154,14 @@ class ModTransactionReview extends \Contao\Module
                             $arrData['label']               = $entry[17];
                             $arrData['work_assignment_id']  = $entry[18];
                             
-                            
+                            // If this is a meeting service
                             if($entry[6] == 1) {
                                 $dur = ceil($arrData['meeting_duration'] / 60);
+                                $arrData['price'] = $dur * $arrData['price'];
+                            }
+                            // If this is an Editing Service transaction
+                            else if($entry[6] == 19) {
+                                $dur = ceil($arrData['meeting_duration'] / 15);
                                 $arrData['price'] = $dur * $arrData['price'];
                             }
                             
