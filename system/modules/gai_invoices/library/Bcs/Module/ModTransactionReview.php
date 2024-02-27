@@ -161,11 +161,12 @@ class ModTransactionReview extends \Contao\Module
                             }
                             // If this is an Editing Service transaction
                             else if($entry[6] == 19) {
+                                // Get the total of quarters
                                 $dur = ceil($arrData['meeting_duration'] / 15);
-                                $arrData['price'] = $dur * $arrData['price'];
+                                // Quartered hourly rate
+                                $arrData['price'] = $dur * 7.5;
                             }
                             
-        
                             // Generate as "List"
                             $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'transaction_review_list');
                             $objListTemplate = new \FrontendTemplate($strListTemplate);
