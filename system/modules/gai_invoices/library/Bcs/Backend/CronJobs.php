@@ -216,15 +216,16 @@ class CronJobs extends System
                         if($row['psychologist_tier_7'] != $entry[8]) { $has_changes = true; }
                         if($row['psychologist_tier_8'] != $entry[9]) { $has_changes = true; }
                         if($row['psychologist_tier_9'] != $entry[10]) { $has_changes = true; }
-                        if($row['school_tier_1'] != $entry[11]) { $has_changes = true; }
-                        if($row['school_tier_2'] != $entry[12]) { $has_changes = true; }
-                        if($row['school_tier_3'] != $entry[13]) { $has_changes = true; }
+                        if($row['psychologist_tier_10'] != $entry[11]) { $has_changes = true; }
+                        if($row['school_tier_1'] != $entry[12]) { $has_changes = true; }
+                        if($row['school_tier_2'] != $entry[13]) { $has_changes = true; }
+                        if($row['school_tier_3'] != $entry[14]) { $has_changes = true; }
                     }
                     
                     // if there is changes detected, update the existing psychologist
                     if($has_changes) {
                         \Controller::log('GAI: Updating existing service ("'.$entry[1].'")', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
-                        $query = "UPDATE tl_services SET tstamp='".time()."', service_code='".$entry[0]."', name='".$entry[1]."', psychologist_tier_1='".$entry[2]."', psychologist_tier_2='".$entry[3]."', psychologist_tier_3='".$entry[4]."', psychologist_tier_4='".$entry[5]."', psychologist_tier_5='".$entry[6]."', psychologist_tier_6='".$entry[7]."', psychologist_tier_7='".$entry[8]."', psychologist_tier_8='".$entry[9]."', psychologist_tier_9='".$entry[10]."', school_tier_1='".$entry[11]."', school_tier_2='".$entry[12]."', school_tier_3='".$entry[13]."' WHERE service_code='".$entry[0]."'";
+                        $query = "UPDATE tl_services SET tstamp='".time()."', service_code='".$entry[0]."', name='".$entry[1]."', psychologist_tier_1='".$entry[2]."', psychologist_tier_2='".$entry[3]."', psychologist_tier_3='".$entry[4]."', psychologist_tier_4='".$entry[5]."', psychologist_tier_5='".$entry[6]."', psychologist_tier_6='".$entry[7]."', psychologist_tier_7='".$entry[8]."', psychologist_tier_8='".$entry[9]."', psychologist_tier_9='".$entry[10]."', psychologist_tier_10='".$entry[11]."', school_tier_1='".$entry[12]."', school_tier_2='".$entry[13]."', school_tier_3='".$entry[14]."' WHERE service_code='".$entry[0]."'";
                         $result = $dbh->query($query);
                     }
                     
@@ -232,8 +233,8 @@ class CronJobs extends System
                     
                     // no psychologist was found, lets create a new one
                     \Controller::log('GAI: Adding new service ("'.$entry[1].'")', __CLASS__ . '::' . __FUNCTION__, 'GENERAL');
-                    $query = "INSERT INTO tl_services (tstamp, service_code, name, psychologist_tier_1, psychologist_tier_2, psychologist_tier_3, psychologist_tier_4, psychologist_tier_5, psychologist_tier_6, psychologist_tier_7, psychologist_tier_8, psychologist_tier_9, school_tier_1, school_tier_2, school_tier_3)
-                              VALUES ('".time()."', '".$entry[0]."', '".$entry[1]."', '".$entry[2]."', '".$entry[3]."', '".$entry[4]."', '".$entry[5]."', '".$entry[6]."', '".$entry[7]."', '".$entry[8]."', '".$entry[9]."', '".$entry[10]."', '".$entry[11]."', '".$entry[12]."', '".$entry[13]."' )";
+                    $query = "INSERT INTO tl_services (tstamp, service_code, name, psychologist_tier_1, psychologist_tier_2, psychologist_tier_3, psychologist_tier_4, psychologist_tier_5, psychologist_tier_6, psychologist_tier_7, psychologist_tier_8, psychologist_tier_9, psychologist_tier_10, school_tier_1, school_tier_2, school_tier_3)
+                              VALUES ('".time()."', '".$entry[0]."', '".$entry[1]."', '".$entry[2]."', '".$entry[3]."', '".$entry[4]."', '".$entry[5]."', '".$entry[6]."', '".$entry[7]."', '".$entry[8]."', '".$entry[9]."', '".$entry[10]."', '".$entry[11]."', '".$entry[12]."', '".$entry[13]."', '".$entry[14]."' )";
                     $result = $dbh->query($query);
                 }
             }
