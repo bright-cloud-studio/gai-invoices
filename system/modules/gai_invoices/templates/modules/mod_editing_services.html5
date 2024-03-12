@@ -37,7 +37,7 @@
 				<!-- Label -->	
 				<div class="widget widget-text size50">
 					<label for="total_minutes" class="size50">
-						Total Minutes
+						Total Minutes <span class="extra_note">(Please enter the total time in MINUTES)</span>
 					</label>
 					<input type="text" name="total_minutes" id="total_minutes" value="" required="">
 				</div>
@@ -47,7 +47,7 @@
 					<label for="price" class="size50">
 						Price
 					</label>
-					<input type="text" name="price" id="price" value="" required="">
+					<input type="text" name="price" id="price" value="30" required="" readonly>
 				</div>
 
 				<!-- Notes -->
