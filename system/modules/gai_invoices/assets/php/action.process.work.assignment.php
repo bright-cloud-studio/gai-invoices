@@ -4,6 +4,9 @@
 	session_start();
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/../vendor/autoload.php';
     
+    // Manually set the server's time zone
+    //date_default_timezone_set('America/Los_Angeles');
+    
     // Connect to DB
     $dbh = new mysqli("localhost", "globalassinc_user", "Z2rc^wQ}98TS9mtl5y", "globalassinc_contao_4_13");
     if ($dbh->connect_error) {
