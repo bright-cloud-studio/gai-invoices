@@ -34,6 +34,7 @@ $GLOBALS['TL_LANG']['tl_services']['psychologist_tier_6']        = array('Psycho
 $GLOBALS['TL_LANG']['tl_services']['psychologist_tier_7']        = array('Psychologist Tier 7', 'This Service\'s price for Psychologist Tier 7');
 $GLOBALS['TL_LANG']['tl_services']['psychologist_tier_8']        = array('Psychologist Tier 8', 'This Service\'s price for Psychologist Tier 8');
 $GLOBALS['TL_LANG']['tl_services']['psychologist_tier_9']        = array('Psychologist Tier 9', 'This Service\'s price for Psychologist Tier 9');
+$GLOBALS['TL_LANG']['tl_services']['psychologist_tier_10']       = array('Psychologist Tier 10', 'This Service\'s price for Psychologist Tier 10');
 $GLOBALS['TL_LANG']['tl_services']['school_tier_1']              = array('School Tier 1', 'This Service\'s price for School Tier 1');
 $GLOBALS['TL_LANG']['tl_services']['school_tier_2']              = array('School Tier 2', 'This Service\'s price for School Tier 2');
 $GLOBALS['TL_LANG']['tl_services']['school_tier_3']              = array('School Tier 3', 'This Service\'s price for School Tier 3');
