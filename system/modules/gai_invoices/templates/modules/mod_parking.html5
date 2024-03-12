@@ -17,6 +17,22 @@
 			</div>
 		</fieldset>
 		
+		
+		<fieldset class="size100">
+
+			<!-- District -->	
+			<div class="widget widget-select size50">
+				<label for="district_fixed" class="size50">
+					District
+				</label>
+				<select name="district_fixed" id="district_fixed">
+					<option value="MATCH Charter Schools" selected>MATCH Charter Schools</option>
+				</select>
+			</div>
+			
+		</fieldset>
+		
+		
 
 		<!-- The section of the form with the meeting details -->
 		<div class="misc_details">
