@@ -10,6 +10,8 @@
 	$cleanSchool = preg_replace('/[^a-zA-Z0-9_.]/', '_', strtolower($cleanSchool));
 	$cleanStudent = preg_replace('~[^A-Z]~', '', $this->student_name);
 	
+	
+	
 	$unique_id = $cleanDate . "_" . $cleanDistrict . "_" . $cleanSchool . "_" . $cleanStudent . "_" . $this->random_id;
 ?>
 
