@@ -78,6 +78,10 @@ class ModWorkAssignments extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
+        
+        // Manually set the server's time zone
+        date_default_timezone_set('America/Los_Angeles');
+        
         // Import the Database stuffs so we can make queries
         $this->import('Database');
         
@@ -355,6 +359,7 @@ class ModWorkAssignments extends \Contao\Module
             $arrData[$result->service_code]['psychologist_tier_7'] = $result->psychologist_tier_7;
             $arrData[$result->service_code]['psychologist_tier_8'] = $result->psychologist_tier_8;
             $arrData[$result->service_code]['psychologist_tier_9'] = $result->psychologist_tier_9;
+            $arrData[$result->service_code]['psychologist_tier_10'] = $result->psychologist_tier_10;
             $arrData[$result->service_code]['school_tier_1'] = $result->school_tier_1;
             $arrData[$result->service_code]['school_tier_2'] = $result->school_tier_2;
             $arrData[$result->service_code]['school_tier_3'] = $result->school_tier_3;
