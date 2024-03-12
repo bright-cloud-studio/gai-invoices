@@ -103,6 +103,7 @@ class ModTransactionReview extends \Contao\Module
         
         // get the current month
         $month = date('F');
+        //$month = 'February';
         
         
         
@@ -162,9 +163,10 @@ class ModTransactionReview extends \Contao\Module
                             // If this is an Editing Service transaction
                             else if($entry[6] == 19) {
                                 // Get the total of quarters
-                                $dur = ceil($arrData['meeting_duration'] / 15);
+                                //$dur = ceil($arrData['meeting_duration'] / 15);
+                                $dur = $arrData['meeting_duration'];
                                 // Quartered hourly rate
-                                $arrData['price'] = $dur * 7.5;
+                                $arrData['price'] = $dur * 0.5;
                             }
                             
                             // Generate as "List"
