@@ -17,6 +17,68 @@
 			</div>
 		</fieldset>
 		
+		
+		
+		
+		
+		
+		<fieldset class="size100">
+
+			<!-- District -->	
+			<div class="widget widget-select size50">
+				<label for="district_fixed" class="size50">
+					District
+				</label>
+				<select name="district_fixed" id="district_fixed">
+					<option value="Phoenix Academy Public Charter Schools" selected>Phoenix Academy Public Charter Schools</option>
+				</select>
+			</div>
+			
+			<!-- School -->	
+			<div class="widget widget-select size50">
+				<label for="school_fixed" class="size50">
+					School
+				</label>
+				<select name="school_fixed" id="school_fixed">
+					<option value="Springfield" selected>Springfield</option>
+				</select>
+			</div>
+
+			<!-- Student Name -->	
+			<div class="widget widget-text size50">
+				<label for="student_name" class="size50">
+					Student Name (Initials)
+				</label>
+				<input type="text" name="student_name" id="student_name" value="" required="">
+			</div>
+
+			<!-- LASID -->	
+			<div class="widget widget-text size50">
+				<label for="lasid" class="size50">
+					LASID #
+				</label>
+				<input type="text" name="lasid" id="lasid" value="" required="">
+			</div>
+			
+			<!-- SASID -->	
+			<div class="widget widget-text size50">
+				<label for="sasid" class="size50">
+					SASID #
+				</label>
+				<input type="text" name="sasid" id="sasid" value="" required="">
+			</div>
+			
+		</fieldset>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 		<!-- The section of the form with the meeting details -->
 		<div class="misc_details">
@@ -34,21 +96,25 @@
 					</select>
 				</div>
 	
-				<!-- Label -->	
-				<div class="widget widget-text size50">
-					<label for="label" class="size50">
-						Label
-					</label>
-					<input type="text" name="label" id="label" value="" required="">
-				</div>
-	
 				<!-- Price -->	
 				<div class="widget widget-text size50">
-					<label for="price" class="size50">
-						Price
+					<label class="size50">
+						Hourly Rate
 					</label>
-					<input type="text" name="price" id="price" value="" required="">
+					<input type="text" name="price" id="price" value="200" required="">
 				</div>
+				
+				
+				
+				<!-- Meeting Date -->	
+				<div class="widget widget-text size50" id="meeting_date">
+					<label for="meeting_date" class="size50">
+						Meeting Date
+					</label>
+					<input type="text" name="meeting_date" id="meeting_date" value="" required="" autocomplete="off" readonly="readonly">
+				</div>
+				
+				
 
 				<!-- Notes -->
 				<div class="widget widget-textarea size100">
