@@ -48,6 +48,9 @@ class ModJobCosting extends \Contao\Module
         $this->$service = new \Google_Service_Sheets($this->$client);
         // Set the ID for our specific spreadsheet
         ModJobCosting::$spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
+
+        // Include Chart.js and our configuration script
+        $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
 	}
 	
     /**
