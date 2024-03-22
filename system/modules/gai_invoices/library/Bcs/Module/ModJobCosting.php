@@ -111,6 +111,7 @@ class ModJobCosting extends \Contao\Module
                 }
                 
             }
+            die();
             
         }
 
