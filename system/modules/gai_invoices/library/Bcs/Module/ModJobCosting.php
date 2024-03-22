@@ -47,7 +47,7 @@ class ModJobCosting extends \Contao\Module
         // Assign our client to a service
         $this->$service = new \Google_Service_Sheets($this->$client);
         // Set the ID for our specific spreadsheet
-        ModJobCosting::$spreadsheetId = '1erZUWlCgpWd67E1PIwwKNCYT0yCm2QiV2DL28VA8oVU';
+        ModJobCosting::$spreadsheetId = '1PEJN5ZGlzooQrtIEdeo4_nZH73W0aJTUbRIoibzl3Lo';
 
         // Include Chart.js and our configuration script
         $GLOBALS['TL_JAVASCRIPT']['chart_cdn'] = 'https://cdn.jsdelivr.net/npm/chart.js';
@@ -79,6 +79,9 @@ class ModJobCosting extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
+        // Manually set the server's time zone
+        date_default_timezone_set('America/Los_Angeles')
+        
         // Import the Database stuffs so we can make queries
         $this->import('Database');
         
@@ -94,10 +97,30 @@ class ModJobCosting extends \Contao\Module
         $spreadsheet = $this->$service->spreadsheets->get(ModJobCosting::$spreadsheetId);
         
         // LIVE
-        $range = 'SY2022-2023';
+        $range = 'Transactions';
         
         $response = $this->$service->spreadsheets_values->get(ModJobCosting::$spreadsheetId, $range);
         $values = $response->getValues();
+
+        $entry_id = 1;
+        /* Loop through our sheets data */
+        foreach($values as $entry) {
+
+            // if the id matches this entry, it is related to our user
+            if($entry_id != 1) {
+
+                if($entry[16] != 1) {
+
+                    echo $entry;
+                    echo "<br><br>";
+                    
+                }
+                
+            }
+            
+        }
+
+        
 	}
 
 } 
