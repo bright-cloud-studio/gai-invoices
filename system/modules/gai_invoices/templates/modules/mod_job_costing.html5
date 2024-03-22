@@ -1,3 +1,11 @@
-<div class="mod_job_costing marbot90">
-  <h1>Job Costing</h1>
+<div class="mod_job_costing marbot90 flex_wrapper">
+	<h1>Job Costing</h1>
+	
+	<div class="size100 marbot90">
+		<div class="wrapper_chart_horizontal_bar">
+			<canvas id="chart_horizontal_bar"></canvas>
+		</div>
+	</div>
+  
+  
 </div>
