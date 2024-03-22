@@ -79,12 +79,6 @@ class ModJobCosting extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
-        // Manually set the server's time zone
-        date_default_timezone_set('America/Los_Angeles')
-        
-        // Import the Database stuffs so we can make queries
-        //$this->import('Database');
-        
         // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
         $GLOBALS['TL_BODY']['work_assignments'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
