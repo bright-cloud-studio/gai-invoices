@@ -83,7 +83,7 @@ class ModJobCosting extends \Contao\Module
         date_default_timezone_set('America/Los_Angeles')
         
         // Import the Database stuffs so we can make queries
-        $this->import('Database');
+        //$this->import('Database');
         
         // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
