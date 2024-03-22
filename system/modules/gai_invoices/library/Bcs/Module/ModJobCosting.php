@@ -105,7 +105,7 @@ class ModJobCosting extends \Contao\Module
 
                 if($entry[16] != 1) {
 
-                    echo $entry;
+                    print_r($entry);
                     echo "<br><br>";
                     
                 }
