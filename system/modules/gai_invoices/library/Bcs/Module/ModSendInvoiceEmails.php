@@ -99,6 +99,7 @@ class ModSendInvoiceEmails extends \Contao\Module
         // get the current month
         $today = date('F');
         $month = date("n", strtotime ( '-1 month' , strtotime ( $today ) )) ;
+        $year = date("Y",time());
         
         
         // Get every psy so we can get their email
@@ -144,28 +145,29 @@ class ModSendInvoiceEmails extends \Contao\Module
             if($entry_id != 1) {
                 
                 if($entry[1] == $lastMonth) {
-
-                    $arrData = array();
-                    $arrData['row_id']          = $entry_id;
-                    $arrData['id']              = $psy_total;
-                    $arrData['billing_year']    = $entry[0];
-                    $arrData['billing_month']   = $entry[1];
-                    $arrData['invoice_number']  = $entry[2];
-                    $arrData['psychologist']    = $entry[3];
-                    $arrData['date_issued']     = $entry[4];
-                    $arrData['date_due']        = $entry[5];
-                    $arrData['invoice_link']    = $entry[6];
-                    $arrData['email_sent']      = $entry[7];
-                    $arrData['invoice_total']   = $entry[8];
-                    $arrData['email']           = $psys[$entry[3]];
-                    
-                    // Generate as "List"
-                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'send_invoice_emails_list');
-                    $objListTemplate = new \FrontendTemplate($strListTemplate);
-                    $objListTemplate->setData($arrData);
-                    $entryPsy[$entry_id] = $objListTemplate->parse();
-                    $psy_total++;
-
+                    if($entry[0] == $year) {
+    
+                        $arrData = array();
+                        $arrData['row_id']          = $entry_id;
+                        $arrData['id']              = $psy_total;
+                        $arrData['billing_year']    = $entry[0];
+                        $arrData['billing_month']   = $entry[1];
+                        $arrData['invoice_number']  = $entry[2];
+                        $arrData['psychologist']    = $entry[3];
+                        $arrData['date_issued']     = $entry[4];
+                        $arrData['date_due']        = $entry[5];
+                        $arrData['invoice_link']    = $entry[6];
+                        $arrData['email_sent']      = $entry[7];
+                        $arrData['invoice_total']   = $entry[8];
+                        $arrData['email']           = $psys[$entry[3]];
+                        
+                        // Generate as "List"
+                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'send_invoice_emails_list');
+                        $objListTemplate = new \FrontendTemplate($strListTemplate);
+                        $objListTemplate->setData($arrData);
+                        $entryPsy[$entry_id] = $objListTemplate->parse();
+                        $psy_total++;
+                    }
                 }
             }
             
@@ -187,28 +189,30 @@ class ModSendInvoiceEmails extends \Contao\Module
             if($entry_id != 1) {
                 
                 if($entry[1] == $lastMonth) {
-                    $arrData = array();
-                    $arrData['row_id']          = $entry_id;
-                    $arrData['id']              = $school_total;
-                    $arrData['billing_year']    = $entry[0];
-                    $arrData['billing_month']   = $entry[1];
-                    $arrData['invoice_number']  = $entry[2];
-                    $arrData['district_name']   = $entry[3];
-                    $arrData['school_name']     = $entry[4];
-                    $arrData['date_issued']     = $entry[5];
-                    $arrData['date_due']        = $entry[6];
-                    $arrData['invoice_link']    = $entry[7];
-                    $arrData['email_sent']      = $entry[8];
-                    $arrData['invoice_total']   = $entry[9];
-                    $arrData['email']           = $schools[$entry[3]][$entry[4]]['em'];
-                    $arrData['cc']           = $schools[$entry[3]][$entry[4]]['cc'];
-                    
-                    // Generate as "List"
-                    $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'send_invoice_emails_school_list');
-                    $objListTemplate = new \FrontendTemplate($strListTemplate);
-                    $objListTemplate->setData($arrData);
-                    $entrySchool[$entry_id] = $objListTemplate->parse();
-                    $school_total++;
+                    if($entry[0] == $year) {
+                        $arrData = array();
+                        $arrData['row_id']          = $entry_id;
+                        $arrData['id']              = $school_total;
+                        $arrData['billing_year']    = $entry[0];
+                        $arrData['billing_month']   = $entry[1];
+                        $arrData['invoice_number']  = $entry[2];
+                        $arrData['district_name']   = $entry[3];
+                        $arrData['school_name']     = $entry[4];
+                        $arrData['date_issued']     = $entry[5];
+                        $arrData['date_due']        = $entry[6];
+                        $arrData['invoice_link']    = $entry[7];
+                        $arrData['email_sent']      = $entry[8];
+                        $arrData['invoice_total']   = $entry[9];
+                        $arrData['email']           = $schools[$entry[3]][$entry[4]]['em'];
+                        $arrData['cc']           = $schools[$entry[3]][$entry[4]]['cc'];
+                        
+                        // Generate as "List"
+                        $strListTemplate = ($this->entry_customItemTpl != '' ? $this->entry_customItemTpl : 'send_invoice_emails_school_list');
+                        $objListTemplate = new \FrontendTemplate($strListTemplate);
+                        $objListTemplate->setData($arrData);
+                        $entrySchool[$entry_id] = $objListTemplate->parse();
+                        $school_total++;
+                    }
                 }
 
             }
