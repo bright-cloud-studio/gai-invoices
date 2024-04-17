@@ -96,9 +96,6 @@ class ModJobCosting extends \Contao\Module
         $response = $this->$service->spreadsheets_values->get(ModJobCosting::$spreadsheetId, $range);
         $values = $response->getValues();
 
-        print_r($response);
-        die();
-
         $entry_id = 1;
         /* Loop through our sheets data */
         foreach($values as $entry) {
@@ -108,13 +105,9 @@ class ModJobCosting extends \Contao\Module
 
                 if($entry[16] != 1) {
 
-                    print_r($entry);
-                    echo "<br><br>";
-                    
                 }
                 
             }
-            die();
             
         }
 
