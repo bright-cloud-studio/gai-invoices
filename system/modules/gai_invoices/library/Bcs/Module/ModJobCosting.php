@@ -79,6 +79,7 @@ class ModJobCosting extends \Contao\Module
     /* Generate the module */
     protected function compile()
     {
+        
         // Include our JS with a unique code to prefent caching
         $rand_ver = rand(1,9999);
         $GLOBALS['TL_BODY']['work_assignments'] = '<script src="system/modules/gai_invoices/assets/js/gai_invoice.js?v='.$rand_ver.'"></script>';
@@ -96,20 +97,74 @@ class ModJobCosting extends \Contao\Module
         $response = $this->$service->spreadsheets_values->get(ModJobCosting::$spreadsheetId, $range);
         $values = $response->getValues();
 
-        $entry_id = 1;
+        $entry_id = 0;
+        $psys = array();
         /* Loop through our sheets data */
         foreach($values as $entry) {
 
-            // if the id matches this entry, it is related to our user
-            if($entry_id != 1) {
-
-                if($entry[16] != 1) {
-
-                }
+           if($entry_id >= 1) {
+           
+                $psys[trim($entry[2])]['price'] += intval(trim($entry[7]));
                 
-            }
+                //echo "PSYS: " . $psys[trim($entry[2])]['price'] . "<br>";
+                //echo "PRICE: " . trim($entry[7]) . "<br>";
+                
+           }
+            
+            $entry_id++;
             
         }
+        //die();
+        
+        
+        
+        $config = '
+        
+            const chb = document.getElementById("chart_horizontal_bar");
+	
+        	new Chart(chb, {
+        		type: "bar",
+        	    data: {
+        	      labels: [';
+        	      
+        	      foreach($psys as $key=>$psy) {
+        	          $config .= '"' . $key . '", ';
+        	      }
+        	      
+        $config .= '],
+        	      datasets: [
+        	        {
+        	          label: "Dollars Billed (Month-to-Date)",
+        	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        	          data: [';
+        	          
+        	          foreach($psys as $psy) {
+            	          $config .= '"' . $psy['price'] . '", ';
+            	      }
+        	          
+        	          $config .= ']
+        	        }
+        	      ]
+        	    },
+        	    options: {
+        	      legend: { display: true },
+        	      title: {
+        	        display: true,
+        	        text: "Predicted world population (millions) in 2050"
+        	      }
+        	    }
+        	});
+        
+        
+        ';
+        
+        // Add our config script to the bottom of the <body> tag
+        $GLOBALS['TL_BODY'][] = '<script>' . $config . '</script>';
+        
+        
+        
+        
+        
 
         
 	}
