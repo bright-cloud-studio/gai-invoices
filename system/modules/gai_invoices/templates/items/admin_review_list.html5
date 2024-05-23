@@ -85,6 +85,16 @@
 				<?php if($this->service == 'In Person Mtg Attendance Full Day'){ echo '<option value="29" selected>In Person Mtg Attendance Full Day</option>'; } else { echo '<option value="29">In Person Mtg Attendance Full Day</option>'; }; ?>
 				<?php if($this->service == 'Psych/Dev Hist'){ echo '<option value="30" selected>Psych/Dev Hist</option>'; } else { echo '<option value="30">Psych/Dev Hist</option>'; }; ?>
 				
+				<?php if($this->service == 'Achvmt/Ratings'){ echo '<option value="31" selected>Achvmt/Ratings</option>'; } else { echo '<option value="31">Achvmt/Ratings</option>'; }; ?>
+				<?php if($this->service == 'First Test Late Cancel'){ echo '<option value="32" selected>First Test Late Cancel</option>'; } else { echo '<option value="32">First Test Late Cancel</option>'; }; ?>
+				<?php if($this->service == 'Additional Test Late Cancel'){ echo '<option value="33" selected>Additional Test Late Cancel</option>'; } else { echo '<option value="33">Additional Test Late Cancel</option>'; }; ?>
+				<?php if($this->service == 'Psych/Dev Hist/Additional'){ echo '<option value="34" selected>Psych/Dev Hist/Additional</option>'; } else { echo '<option value="34">Psych/Dev Hist/Additional</option>'; }; ?>
+				<?php if($this->service == 'Return Visit'){ echo '<option value="35" selected>Return Visit</option>'; } else { echo '<option value="35">Return Visit</option>'; }; ?>
+				<?php if($this->service == 'Return Visit x 2'){ echo '<option value="36" selected>Return Visit x 2</option>'; } else { echo '<option value="36">Return Visit x 2</option>'; }; ?>
+				<?php if($this->service == 'Return Visit x 3'){ echo '<option value="37" selected>Return Visit x 3</option>'; } else { echo '<option value="37">Return Visit x 3</option>'; }; ?>
+				<?php if($this->service == 'Return Visit x 4'){ echo '<option value="38" selected>Return Visit x 4</option>'; } else { echo '<option value="38">Return Visit x 4</option>'; }; ?>
+				<?php if($this->service == 'Psych/Achvmt/Dev Hist/Obs'){ echo '<option value="39" selected>Psych/Achvmt/Dev Hist/Obs</option>'; } else { echo '<option value="39">Psych/Achvmt/Dev Hist/Obs</option>'; }; ?>
+				
 
 				<?php if($this->service == 'Misc. Billing'){ echo '<option value="99" selected>Misc. Billing</option>'; } else { echo '<option value="99">Misc. Billing</option>'; }; ?>
 				
