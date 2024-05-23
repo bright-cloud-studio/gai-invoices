@@ -1,9 +1,17 @@
-<div class="mod_job_costing marbot90 flex_wrapper">
-	<h1>Job Costing</h1>
+<div class="mod_job_costing marbot90 size100 no-pad flex_wrapper">
+	<h1 class="size100">Job Costing</h1>
 	
 	<div class="size100 marbot90">
+		<h2>Current Month - Psychologists</h2>
 		<div class="wrapper_chart_horizontal_bar">
 			<canvas id="chart_horizontal_bar"></canvas>
+		</div>
+	</div>
+	
+	<div class="size100 marbot90">
+		<h2>Services - Total Usage</h2>
+		<div class="wrapper_chart_horizontal_bar_2">
+			<canvas id="chart_horizontal_bar_2"></canvas>
 		</div>
 	</div>
   
