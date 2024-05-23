@@ -153,6 +153,7 @@
 					<span class="psychologist_tier_7"><?= $service['psychologist_tier_7'] ?></span><br />
 					<span class="psychologist_tier_8"><?= $service['psychologist_tier_8'] ?></span><br />
 					<span class="psychologist_tier_9"><?= $service['psychologist_tier_9'] ?></span><br />
+					<span class="psychologist_tier_10"><?= $service['psychologist_tier_10'] ?></span><br />
 					<span class="school_tier_1"><?= $service['school_tier_1'] ?></span><br />
 					<span class="school_tier_2"><?= $service['school_tier_2'] ?></span><br />
 					<span class="school_tier_3"><?= $service['school_tier_3'] ?></span><br />
