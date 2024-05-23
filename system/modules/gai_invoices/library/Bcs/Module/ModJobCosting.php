@@ -114,12 +114,10 @@ class ModJobCosting extends \Contao\Module
             $entry_id++;
             
         }
-        //die();
         
         
-        
+        // Chart 1
         $config = '
-        
             const chb = document.getElementById("chart_horizontal_bar");
 	
         	new Chart(chb, {
@@ -154,12 +152,49 @@ class ModJobCosting extends \Contao\Module
         	      }
         	    }
         	});
-        
-        
         ';
-        
-        // Add our config script to the bottom of the <body> tag
         $GLOBALS['TL_BODY'][] = '<script>' . $config . '</script>';
+        
+        
+        
+        // Chart 2
+        $config2 = '
+            const chb2 = document.getElementById("chart_horizontal_bar_2");
+	
+        	new Chart(chb2, {
+        		type: "bar",
+        	    data: {
+        	      labels: [';
+        	      
+        	      foreach($psys as $key=>$psy) {
+        	          $config2 .= '"' . $key . '", ';
+        	      }
+        	      
+        $config2 .= '],
+        	      datasets: [
+        	        {
+        	          label: "Services Used (Month-to-Date)",
+        	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        	          data: [';
+        	          
+        	          foreach($psys as $psy) {
+            	          $config2 .= '"' . $psy['price'] . '", ';
+            	      }
+        	          
+        	          $config2 .= ']
+        	        }
+        	      ]
+        	    },
+        	    options: {
+        	      legend: { display: true },
+        	      title: {
+        	        display: true,
+        	        text: "Predicted world population (millions) in 2050"
+        	      }
+        	    }
+        	});
+        ';
+        $GLOBALS['TL_BODY'][] = '<script>' . $config2 . '</script>';
         
 	}
 
