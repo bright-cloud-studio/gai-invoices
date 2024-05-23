@@ -161,12 +161,6 @@ class ModJobCosting extends \Contao\Module
         // Add our config script to the bottom of the <body> tag
         $GLOBALS['TL_BODY'][] = '<script>' . $config . '</script>';
         
-        
-        
-        
-        
-
-        
 	}
 
 } 
