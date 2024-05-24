@@ -27,6 +27,11 @@ class ModJobCosting extends \Contao\Module
     protected $client;
     protected $service;
     public static $spreadsheetId;
+    
+    public $services = array();
+    public $schools = array();
+    public $psys = array();
+    public $districts = array();
  
 	/**
 	 * Initialize the object
@@ -92,30 +97,83 @@ class ModJobCosting extends \Contao\Module
         $spreadsheet = $this->$service->spreadsheets->get(ModJobCosting::$spreadsheetId);
         
         // LIVE
-        $range = 'Transactions';
         
-        $response = $this->$service->spreadsheets_values->get(ModJobCosting::$spreadsheetId, $range);
-        $values = $response->getValues();
-
-        $entry_id = 0;
-        $psys = array();
+        $services_id = 0;
+        $range_serv = 'Services';
+        $response_serv = $this->$service->spreadsheets_values->get(ModJobCosting::$spreadsheetId, $range_serv);
+        $values_serv = $response_serv->getValues();
         
-        /* Loop through our sheets data */
-        foreach($values as $entry) {
-
-           if($entry_id >= 1) {
-           
-                //$psys[trim($entry[2])]['price'] += intval(trim($entry[7]));
+        foreach($values_serv as $entry_serv) {
+            if($services_id >= 1) {
+                $services[$entry_serv[0]]['name'] = $entry_serv[1];
                 
-                $psys[trim($entry[2])]['price'] += $this->calculatePrice($entry[6], intval(trim($entry[7])), $entry[13] );
+                $services[$entry_serv[0]]['Psychologist Tier 1'] = str_replace('$','',$entry_serv[1]);
+                $services[$entry_serv[0]]['Psychologist Tier 2'] = str_replace('$','',$entry_serv[2]);
+                $services[$entry_serv[0]]['Psychologist Tier 3'] = str_replace('$','',$entry_serv[3]);
+                $services[$entry_serv[0]]['Psychologist Tier 4'] = str_replace('$','',$entry_serv[4]);
+                $services[$entry_serv[0]]['Psychologist Tier 5'] = str_replace('$','',$entry_serv[5]);
+                $services[$entry_serv[0]]['Psychologist Tier 6'] = str_replace('$','',$entry_serv[6]);
+                $services[$entry_serv[0]]['Psychologist Tier 7'] = str_replace('$','',$entry_serv[7]);
+                $services[$entry_serv[0]]['Psychologist Tier 8'] = str_replace('$','',$entry_serv[8]);
+                $services[$entry_serv[0]]['Psychologist Tier 9'] = str_replace('$','',$entry_serv[9]);
+                $services[$entry_serv[0]]['Psychologist Tier 10'] = str_replace('$','',$entry_serv[10]);
                 
-           }
-            
-            $entry_id++;
-            
+                $services[$entry_serv[0]]['School Tier 1'] = str_replace('$','',$entry_serv[11]);
+                $services[$entry_serv[0]]['School Tier 2'] = str_replace('$','',$entry_serv[12]);
+                $services[$entry_serv[0]]['School Tier 3'] = str_replace('$','',$entry_serv[13]);
+            }
+                
+            $services_id++;
         }
         
         
+        
+        
+        
+        $schools_id = 0;
+        $range_schools = 'Schools';
+        $response_schools = $this->$service->spreadsheets_values->get(ModJobCosting::$spreadsheetId, $range_schools);
+        $values_schools = $response_schools->getValues();
+        
+        foreach($values_schools as $entry_school) {
+            if($schools_id >= 1) {
+                $schools[trim($entry_school[0])]['name'] = $entry_school[1];
+                $schools[trim($entry_school[2])]['tier'] = $entry_school[13];
+            }
+            $schools_id++;
+        }
+        
+        
+        
+        $entry_id = 0;
+        $range = 'Transactions';
+        $response = $this->$service->spreadsheets_values->get(ModJobCosting::$spreadsheetId, $range);
+        $values = $response->getValues();
+
+        foreach($values as $entry) {
+           if($entry_id >= 1) {
+               
+               if($entry[16] != '1') {
+                   
+                    $psys[trim($entry[2])]['price'] += $this->calculatePrice($entry[6], intval(trim($entry[7])), $entry[13] );
+                    $psys[trim($entry[2])]['total_meeting_minutes'] += intval($entry[13]);
+                    
+                    if($entry[6] != '99') {
+                        
+                        $districts[trim($entry[3])]['price'] += $this->calculateSchoolPrice($entry[6], intval($services[$entry[6]][$schools[$entry[3]]['tier']]), $entry[13]);
+                        $districts[trim($entry[3])]['total_meeting_minutes'] += intval($entry[13]);
+                        $districts[trim($entry[3])]['tier'] =  $schools[trim($entry[3])]['tier'];
+                    }
+                    
+                    $services[$entry[6]]['total_usage'] += 1;
+                   
+               }
+               
+                
+           }
+            $entry_id++;
+        }
+
         // Chart 1
         $config = '
             const chb = document.getElementById("chart_horizontal_bar");
@@ -132,7 +190,7 @@ class ModJobCosting extends \Contao\Module
         $config .= '],
         	      datasets: [
         	        {
-        	          label: "Total Billed (Month-to-Date)",
+        	          label: "Total Billed",
         	          backgroundColor: [
                         "#C0392B",
                         "#ffd76a",
@@ -205,6 +263,13 @@ class ModJobCosting extends \Contao\Module
         
         
         
+        
+        
+        
+        
+        
+        
+        
         // Chart 2
         $config2 = '
             const chb2 = document.getElementById("chart_horizontal_bar_2");
@@ -214,19 +279,51 @@ class ModJobCosting extends \Contao\Module
         	    data: {
         	      labels: [';
         	      
-        	      foreach($psys as $key=>$psy) {
-        	          $config2 .= '"' . $key . '", ';
+        	      foreach($services as $service) {
+        	          if($service['total_usage'] > 0)
+        	            $config2 .= '"' . $service['name'] . '", ';
         	      }
         	      
         $config2 .= '],
         	      datasets: [
         	        {
-        	          label: "Services Used (Month-to-Date)",
-        	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        	          label: "Total Usage",
+        	          backgroundColor: [
+                        "#C0392B",
+                        "#ffd76a",
+                        "#9B59B6",
+                        "#2980B9",
+                        "#42c8b0",
+                        "#27AE60",
+                        "#d36f88",
+                        "#F1C40F",
+                        "#E67E22",
+                        "#fc8d45",
+                        "#E67E22",
+                        "#8E44AD",
+                        "#3498DB",
+                        "#16A085",
+                        "#4575f3",
+                        "#2ECC71",
+                        "#F39C12",
+                        "#D35400",
+                        "#ff9933",
+                        "#e4007c",
+                        "#881c9e",
+                        "#1eebc9",
+                        "#6933b0",
+                        "#d0ff14",
+                        "#008b8b",
+                        "#01027b",
+                        "#95bedd",
+                        "#1ABC9C",
+                        "#ec833f"
+                      ],
         	          data: [';
         	          
-        	          foreach($psys as $psy) {
-            	          $config2 .= '"' . $psy['price'] . '", ';
+        	          foreach($services as $service) {
+        	              if($service['total_usage'] > 0)
+            	            $config2 .= '"' . $service['total_usage'] . '", ';
             	      }
         	          
         	          $config2 .= ']
@@ -234,15 +331,348 @@ class ModJobCosting extends \Contao\Module
         	      ]
         	    },
         	    options: {
-        	      legend: { display: true },
-        	      title: {
-        	        display: true,
-        	        text: "Predicted world population (millions) in 2050"
-        	      }
+        	        plugins: {
+        	            legend: {
+        	                display: false
+        	            }
+        	        }
         	    }
         	});
         ';
         $GLOBALS['TL_BODY'][] = '<script>' . $config2 . '</script>';
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // Chart 3
+        $config3 = '
+            const chb3 = document.getElementById("chart_horizontal_bar_3");
+	
+        	new Chart(chb3, {
+        		type: "bar",
+        	    data: {
+        	      labels: [';
+        	      
+        	      foreach($psys as $key=>$psy) {
+        	          if($psy['total_meeting_minutes'] > 0)
+        	            $config3 .= '"' . $key . '", ';
+        	      }
+        	      
+        $config3 .= '],
+        	      datasets: [
+        	        {
+        	          label: "Total Meeting Minutes",
+        	          backgroundColor: [
+                        "#C0392B",
+                        "#ffd76a",
+                        "#9B59B6",
+                        "#2980B9",
+                        "#42c8b0",
+                        "#27AE60",
+                        "#d36f88",
+                        "#F1C40F",
+                        "#E67E22",
+                        "#fc8d45",
+                        "#E67E22",
+                        "#8E44AD",
+                        "#3498DB",
+                        "#16A085",
+                        "#4575f3",
+                        "#2ECC71",
+                        "#F39C12",
+                        "#D35400",
+                        "#ff9933",
+                        "#e4007c",
+                        "#881c9e",
+                        "#1eebc9",
+                        "#6933b0",
+                        "#d0ff14",
+                        "#008b8b",
+                        "#01027b",
+                        "#95bedd",
+                        "#1ABC9C",
+                        "#ec833f"
+                      ],
+        	          data: [';
+        	          
+        	          foreach($psys as $psy) {
+        	              if($psy['total_meeting_minutes'] > 0)
+            	            $config3 .= '"' . $psy['total_meeting_minutes'] . '", ';
+            	      }
+        	          
+        	          $config3 .= ']
+        	        }
+        	      ]
+        	    },
+        	    options: {
+        	        plugins: {
+
+        	            legend: {
+        	                display: false
+        	            }
+        	        }
+        	    }
+        	});
+        ';
+        $GLOBALS['TL_BODY'][] = '<script>' . $config3 . '</script>';
+        
+        
+        
+        
+        
+        // Chart 4
+        $config4 = '
+            const chb4 = document.getElementById("chart_horizontal_bar_4");
+	
+        	new Chart(chb4, {
+        		type: "bar",
+        	    data: {
+        	      labels: [';
+        	      
+        	      foreach($districts as $key=>$district) {
+        	          $config4 .= '"' . $key . '", ';
+        	      }
+        	      
+        $config4 .= '],
+        	      datasets: [
+        	        {
+        	          label: "Total Billed",
+        	          backgroundColor: [
+                        "#C0392B",
+                        "#ffd76a",
+                        "#9B59B6",
+                        "#2980B9",
+                        "#42c8b0",
+                        "#27AE60",
+                        "#d36f88",
+                        "#F1C40F",
+                        "#E67E22",
+                        "#fc8d45",
+                        "#E67E22",
+                        "#8E44AD",
+                        "#3498DB",
+                        "#16A085",
+                        "#4575f3",
+                        "#2ECC71",
+                        "#F39C12",
+                        "#D35400",
+                        "#ff9933",
+                        "#e4007c",
+                        "#881c9e",
+                        "#1eebc9",
+                        "#6933b0",
+                        "#d0ff14",
+                        "#008b8b",
+                        "#01027b",
+                        "#95bedd",
+                        "#1ABC9C",
+                        "#ec833f"
+                      ],
+        	          data: [';
+        	          
+        	          foreach($districts as $district) {
+            	          $config4 .= '"' . $district['price'] . '", ';
+            	      }
+        	          
+        	          $config4 .= ']
+        	        }
+        	      ]
+        	    },
+        	    options: {
+        	        plugins: {
+        	        
+        	            tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || "";
+            
+                                    if (label) {
+                                        label += ": ";
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+        	        
+        	        
+        	            legend: {
+        	                display: false
+        	            }
+        	        }
+        	    }
+        	});
+        ';
+        $GLOBALS['TL_BODY'][] = '<script>' . $config4 . '</script>';
+        
+        
+        
+        
+        
+        
+        
+        // Chart 5
+        $config5 = '
+            const chb5 = document.getElementById("chart_horizontal_bar_5");
+	
+        	new Chart(chb5, {
+        		type: "bar",
+        	    data: {
+        	      labels: [';
+        	      
+        	      foreach($districts as $key=>$district) {
+        	          if($district['total_meeting_minutes'] > 0)
+        	            $config5 .= '"' . $key . '", ';
+        	      }
+        	      
+        $config5 .= '],
+        	      datasets: [
+        	        {
+        	          label: "Total Meeting Minutes",
+        	          backgroundColor: [
+                        "#C0392B",
+                        "#ffd76a",
+                        "#9B59B6",
+                        "#2980B9",
+                        "#42c8b0",
+                        "#27AE60",
+                        "#d36f88",
+                        "#F1C40F",
+                        "#E67E22",
+                        "#fc8d45",
+                        "#E67E22",
+                        "#8E44AD",
+                        "#3498DB",
+                        "#16A085",
+                        "#4575f3",
+                        "#2ECC71",
+                        "#F39C12",
+                        "#D35400",
+                        "#ff9933",
+                        "#e4007c",
+                        "#881c9e",
+                        "#1eebc9",
+                        "#6933b0",
+                        "#d0ff14",
+                        "#008b8b",
+                        "#01027b",
+                        "#95bedd",
+                        "#1ABC9C",
+                        "#ec833f"
+                      ],
+        	          data: [';
+        	          
+        	          foreach($districts as $district) {
+        	              if($district['total_meeting_minutes'] > 0)
+            	            $config5 .= '"' . $district['total_meeting_minutes'] . '", ';
+            	      }
+        	          
+        	          $config5 .= ']
+        	        }
+        	      ]
+        	    },
+        	    options: {
+        	        plugins: {
+
+        	            legend: {
+        	                display: false
+        	            }
+        	        }
+        	    }
+        	});
+        ';
+        $GLOBALS['TL_BODY'][] = '<script>' . $config5 . '</script>';
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        // Chart 6
+        /*
+        $config6 = '
+            const chb6 = document.getElementById("chart_horizontal_bar_6");
+	
+        	new Chart(chb6, {
+        		type: "bar",
+        	    data: {
+        	      labels: [';
+        	      
+        	      foreach($services as $service) {
+        	          if($service['total_usage'] > 0)
+        	            $config6 .= '"' . $service['name'] . '", ';
+        	      }
+        	      
+        $config6 .= '],
+        	      datasets: [
+        	        {
+        	          label: "Total Usage",
+        	          backgroundColor: [
+                        "#C0392B",
+                        "#ffd76a",
+                        "#9B59B6",
+                        "#2980B9",
+                        "#42c8b0",
+                        "#27AE60",
+                        "#d36f88",
+                        "#F1C40F",
+                        "#E67E22",
+                        "#fc8d45",
+                        "#E67E22",
+                        "#8E44AD",
+                        "#3498DB",
+                        "#16A085",
+                        "#4575f3",
+                        "#2ECC71",
+                        "#F39C12",
+                        "#D35400",
+                        "#ff9933",
+                        "#e4007c",
+                        "#881c9e",
+                        "#1eebc9",
+                        "#6933b0",
+                        "#d0ff14",
+                        "#008b8b",
+                        "#01027b",
+                        "#95bedd",
+                        "#1ABC9C",
+                        "#ec833f"
+                      ],
+        	          data: [';
+        	          
+        	          foreach($services as $service) {
+        	              if($service['total_usage'] > 0)
+            	            $config6 .= '"' . $service['total_usage'] . '", ';
+            	      }
+        	          
+        	          $config6 .= ']
+        	        }
+        	      ]
+        	    },
+        	    options: {
+        	        plugins: {
+        	            legend: {
+        	                display: false
+        	            }
+        	        }
+        	    }
+        	});
+        ';
+        $GLOBALS['TL_BODY'][] = '<script>' . $config6 . '</script>';
+        
+        */
+        
         
 	}
 	
@@ -275,9 +705,31 @@ class ModJobCosting extends \Contao\Module
                 return $price;
                 //code block
         }
+        
+	}
+	
+	
+	public function calculateSchoolPrice($service_code, $price, $meeting_duration) {
 	    
-	    
-	    
+        switch ($service_code) {
+            case 1:
+                
+                $half_rate = $price / 2;
+                $quarter_rate = $price / 4;
+                
+                if($meeting_duration <= 30) {
+                    return $half_rate;
+                } else {
+                    $dur = ceil(($meeting_duration - 30) / 15);
+                    return $half_rate + ($dur * $quarter_rate);
+                }
+                
+                break;
+            default:
+                return $price;
+                //code block
+        }
+        
 	}
 
 } 
