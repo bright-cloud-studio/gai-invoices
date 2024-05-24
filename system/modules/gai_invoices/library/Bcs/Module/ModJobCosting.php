@@ -99,15 +99,15 @@ class ModJobCosting extends \Contao\Module
 
         $entry_id = 0;
         $psys = array();
+        
         /* Loop through our sheets data */
         foreach($values as $entry) {
 
            if($entry_id >= 1) {
            
-                $psys[trim($entry[2])]['price'] += intval(trim($entry[7]));
+                //$psys[trim($entry[2])]['price'] += intval(trim($entry[7]));
                 
-                //echo "PSYS: " . $psys[trim($entry[2])]['price'] . "<br>";
-                //echo "PRICE: " . trim($entry[7]) . "<br>";
+                $psys[trim($entry[2])]['price'] += $this->calculatePrice($entry[6], intval(trim($entry[7])), $entry[13] );
                 
            }
             
@@ -132,8 +132,38 @@ class ModJobCosting extends \Contao\Module
         $config .= '],
         	      datasets: [
         	        {
-        	          label: "Dollars Billed (Month-to-Date)",
-        	          backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+        	          label: "Total Billed (Month-to-Date)",
+        	          backgroundColor: [
+                        "#C0392B",
+                        "#ffd76a",
+                        "#9B59B6",
+                        "#2980B9",
+                        "#42c8b0",
+                        "#27AE60",
+                        "#d36f88",
+                        "#F1C40F",
+                        "#E67E22",
+                        "#fc8d45",
+                        "#E67E22",
+                        "#8E44AD",
+                        "#3498DB",
+                        "#16A085",
+                        "#4575f3",
+                        "#2ECC71",
+                        "#F39C12",
+                        "#D35400",
+                        "#ff9933",
+                        "#e4007c",
+                        "#881c9e",
+                        "#1eebc9",
+                        "#6933b0",
+                        "#d0ff14",
+                        "#008b8b",
+                        "#01027b",
+                        "#95bedd",
+                        "#1ABC9C",
+                        "#ec833f"
+                      ],
         	          data: [';
         	          
         	          foreach($psys as $psy) {
@@ -145,11 +175,29 @@ class ModJobCosting extends \Contao\Module
         	      ]
         	    },
         	    options: {
-        	      legend: { display: true },
-        	      title: {
-        	        display: true,
-        	        text: "Predicted world population (millions) in 2050"
-        	      }
+        	        plugins: {
+        	        
+        	            tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || "";
+            
+                                    if (label) {
+                                        label += ": ";
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        label += new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(context.parsed.y);
+                                    }
+                                    return label;
+                                }
+                            }
+                        },
+        	        
+        	        
+        	            legend: {
+        	                display: false
+        	            }
+        	        }
         	    }
         	});
         ';
@@ -196,6 +244,40 @@ class ModJobCosting extends \Contao\Module
         ';
         $GLOBALS['TL_BODY'][] = '<script>' . $config2 . '</script>';
         
+	}
+	
+	
+	public function calculatePrice($service_code, $price, $meeting_duration) {
+	    
+        switch ($service_code) {
+            case 1:
+                
+                //echo "Service Code: " . $service_code . "<br>";
+                //echo "Price: " . $price . "<br>";
+                //echo "Meeting Duration: " . $meeting_duration . "<br>";
+                
+                $dur = ceil($meeting_duration / 60);
+        
+                //echo "Dur: " . $dur . "<br>";
+                //echo "Calculated: " . $dur * $price . "<br>";
+                //echo "<br><br>";
+
+                // Get our quarters, rounded up
+                return $dur * $price;
+                
+                break;
+            case 19:
+                
+                   return $meeting_duration * 0.5; 
+                    
+                break;
+            default:
+                return $price;
+                //code block
+        }
+	    
+	    
+	    
 	}
 
 } 
