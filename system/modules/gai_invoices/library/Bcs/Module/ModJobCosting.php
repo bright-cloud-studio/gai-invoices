@@ -32,6 +32,7 @@ class ModJobCosting extends \Contao\Module
     public $schools = array();
     public $psys = array();
     public $districts = array();
+    public $cumulative_totals = array();
  
 	/**
 	 * Initialize the object
@@ -159,14 +160,21 @@ class ModJobCosting extends \Contao\Module
                     $psys[trim($entry[2])]['price'] += $this->calculatePrice($entry[6], intval(trim($entry[7])), $entry[13] );
                     $psys[trim($entry[2])]['total_meeting_minutes'] += intval($entry[13]);
                     
+                    $cumulative_totals['psychologists']['price'] += $this->calculatePrice($entry[6], intval(trim($entry[7])), $entry[13] );
+                    $cumulative_totals['psychologists']['meeting_minutes'] += intval($entry[13]);
+                    
                     if($entry[6] != '99') {
                         $districts[trim($entry[3])]['name'] = trim($entry[3]);
                         $districts[trim($entry[3])]['price'] += $this->calculateSchoolPrice($entry[6], intval($services[$entry[6]][$schools[$entry[3]]['tier']]), $entry[13]);
                         $districts[trim($entry[3])]['total_meeting_minutes'] += intval($entry[13]);
                         $districts[trim($entry[3])]['tier'] =  $schools[trim($entry[3])]['tier'];
+                        
+                        $cumulative_totals['districts']['price'] += $this->calculateSchoolPrice($entry[6], intval($services[$entry[6]][$schools[$entry[3]]['tier']]), $entry[13]);
+                        $cumulative_totals['districts']['meeting_minutes'] += intval($entry[13]);
                     }
                     
                     $services[$entry[6]]['total_usage'] += 1;
+                    $cumulative_totals['services']['usage'] += 1;
                    
                }
                
@@ -599,87 +607,8 @@ class ModJobCosting extends \Contao\Module
         $GLOBALS['TL_BODY'][] = '<script>' . $config5 . '</script>';
         
         
-        
-        
-        
-        
-        
-        
-        
-        // Chart 6
-        /*
-        $config6 = '
-            const chb6 = document.getElementById("chart_horizontal_bar_6");
-	
-        	new Chart(chb6, {
-        		type: "bar",
-        	    data: {
-        	      labels: [';
-        	      
-        	      foreach($services as $service) {
-        	          if($service['total_usage'] > 0)
-        	            $config6 .= '"' . $service['name'] . '", ';
-        	      }
-        	      
-        $config6 .= '],
-        	      datasets: [
-        	        {
-        	          label: "Total Usage",
-        	          backgroundColor: [
-                        "#C0392B",
-                        "#ffd76a",
-                        "#9B59B6",
-                        "#2980B9",
-                        "#42c8b0",
-                        "#27AE60",
-                        "#d36f88",
-                        "#F1C40F",
-                        "#E67E22",
-                        "#fc8d45",
-                        "#E67E22",
-                        "#8E44AD",
-                        "#3498DB",
-                        "#16A085",
-                        "#4575f3",
-                        "#2ECC71",
-                        "#F39C12",
-                        "#D35400",
-                        "#ff9933",
-                        "#e4007c",
-                        "#881c9e",
-                        "#1eebc9",
-                        "#6933b0",
-                        "#d0ff14",
-                        "#008b8b",
-                        "#01027b",
-                        "#95bedd",
-                        "#1ABC9C",
-                        "#ec833f"
-                      ],
-        	          data: [';
-        	          
-        	          foreach($services as $service) {
-        	              if($service['total_usage'] > 0)
-            	            $config6 .= '"' . $service['total_usage'] . '", ';
-            	      }
-        	          
-        	          $config6 .= ']
-        	        }
-        	      ]
-        	    },
-        	    options: {
-        	        plugins: {
-        	            legend: {
-        	                display: false
-        	            }
-        	        }
-        	    }
-        	});
-        ';
-        $GLOBALS['TL_BODY'][] = '<script>' . $config6 . '</script>';
-        
-        */
-        
+        // Add our cumulative totals to the template
+        $this->Template->cumulative_totals = $cumulative_totals;
         
 	}
 	
