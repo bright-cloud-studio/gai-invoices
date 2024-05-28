@@ -179,7 +179,7 @@ class ModJobCosting extends \Contao\Module
         // Sort data
         array_multisort( array_column($psys, "last_name"), SORT_ASC, $psys );
         array_multisort( array_column($districts, "name"), SORT_ASC, $districts );
-         array_multisort( array_column($services, "name"), SORT_ASC, $services );
+        array_multisort( array_column($services, "name"), SORT_ASC, $services );
 
         // Chart 1
         $config = '
