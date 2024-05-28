@@ -108,27 +108,25 @@ class ModJobCosting extends \Contao\Module
             if($services_id >= 1) {
                 $services[$entry_serv[0]]['name'] = $entry_serv[1];
                 
-                $services[$entry_serv[0]]['Psychologist Tier 1'] = str_replace('$','',$entry_serv[1]);
-                $services[$entry_serv[0]]['Psychologist Tier 2'] = str_replace('$','',$entry_serv[2]);
-                $services[$entry_serv[0]]['Psychologist Tier 3'] = str_replace('$','',$entry_serv[3]);
-                $services[$entry_serv[0]]['Psychologist Tier 4'] = str_replace('$','',$entry_serv[4]);
-                $services[$entry_serv[0]]['Psychologist Tier 5'] = str_replace('$','',$entry_serv[5]);
-                $services[$entry_serv[0]]['Psychologist Tier 6'] = str_replace('$','',$entry_serv[6]);
-                $services[$entry_serv[0]]['Psychologist Tier 7'] = str_replace('$','',$entry_serv[7]);
-                $services[$entry_serv[0]]['Psychologist Tier 8'] = str_replace('$','',$entry_serv[8]);
-                $services[$entry_serv[0]]['Psychologist Tier 9'] = str_replace('$','',$entry_serv[9]);
-                $services[$entry_serv[0]]['Psychologist Tier 10'] = str_replace('$','',$entry_serv[10]);
+                $services[$entry_serv[0]]['Psychologist Tier 1'] = str_replace('$','',$entry_serv[2]);
+                $services[$entry_serv[0]]['Psychologist Tier 2'] = str_replace('$','',$entry_serv[3]);
+                $services[$entry_serv[0]]['Psychologist Tier 3'] = str_replace('$','',$entry_serv[4]);
+                $services[$entry_serv[0]]['Psychologist Tier 4'] = str_replace('$','',$entry_serv[5]);
+                $services[$entry_serv[0]]['Psychologist Tier 5'] = str_replace('$','',$entry_serv[6]);
+                $services[$entry_serv[0]]['Psychologist Tier 6'] = str_replace('$','',$entry_serv[7]);
+                $services[$entry_serv[0]]['Psychologist Tier 7'] = str_replace('$','',$entry_serv[8]);
+                $services[$entry_serv[0]]['Psychologist Tier 8'] = str_replace('$','',$entry_serv[9]);
+                $services[$entry_serv[0]]['Psychologist Tier 9'] = str_replace('$','',$entry_serv[10]);
+                $services[$entry_serv[0]]['Psychologist Tier 10'] = str_replace('$','',$entry_serv[11]);
                 
-                $services[$entry_serv[0]]['School Tier 1'] = str_replace('$','',$entry_serv[11]);
-                $services[$entry_serv[0]]['School Tier 2'] = str_replace('$','',$entry_serv[12]);
-                $services[$entry_serv[0]]['School Tier 3'] = str_replace('$','',$entry_serv[13]);
+                $services[$entry_serv[0]]['School Tier 1'] = str_replace('$','',$entry_serv[12]);
+                $services[$entry_serv[0]]['School Tier 2'] = str_replace('$','',$entry_serv[13]);
+                $services[$entry_serv[0]]['School Tier 3'] = str_replace('$','',$entry_serv[14]);
             }
                 
             $services_id++;
         }
-        
-        
-        
+
         
         
         $schools_id = 0;
@@ -137,12 +135,17 @@ class ModJobCosting extends \Contao\Module
         $values_schools = $response_schools->getValues();
         
         foreach($values_schools as $entry_school) {
+
+            
             if($schools_id >= 1) {
-                $schools[trim($entry_school[0])]['name'] = $entry_school[1];
-                $schools[trim($entry_school[2])]['tier'] = $entry_school[13];
+                if($entry_school[2] != '') {
+                    $schools[trim($entry_school[2])]['name'] = $entry_school[2];
+                    $schools[trim($entry_school[2])]['tier'] = $entry_school[13];
+                }
             }
             $schools_id++;
         }
+
         
         
         
@@ -153,10 +156,11 @@ class ModJobCosting extends \Contao\Module
 
         foreach($values as $entry) {
            if($entry_id >= 1) {
-               
+               // If Not deleted
                if($entry[16] != '1') {
                    
                     $psys[trim($entry[2])]['last_name'] = explode(' ', $entry[2])[1];
+                    $tmp_price = $this->calculatePrice($entry[6], intval(trim($entry[7])), $entry[13] );
                     $psys[trim($entry[2])]['price'] += $this->calculatePrice($entry[6], intval(trim($entry[7])), $entry[13] );
                     $psys[trim($entry[2])]['total_meeting_minutes'] += intval($entry[13]);
                     
@@ -164,21 +168,23 @@ class ModJobCosting extends \Contao\Module
                     $cumulative_totals['psychologists']['meeting_minutes'] += intval($entry[13]);
                     
                     if($entry[6] != '99') {
+                        
+                        if($entry[3] != '') {
                         $districts[trim($entry[3])]['name'] = trim($entry[3]);
+                        
                         $districts[trim($entry[3])]['price'] += $this->calculateSchoolPrice($entry[6], intval($services[$entry[6]][$schools[$entry[3]]['tier']]), $entry[13]);
                         $districts[trim($entry[3])]['total_meeting_minutes'] += intval($entry[13]);
                         $districts[trim($entry[3])]['tier'] =  $schools[trim($entry[3])]['tier'];
                         
                         $cumulative_totals['districts']['price'] += $this->calculateSchoolPrice($entry[6], intval($services[$entry[6]][$schools[$entry[3]]['tier']]), $entry[13]);
                         $cumulative_totals['districts']['meeting_minutes'] += intval($entry[13]);
+                        }
                     }
                     
                     $services[$entry[6]]['total_usage'] += 1;
                     $cumulative_totals['services']['usage'] += 1;
-                   
                }
                
-                
            }
             $entry_id++;
         }
@@ -188,6 +194,7 @@ class ModJobCosting extends \Contao\Module
         array_multisort( array_column($psys, "last_name"), SORT_ASC, $psys );
         array_multisort( array_column($districts, "name"), SORT_ASC, $districts );
         array_multisort( array_column($services, "name"), SORT_ASC, $services );
+
 
         // Chart 1
         $config = '
@@ -618,15 +625,7 @@ class ModJobCosting extends \Contao\Module
         switch ($service_code) {
             case 1:
                 
-                //echo "Service Code: " . $service_code . "<br>";
-                //echo "Price: " . $price . "<br>";
-                //echo "Meeting Duration: " . $meeting_duration . "<br>";
-                
                 $dur = ceil($meeting_duration / 60);
-        
-                //echo "Dur: " . $dur . "<br>";
-                //echo "Calculated: " . $dur * $price . "<br>";
-                //echo "<br><br>";
 
                 // Get our quarters, rounded up
                 return $dur * $price;
@@ -655,6 +654,7 @@ class ModJobCosting extends \Contao\Module
                 
                 if($meeting_duration <= 30) {
                     return $half_rate;
+                    
                 } else {
                     $dur = ceil(($meeting_duration - 30) / 15);
                     return $half_rate + ($dur * $quarter_rate);
