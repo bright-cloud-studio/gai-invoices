@@ -155,11 +155,12 @@ class ModJobCosting extends \Contao\Module
                
                if($entry[16] != '1') {
                    
+                    $psys[trim($entry[2])]['last_name'] = explode(' ', $entry[2])[1];
                     $psys[trim($entry[2])]['price'] += $this->calculatePrice($entry[6], intval(trim($entry[7])), $entry[13] );
                     $psys[trim($entry[2])]['total_meeting_minutes'] += intval($entry[13]);
                     
                     if($entry[6] != '99') {
-                        
+                        $districts[trim($entry[3])]['name'] = trim($entry[3]);
                         $districts[trim($entry[3])]['price'] += $this->calculateSchoolPrice($entry[6], intval($services[$entry[6]][$schools[$entry[3]]['tier']]), $entry[13]);
                         $districts[trim($entry[3])]['total_meeting_minutes'] += intval($entry[13]);
                         $districts[trim($entry[3])]['tier'] =  $schools[trim($entry[3])]['tier'];
@@ -173,6 +174,12 @@ class ModJobCosting extends \Contao\Module
            }
             $entry_id++;
         }
+        
+        
+        // Sort data
+        array_multisort( array_column($psys, "last_name"), SORT_ASC, $psys );
+        array_multisort( array_column($districts, "name"), SORT_ASC, $districts );
+         array_multisort( array_column($services, "name"), SORT_ASC, $services );
 
         // Chart 1
         $config = '
@@ -731,5 +738,6 @@ class ModJobCosting extends \Contao\Module
         }
         
 	}
+
 
 } 
